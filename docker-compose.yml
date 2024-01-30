@@ -1,0 +1,57 @@
+version: '3'  
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      PGUSER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: postgres
+    ports: 
+      - "5433:5432"
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 10s  
+  api:
+    build: ./server
+    environment:
+      - SQL_PASSWORD=123456
+      - SQL_HOST=db
+      - SQL_USER=postgres
+      - SQL_NAME=postgres
+      - MY_TOKEN_SECRET=miSecreto
+      - PORT=4000
+    volumes:
+      - ./server:/usr/src/app
+    ports:
+      - "4000:4000"
+    healthcheck:
+      test: wget --tries=1 --spider http://localhost:4000/api/login/logout || exit 1
+      interval: 2s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
+    depends_on:
+      db:
+        condition: service_healthy
+        restart: true
+  web:
+    build: ./client
+    environment:
+      VITE_API_HOST: localhost:4000
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      api:
+        condition: service_healthy
+        restart: true
+volumes:
+  demo_app:
