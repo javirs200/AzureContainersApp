@@ -1,0 +1,29 @@
+.offer1{
+    width: 100%;
+}
+
+.boton{
+    margin-right: 0px;
+}
+
+section{
+    margin-bottom: 2%;
+}
+
+section.filters{
+    display: flex;
+    justify-content: space-between;
+}
+
+section.search_bar{
+    display: flex;
+    justify-content: space-between;
+}
+
+.filters>input{
+    width: 3%;
+
+    padding: 0;
+    margin: 0;
+}
+

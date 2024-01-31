@@ -1,6 +1,6 @@
 name: Build & publish Docker images
 on:
-  release:
+  push:
     types: [cicd]
 
 env:

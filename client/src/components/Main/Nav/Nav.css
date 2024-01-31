@@ -1,0 +1,43 @@
+/* Nav.css */
+
+nav {
+    width: 100%;
+    background-color: #f9f9f9; /* Fondo blanco más claro */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    margin-bottom: 30px;
+  }
+  
+  .logo_nav {
+    width: 100px; /* Ajusta el ancho según tus necesidades */
+    height: auto;
+  }
+  
+  ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+  }
+  
+  li {
+    color: black;
+    margin-right: 20px;
+    cursor: pointer;
+  }
+
+  a.link{
+    color: inherit; /* blue colors for links too */
+    text-decoration: inherit; /* no underline */
+  }
+  
+  li:hover {
+    color: red; /* Cambia el color al hacer hover */
+  }
+  
+  p {
+    color: black;
+    margin: 0;
+  }
