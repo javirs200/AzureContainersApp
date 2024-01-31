@@ -1,7 +1,7 @@
 import React from "react";
 import "./Nav.css";
 import { Link } from 'react-router-dom'
-import foto from "../../../assets/img/profile.svg";
+import foto from "../../../assets/favicon.svg";
 
 const Nav = () => {
   return (
