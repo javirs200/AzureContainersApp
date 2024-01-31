@@ -1,19 +1,25 @@
-# Usar una imagen base de Node
+# Establecer la imagen base a Node
 FROM node:18-alpine
 
-# Crear un directorio para la app
+# Establecer el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Instalar dependencias
-COPY package*.json ./
+WORKDIR /app/server
 
+# copy lista dependencias
+COPY ./server/package.json ./
+# comprobacion
+RUN ls
+#instalar dependencias
 RUN npm install
 
-# Copiar el resto del código de la app
-COPY . .
+COPY ./server/ ./
 
-# Exponer el puerto en el que la app se ejecutará
+# comprobacion
+RUN ls
+
+# El puerto en el que se ejecutará la aplicación
 EXPOSE 4000
 
-# Comando para iniciar la app
-CMD [ "npm","run", "start" ]
+# Comando para iniciar la aplicación
+CMD ["npm", "run" ,"start"]

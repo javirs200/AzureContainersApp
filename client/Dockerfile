@@ -4,14 +4,19 @@ FROM node:18-alpine
 # Establecer el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copiar el archivo package.json y package-lock.json (si está disponible)
-COPY package*.json ./
+WORKDIR /app/client
 
-# Instalar las dependencias del proyecto
+# copy lista dependencias
+COPY ./client/package.json ./
+# comprobacion
+RUN ls
+#instalar dependencias
 RUN npm install
 
-# Copiar el resto del código de la aplicación al contenedor
-COPY . .
+COPY ./client/ ./
+
+# comprobacion
+RUN ls
 
 # El puerto en el que se ejecutará la aplicación
 EXPOSE 5173
