@@ -1,14 +1,14 @@
 import React from "react";
 import Nav from "../Nav/Nav";
-import search_bar from "../../../assets/img_offer/Search.svg";
-import download from "../../../assets/img_offer/download.svg";
-import trash from "../../../assets/img_offer/trash.svg";
+import search_bar from "../../../assets/offers_View/Search.svg";
+import download from "../../../assets/offers_View/download.svg";
+import trash from "../../../assets/offers_View/trash.svg";
 import filtro_propuestas from "../../../assets/img_offer/FiltroPropuestas.svg";
-import propuesta1 from "../../../assets/img_offer/PropuestaListado.svg";
-import propuesta2 from "../../../assets/img_offer/PropuestaListado1.svg";
-import propuesta3 from "../../../assets/img_offer/PropuestaListado2.svg";
-import propuesta4 from "../../../assets/img_offer/PropuestaListado3.svg";
-import selector_propuesta from "../../../assets/img_offer/SelectorPropuestas.svg";
+import propuesta1 from "../../../assets/offers_View/PropuestaListado.svg";
+import propuesta2 from "../../../assets/offers_View/PropuestaListado1.svg";
+import propuesta3 from "../../../assets/offers_View/PropuestaListado2.svg";
+import propuesta4 from "../../../assets/offers_View/PropuestaListado3.svg";
+import selector_propuesta from "../../../assets/offers_View/SelectorPropuestas.svg";
 import "./Offer_View.css";
 
 const Offer_View = () => {

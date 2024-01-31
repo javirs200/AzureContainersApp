@@ -1,5 +1,5 @@
 import React from "react";
-import profile from '../../../../../assets/img/profile.svg'
+import profile from '../../../../../assets/users_View/profile.svg'
 import './userCard.css'
 
 const UserCard = ({nombre,apellido,rol}) => {
