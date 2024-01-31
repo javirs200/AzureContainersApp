@@ -4,12 +4,11 @@ FROM node:18-alpine
 # Crear un directorio para la app
 WORKDIR /app
 
-# Instalar dependencias
-COPY ./package.json ./
-
-RUN npm install
-# Copiar el resto del código de la app
+# copiar todos los archivos
 COPY . .
+
+#instalar dependencias
+RUN npm install
 
 # Exponer el puerto en el que la app se ejecutará
 EXPOSE 4000
