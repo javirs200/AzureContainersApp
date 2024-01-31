@@ -3,7 +3,7 @@ import Nav from "../Nav/Nav";
 import search_bar from "../../../assets/offers_View/Search.svg";
 import download from "../../../assets/offers_View/download.svg";
 import trash from "../../../assets/offers_View/trash.svg";
-import filtro_propuestas from "../../../assets/img_offer/FiltroPropuestas.svg";
+import filtro_propuestas from "../../../assets/offers_View/FiltroPropuestas.svg";
 import propuesta1 from "../../../assets/offers_View/PropuestaListado.svg";
 import propuesta2 from "../../../assets/offers_View/PropuestaListado1.svg";
 import propuesta3 from "../../../assets/offers_View/PropuestaListado2.svg";
