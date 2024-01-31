@@ -5,10 +5,9 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Instalar dependencias
-COPY package*.json ./
+COPY package.json ./
 
 RUN npm install
-
 # Copiar el resto del código de la app
 COPY . .
 
