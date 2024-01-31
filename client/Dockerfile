@@ -5,7 +5,7 @@ FROM node:18-alpine
 WORKDIR /app
 
 # Copiar el archivo package.json y package-lock.json (si está disponible)
-COPY package.json ./
+COPY ./package.json ./
 
 # Instalar las dependencias del proyecto
 RUN npm install
