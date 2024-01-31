@@ -7,6 +7,8 @@ WORKDIR /app
 # copiar todos los archivos
 COPY . .
 
+RUN ls
+
 #instalar dependencias
 RUN npm install
 
