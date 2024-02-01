@@ -9,8 +9,6 @@ services:
       POSTGRES_DB: postgres
     ports: 
       - "5433:5432"
-    volumes:
-      - ./data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready", "-d", "db_prod"]
       interval: 2s
@@ -18,7 +16,9 @@ services:
       retries: 5
       start_period: 10s  
   api:
-    build: ./server
+    build:
+      context: .
+      dockerfile: ./server/Dockerfile
     environment:
       - SQL_PASSWORD=123456
       - SQL_HOST=db
@@ -27,7 +27,7 @@ services:
       - MY_TOKEN_SECRET=miSecreto
       - PORT=4000
     volumes:
-      - ./server:/usr/src/app
+      - ./server:/server
     ports:
       - "4000:4000"
     healthcheck:
@@ -41,12 +41,13 @@ services:
         condition: service_healthy
         restart: true
   web:
-    build: ./client
+    build:
+      context: .
+      dockerfile: ./client/Dockerfile
     environment:
       VITE_API_HOST: localhost:4000
     volumes:
-      - ./client:/app
-      - /app/node_modules
+      - ./client:/client
     ports:
       - "5173:5173"
     depends_on:
