@@ -23,6 +23,23 @@ app.use('/api/users',userRoutes)
 
 app.use('/api/login',loginRoutes)
 
+app.get('/api/hello',doHello);
+
+const doHello = async (req, res) => {
+  try {
+    const response = req.ip
+    if(response){
+      res.status(200).json({ msj:"hello " + response + ", welcome"});
+    }else{
+      res.status(200).json({ msj:"hello from api , welcome"});
+    }
+    
+  } catch (error) {
+    console.log(`ERROR: ${error}`);
+    res.status(400).json({ msj: `ERROR: ${error}` });
+  }
+};
+
 app.use('/api/*',error404);
   
 app.listen(port, () => {
