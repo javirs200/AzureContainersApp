@@ -1,0 +1,31 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- cicd
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - task: DockerCompose@0
+      inputs:
+        containerregistrytype: 'Azure Container Registry'
+        azureSubscription: 'Azure para estudiantes(422dcfc4-47b6-4958-a1af-293497206b9c)'
+        azureContainerRegistry: '{"loginServer":"tfgregistry.azurecr.io", "id" : "/subscriptions/422dcfc4-47b6-4958-a1af-293497206b9c/resourceGroups/TFGResourceGroup/providers/Microsoft.ContainerRegistry/registries/tfgRegistry"}'
+        dockerComposeFile: '**/docker-compose.yml'
+        action: 'Run a Docker Compose command'
+        dockerComposeCommand: 'up'
+        arguments: '--build'
