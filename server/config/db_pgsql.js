@@ -1,12 +1,13 @@
 const { Sequelize } = require('sequelize');
 
 require('dotenv').config()
-//?sslmode=require
-const dbURI = `postgres://${process.env.SQL_USER}:${process.env.SQL_PASSWORD}@${process.env.SQL_HOST}/${process.env.SQL_NAME}`
 
-console.log('uri de la database',dbURI);
-
-const db = new Sequelize(dbURI, {logging:false});
+//Passing parameters separately
+const db = new Sequelize(process.env.SQL_NAME, process.env.SQL_USER, process.env.SQL_PASSWORD, {
+    host: process.env.SQL_HOST,
+    dialect: 'postgres',
+    logging:false
+  });
 
 const connectSQL = async () => {
     try {
