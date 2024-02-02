@@ -3,7 +3,7 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config()
 
 //Passing parameters separately
-const db = new Sequelize(process.env.SQL_NAME, process.env.SQL_USER, process.env.SQL_PASSWORD, {
+const db = new Sequelize(process.env.SQL_NAME, process.env.SQL_USER, process.env.SQL_PASSWORD.toString(), {
     host: process.env.SQL_HOST,
     dialect: 'postgres',
     logging:false
