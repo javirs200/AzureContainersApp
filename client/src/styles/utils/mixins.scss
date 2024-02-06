@@ -1,0 +1,10 @@
+@import './variables.scss';
+
+@mixin standard-component{
+    background-color: $black;
+    color: $white;
+    min-height:85vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}

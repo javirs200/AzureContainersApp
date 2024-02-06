@@ -1,5 +1,4 @@
 import React from "react";
-import "./Nav.css";
 import { Link } from 'react-router-dom'
 import foto from "../../../assets/favicon.svg";
 

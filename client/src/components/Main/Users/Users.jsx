@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Nav from "../Nav/Nav";
 import ListaUsers from "./listaUsers/listaUsers";
 
 const Users = () => {
@@ -62,7 +61,6 @@ const Users = () => {
 
   return (
     <>
-      <Nav />
       <ListaUsers users={users} />
     </>
   );

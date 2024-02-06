@@ -5,7 +5,6 @@ import Offer_View from "./Offer_View/Offer_View";
 import Users from "./Users/Users"
 import { Route, Routes, Navigate } from "react-router-dom";
 import { UserContext } from "../../context/userContext";
-import "./Main.css";
 
 const Main = () => {
   const [logged, setLoggedIn] = useState(false);
