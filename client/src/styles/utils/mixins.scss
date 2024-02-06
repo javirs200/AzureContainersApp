@@ -1,9 +1,8 @@
 @import './variables.scss';
 
 @mixin standard-component{
-    background-color: $black;
     color: $white;
-    min-height:85vh;
+    min-height: 75vh;
     display:flex;
     align-items: center;
     justify-content: center;

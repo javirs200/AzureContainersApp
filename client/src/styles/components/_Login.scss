@@ -5,3 +5,11 @@
 #register_link{
     margin-top: 50px;
 }
+
+/* contenedor form */
+.form_login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}

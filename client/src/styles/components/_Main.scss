@@ -1,72 +1,46 @@
 @import '../utils/variables.scss';
 @import '../utils/mixins.scss';
 
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@200&display=swap');
-
-/* contenedor logo y form */
-.form_logo_container {
+main{
+    @include standard-component;
     display: flex;
-    flex-direction: column;
-    align-items: center;
 }
 
-/* contenedor section */
-.form_section {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
 
-.form_label {
+.forms {
     display: flex;
+    width: 100%;
     flex-direction: column;
-    width: 301px;
-    height: 40px;
-    padding: 8px;
     align-items: center;
     gap: 16px;
-
-}
-
-.create_p {
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: bold;
-    line-height: normal;
-    color: var(--Primary-Black, #1A0000);
-
-
 }
 
 .form_button {
-    background-color: #C10000;
-    color: #FDFCFC;
+    font-family: $font;
+    color:$white;
+    background-color: $red;
+    // color: #FDFCFC;
     display: flex;
-    width: 208px;
-    height: 32px;
-    padding: 8px 24px;
+    width: 25%;
+    height: 3vh;
     justify-content: center;
-    margin-top: 10%;
     border-radius: 8px;
     border: none;
     cursor: pointer;
-
 }
 
 .form_button:hover {
-    background-color: #F53D3D;
-
+    background-color: $lightred;
 }
 
 .input_form {
     outline: none;
     border: none;
-    border-bottom: 1px solid var(--Secondary-Red-300, #F53D3D);
-    width: 301px;
-    height: 40px;
-    padding: 8px;
-    gap: 16px;
+    border-bottom: 1px solid var(--Secondary-Red-300, $lightred);
+    width: 30%;
+    height: 4vh;
+    padding: 1%;
+    gap: 2%;
 }
 
 .input_form_match {
