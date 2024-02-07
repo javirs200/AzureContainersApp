@@ -10,7 +10,7 @@ const ListaUsers = ({users}) => {
 
     return users.map((el,index)=>{
 
-      return <UserCard key={index} nombre={el.nombre} apellido={el.apellido} rol={el.rol} />
+      return <UserCard key={index} name={el.name} email={el.email} rol={el.rol} />
 
     })
       

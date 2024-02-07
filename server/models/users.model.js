@@ -3,18 +3,14 @@ const { db } = require('../config/db_pgsql');
 
 const { DataTypes } = require('sequelize');
 
-const usuario = db.define("usuario", {
-    id_usuario: {
-        field: 'id_usuario',
+const users = db.define("users", {
+    uuid: {
+        field: 'uuid',
         type: DataTypes.UUID,
         primaryKey:true,
     },
-    nombre: {
-        field: 'nombre',
-        type: DataTypes.STRING(50)
-    },
-    apellido:{
-        field: 'apellido',
+    name: {
+        field: 'name',
         type: DataTypes.STRING(50)
     },
     email: {
@@ -29,19 +25,20 @@ const usuario = db.define("usuario", {
     rol: {
         field: 'rol',
         type: DataTypes.STRING(50)
-    },
-    
+    }    
 },
     {
         db,
-        modelName: 'usuario',
-        tableName: 'usuario',
+        modelName: 'users',
+        tableName: 'users',
         timestamps:false,
     }
 );
 
-// This syncs our model with our database.
-// Users.sync({alter:true});
-usuario.sync({alter:true});
+const cars = require('./cars.model')
 
-module.exports = usuario;
+users.hasMany(cars);
+
+users.removeAttribute('id')
+
+module.exports = users;

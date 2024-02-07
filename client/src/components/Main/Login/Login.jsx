@@ -1,8 +1,6 @@
 import React, { useState, useContext } from "react";
-import "./Login.css";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../context/userContext";
-import.meta.env.VITE_API_HOST
 
 const Login = () => {
   const navigate = useNavigate();
@@ -46,10 +44,9 @@ const Login = () => {
   // };
 
   return (
-    <section className="form_logo_container">
-      <article className="form_section">
-        <p className="create_p">Inicia sesión</p>
-        <form className="form_label">
+    <section className="form_login">
+        <h2>Inicia sesión</h2>
+        <form className="forms">
           <input
             type="email"
             className="input_form"
@@ -69,13 +66,12 @@ const Login = () => {
 
         <button
           
-          className="form_button login"
+          className="form_button"
           type="button"
           onClick={handleButtonClick}
         >
           Continuar
         </button>
-      </article>
     </section>
   );
 };
