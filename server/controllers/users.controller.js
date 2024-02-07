@@ -38,7 +38,7 @@ const createUser = async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    let {nombre,apellido,email,password,rol} = req.body;
+    let {name,email,password,rol} = req.body;
 
     if (rol == null) {
       //default role unprivileged user
@@ -46,9 +46,9 @@ const createUser = async (req, res) => {
     }
     password = await bcrypt.hash(password,10)
 
-    const id_usuario = uuidV4.v4()
+    const uuid = uuidV4.v4()
 
-    const data = {id_usuario,nombre,apellido,email,password,rol}
+    const data = {uuid,name,email,password,rol}
 
     console.log('datos para guardar en dB ', data);
     const answer = await usersModel.create(data);
