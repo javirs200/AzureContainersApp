@@ -7,22 +7,26 @@ const cars = db.define("cars", {
     uuid: {
         field: 'uuid',
         type: DataTypes.UUID,
-        primaryKey:true,
+        primaryKey: true,
     },
     brand: {
         field: 'brand',
         type: DataTypes.STRING(50)
     },
-    body:{
+    model: {
+        field: 'model',
+        type: DataTypes.STRING(50)
+    },
+    body: {
         field: 'body',
         type: DataTypes.STRING(50)
-    },   
+    },
 },
     {
         db,
         modelName: 'cars',
         tableName: 'cars',
-        timestamps:false,
+        timestamps: false,
     }
 );
 

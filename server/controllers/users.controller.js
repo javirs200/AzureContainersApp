@@ -19,7 +19,9 @@ const readUser = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   try {
-    const email = req.body.email
+    console.log(req.params);
+    const email = req.params.email
+    console.log(email);
     let user = await usersModel.findOne({ where: { email: email } });
     if (user) {
       res.status(200).json(user);

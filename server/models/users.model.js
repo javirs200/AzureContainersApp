@@ -25,10 +25,6 @@ const users = db.define("users", {
     rol: {
         field: 'rol',
         type: DataTypes.STRING(50)
-    },
-    myCars:{
-        field:'myCars',
-        type: DataTypes.UUID,
     }    
 },
     {
@@ -41,10 +37,7 @@ const users = db.define("users", {
 
 const cars = require('./cars.model')
 
-
-users.hasMany(cars,{foreignKey:'myCars'});
-cars.belongsTo(users);
-
+users.hasMany(cars);
 
 users.removeAttribute('id')
 

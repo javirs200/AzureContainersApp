@@ -19,7 +19,8 @@ const connectSQL = async () => {
         db.cars = require('../models/cars.model')
 
         console.log('models sync');
-        await db.sync({force:true})
+        // await db.sync({alter:true})
+        await db.sync()
         
         console.log('db ready');
 
