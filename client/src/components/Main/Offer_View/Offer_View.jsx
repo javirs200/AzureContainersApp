@@ -1,5 +1,4 @@
 import React from "react";
-import Nav from "../Nav/Nav";
 import search_bar from "../../../assets/offers_View/Search.svg";
 import download from "../../../assets/offers_View/download.svg";
 import trash from "../../../assets/offers_View/trash.svg";
@@ -9,12 +8,10 @@ import propuesta2 from "../../../assets/offers_View/PropuestaListado1.svg";
 import propuesta3 from "../../../assets/offers_View/PropuestaListado2.svg";
 import propuesta4 from "../../../assets/offers_View/PropuestaListado3.svg";
 import selector_propuesta from "../../../assets/offers_View/SelectorPropuestas.svg";
-import "./Offer_View.css";
 
 const Offer_View = () => {
   return (
     <div className="offer_view">
-      <Nav />
       <section className="search_bar">
         <img src={search_bar} alt="search" />
         <img className="selector" src={selector_propuesta} alt="selector" />

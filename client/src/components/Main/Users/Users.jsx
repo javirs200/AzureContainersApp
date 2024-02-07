@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Nav from "../Nav/Nav";
 import ListaUsers from "./listaUsers/listaUsers";
 
 const Users = () => {
@@ -11,7 +10,7 @@ const Users = () => {
     const fetchApi = async () => {
       try {
 
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/users/all`, {
+        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/users/`, {
           method: "GET",
           headers: { "Content-Type": "application/json" },
         });
@@ -25,29 +24,21 @@ const Users = () => {
       } catch {
         setUsers([
           {
-            "id_usuario": "53ebfc78-a38d-44d8-92a1-3d4ea6e83f5f",
-            "nombre": "admin",
-            "apellido": "super",
+            "name": "admin",
             "email": "admin@admin.com",
-            "password": "$2a$10$vWb5PzXGb.8QjaLBs6qq5eYZU.NzC.qA1hIf.b5gRqaMB7N40/t6i",
-            "rol": "administrador"
+            "rol": "driver"
           },
           {
-            "id_usuario": "f9888c2d-74e5-448d-a5ff-6109036d92bb",
-            "nombre": "asesor",
-            "apellido": "normal",
-            "email": "asesor@asesor.com",
-            "password": "$2a$10$oqm03S/7DX/6mhKGOgS9xeC98nqpLIyOlyE3pFgl69QD1JNor7Xjq",
-            "rol": "asesor"
+            "name": "admin2",
+            "email": "admin2@admin.com",
+            "rol": "driver"
           },
           {
-            "id_usuario": "d1c4ba9d-328c-4a22-942d-2df4907e2e2c",
-            "nombre": "anonimo",
-            "apellido": "anonimo",
-            "email": "anonimo@anonimo.com",
-            "password": "$2a$10$XP04pyw1ogbbFZZZ/XU3r.68Kwm3ZHZIuaMgYURp.y0zczIjIb4Oa",
-            "rol": "asesor"
-          }
+            "name": "admin3",
+            "email": "admin3@admin.com",
+            "rol": "driver"
+          },
+         
         ])
       }
 
@@ -62,7 +53,6 @@ const Users = () => {
 
   return (
     <>
-      <Nav />
       <ListaUsers users={users} />
     </>
   );

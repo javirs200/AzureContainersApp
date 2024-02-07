@@ -5,7 +5,7 @@ const uuidV4 = require('uuid')
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await usersModel.findAll();
+    const users = await usersModel.findAll({attributes: ['name', 'email','rol']});
     res.status(200).json(users);
   } catch (error) {
     console.log(`ERROR: ${error}`);
@@ -19,9 +19,12 @@ const readUser = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   try {
-    const email = req.body.email
-    let user = await usersModel.findOne({ where: { email: email } });
+    // console.log(req.params);
+    const email = req.params.email
+    // console.log(email);
+    let user = await usersModel.findOne({ where: { email: email } , attributes: ['name', 'email','rol']});
     if (user) {
+      
       res.status(200).json(user);
     } else {
       res.status(400).json({ msg: "Las credenciales proporcionadas son incorrectas" });
@@ -38,7 +41,7 @@ const createUser = async (req, res) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-    let {nombre,apellido,email,password,rol} = req.body;
+    let {name,email,password,rol} = req.body;
 
     if (rol == null) {
       //default role unprivileged user
@@ -46,11 +49,11 @@ const createUser = async (req, res) => {
     }
     password = await bcrypt.hash(password,10)
 
-    const id_usuario = uuidV4.v4()
+    const uuid = uuidV4.v4()
 
-    const data = {id_usuario,nombre,apellido,email,password,rol}
+    const data = {uuid,name,email,password,rol}
 
-    console.log('datos para guardar en dB ', data);
+    // console.log('datos para guardar en dB ', data);
     const answer = await usersModel.create(data);
     res.status(201).json(answer);
   } catch (error) {
