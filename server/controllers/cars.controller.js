@@ -11,7 +11,7 @@ const getMyCars = async (req, res) => {
   }
   try {
     const email = req.params.email
-    let user = await usersModel.findOne({ where: { email: email } });
+    let user = await usersModel.findOne({ where: { email: email } ,attributes: ['uuid']});
     if (user) {
       const userUuid = user.uuid 
       let cars = await carsModel.findOne({ where: { userUuid } });
