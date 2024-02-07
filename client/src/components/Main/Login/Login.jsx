@@ -8,15 +8,16 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const { setLoggedIn } = useContext(UserContext);
 
-  const handleButtonClick = () => {
+  const handleSubmit = (e) => {
+    e.preventDefault()
     const fetchUsers = async () => {
       const user = { email: email, password: password };
-      
       if (isValidEmail(email)) {
         //peticion api para login con objeto usuario
         const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
+          credentials: 'include',
           body: JSON.stringify(user),
         });
         if (response.status === 200) {
@@ -45,33 +46,26 @@ const Login = () => {
 
   return (
     <section className="form_login">
-        <h2>Inicia sesión</h2>
-        <form className="forms">
-          <input
-            type="email"
-            className="input_form"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-          <input
-            type="password"
-            className="input_form"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </form>
-        <br />
-
-        <button
-          
-          className="form_button"
-          type="button"
-          onClick={handleButtonClick}
-        >
-          Continuar
-        </button>
+      <h2>Inicia sesión</h2>
+      <form className="forms" onSubmit={handleSubmit}>
+        <input
+          name="email"
+          type="email"
+          className="input_form"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+        <input
+          name="password"
+          type="password"
+          className="input_form"
+          placeholder="Contraseña"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <input className="form_button" type="submit" value="Continuar"/>
+      </form>
     </section>
   );
 };
