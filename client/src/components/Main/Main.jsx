@@ -4,6 +4,8 @@ import Home from "./Home/Home";
 import Offer_View from "./Offer_View/Offer_View";
 import Users from "./Users/Users"
 import { Route, Routes, Navigate } from "react-router-dom";
+import RoleManager from "../../utils/RoleManager";
+import ProtectedRoutes from "../../utils/ProtectedRoutes/ProtectedRoutes";
 
 const Main = () => {
 

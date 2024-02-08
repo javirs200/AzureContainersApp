@@ -1,9 +1,8 @@
 import React from "react";
-import FormHome from "./FormHome/FormHome";
 const Home = () => {
   return (
     <>
-      <FormHome />
+      <h1>HOME</h1>
     </>
   );
 };
