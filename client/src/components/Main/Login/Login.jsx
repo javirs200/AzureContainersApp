@@ -27,16 +27,7 @@ const Login = () => {
       setEmailMessage("");
     }
   }, [email])
-
-  useEffect(() => {
-    function getCookie(key) {
-      var b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
-      return b ? b.pop() : "";
-    }
-    const jsontoken = getCookie('access_token')
-    console.log('cookie jwt->',jsontoken);
-  }, [])
-
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     const fetchUsers = async () => {
