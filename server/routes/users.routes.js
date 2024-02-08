@@ -1,6 +1,5 @@
 const userRouter = require("express").Router();
 const userController = require('../controllers/users.controller')
-const carsController = require('../controllers/cars.controller')
 
 //middlewares de control de acceso a rutas protegidas
 const getAccessToken = require('../middleware/getAccessToken');
@@ -12,12 +11,8 @@ const apiKeyValidator = require('../middleware/apiKeyValidator')
 // // POST // con api key para primer user
 userRouter.post("/create", userController.createUser);
 
-userRouter.post("/addCar/",carsController.addCar)
-
 userRouter.get('/',userController.getAllUsers);
 userRouter.get("/:email", userController.readUser);
-userRouter.get("/mycars/:email", carsController.getMyCars);
-
 
 
 module.exports = userRouter;

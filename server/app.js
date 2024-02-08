@@ -9,6 +9,7 @@ const cors = require('cors');
 //routers
 const userRoutes = require('./routes/users.routes')
 const loginRoutes = require('./routes/login.routes')
+const carRoutes = require('./routes/cars.routes')
 
 //DB conection Startup
 const database = require('./config/db_pgsql')
@@ -20,6 +21,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
 
 app.use('/api/users',userRoutes)
+
+app.use('/api/cars',carRoutes)
 
 app.use('/api/login',loginRoutes)
 
