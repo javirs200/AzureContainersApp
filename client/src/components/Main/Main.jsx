@@ -29,8 +29,7 @@ const Main = () => {
 
     const jsontoken = getCookie('access_token')
     const decoded = parseJwt(jsontoken)
-    console.log('decoded token ',decoded);
-    console.log(logged);
+
     if(decoded){
       setLoggedIn(true)
     }else{
