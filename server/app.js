@@ -10,6 +10,8 @@ const cors = require('cors');
 const userRoutes = require('./routes/users.routes')
 const loginRoutes = require('./routes/login.routes')
 const carRoutes = require('./routes/cars.routes')
+const participationsRoutes = require('./routes/participations.routes');
+const eventRoutes = require('./routes/events.routes');
 
 //DB conection Startup
 const database = require('./config/db_pgsql')
@@ -23,6 +25,10 @@ app.use(helmet());
 app.use('/api/users',userRoutes)
 
 app.use('/api/cars',carRoutes)
+
+app.use('/api/events',eventRoutes)
+
+app.use('/api/participations',participationsRoutes)
 
 app.use('/api/login',loginRoutes)
 
