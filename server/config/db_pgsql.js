@@ -17,7 +17,7 @@ const connectSQL = async () => {
         console.log('add models to db');
         db.users = require('../models/users.model')
         db.cars = require('../models/cars.model')
-        db.pruebas = require('../models/pruebas.model')
+        db.pruebas = require('../models/events.model')
         db.participations = require('../models/participations.model')
 
         console.log('models sync');

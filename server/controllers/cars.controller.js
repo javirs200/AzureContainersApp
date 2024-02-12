@@ -1,7 +1,6 @@
 const usersModel = require("../models/users.model");
 const carsModel = require("../models/cars.model");
 const { validationResult } = require('express-validator');
-let bcrypt = require('bcryptjs');
 const uuidV4 = require('uuid')
 
 const getMyCars = async (req, res) => {

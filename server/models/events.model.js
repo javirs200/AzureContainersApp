@@ -3,7 +3,7 @@ const { db } = require('../config/db_pgsql');
 
 const { DataTypes } = require('sequelize');
 
-const pruebas = db.define("pruebas", {
+const events = db.define("events", {
     uuid: {
         field: 'uuid',
         type: DataTypes.UUID,
@@ -11,7 +11,12 @@ const pruebas = db.define("pruebas", {
     },
     name: {
         field: 'name',
-        type: DataTypes.STRING(50)
+        type: DataTypes.STRING(50),
+        unique: true,
+    },
+    date: {
+        field: 'date',
+        type: DataTypes.DATEONLY
     },
     description: {
         field: 'description',
@@ -20,12 +25,12 @@ const pruebas = db.define("pruebas", {
 },
     {
         db,
-        modelName: 'pruebas',
-        tableName: 'pruebas',
+        modelName: 'events',
+        tableName: 'events',
         timestamps: false,
     }
 );
 
-pruebas.removeAttribute('id')
+events.removeAttribute('id')
 
-module.exports = pruebas;
+module.exports = events;

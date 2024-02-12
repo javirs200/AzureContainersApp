@@ -38,10 +38,10 @@ const participations = db.define("participations", {
 );
 
 const users = require('./users.model');
-const pruebas = require('./pruebas.model');
+const events = require('./events.model');
 
 users.hasMany(participations)
-pruebas.hasMany(participations)
+events.hasMany(participations)
 
 participations.removeAttribute('id')
 
