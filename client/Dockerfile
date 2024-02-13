@@ -8,15 +8,15 @@ WORKDIR /app/client
 
 # copy lista dependencias
 COPY ./client/package.json ./
-# comprobacion
-RUN ls
+
 #instalar dependencias
 RUN npm install
 
+# copy rest of app
 COPY ./client/ ./
 
-# comprobacion
-RUN ls
+# build vite app
+RUN npm run build
 
 # El puerto en el que se ejecutará la aplicación
 EXPOSE 80

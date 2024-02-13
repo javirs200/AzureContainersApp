@@ -1,7 +1,6 @@
 const usersModel = require("../models/users.model");
 const carsModel = require("../models/cars.model");
 const { validationResult } = require('express-validator');
-let bcrypt = require('bcryptjs');
 const uuidV4 = require('uuid')
 
 const getMyCars = async (req, res) => {
@@ -49,9 +48,55 @@ const addCar = async (req, res) => {
   }
 };
 
+const updateCar = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  try {
+    let {uuid,carBrand,carModel,carBody} = req.body;
+
+    let updatedCar = await carsModel.update({ brand:carBrand,model:carModel,body:carBody }, {
+      where: {
+        uuid: uuid,
+      },
+    });
+    if (updatedCar) {
+      res.status(200).json({'updated car ': updatedCar});
+    } else {
+      res.status(400).json({ msg: "no se ha podido actualizar "});
+    }
+  } catch (error) {
+    console.log(`ERROR: ${error}`);
+    res.status(400).json({ msj: `ERROR: ${error}` });
+  }
+};
+
+const deleteCar = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
+  try {
+    let {uuid} = req.body;
+
+    let deletedCar = await carsModel.destroy({where:{uuid:uuid}})
+    if (deletedCar) {
+      res.status(200).json({'deleted car ': deletedCar});
+    } else {
+      res.status(400).json({ msg: "no se ha podido borar "});
+    }
+  } catch (error) {
+    console.log(`ERROR: ${error}`);
+    res.status(400).json({ msj: `ERROR: ${error}` });
+  }
+};
+
 
 
 module.exports = {
   getMyCars,
-  addCar
+  addCar,
+  updateCar,
+  deleteCar
 };
