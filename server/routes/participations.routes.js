@@ -1,5 +1,5 @@
-const userRouter = require("express").Router();
-const userController = require('../controllers/users.controller')
+const participationsRouter = require("express").Router();
+const participationsController = require('../controllers/participations.controller')
 
 //middlewares de control de acceso a rutas protegidas
 const getAccessToken = require('../middleware/getAccessToken');
@@ -8,11 +8,7 @@ const adminRoutes = require('../middleware/adminRoutes');
 const clientRoutes = require('../middleware/clientRoutes');
 const apiKeyValidator = require('../middleware/apiKeyValidator')
 
-// // POST // con api key para primer user
-userRouter.post("/create", userController.createUser);
+participationsRouter.post("/new/",participationsController.newParticipation)
+participationsRouter.put("/addTime/", participationsController.addTime);
 
-userRouter.get('/',userController.getAllUsers);
-userRouter.get("/:email", userController.readUser);
-
-
-module.exports = userRouter;
+module.exports = participationsRouter;
