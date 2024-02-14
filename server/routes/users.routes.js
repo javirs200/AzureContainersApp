@@ -9,10 +9,9 @@ const clientRoutes = require('../middleware/clientRoutes');
 const apiKeyValidator = require('../middleware/apiKeyValidator')
 
 // // POST // con api key para primer user
-userRouter.post("/create", userController.createUser);
+userRouter.post("/create",apiKeyValidator, userController.createUser);
 
-userRouter.get('/',userController.getAllUsers);
-userRouter.get("/:email", userController.readUser);
-
+userRouter.get('/',getAccessToken,decodeToken,adminRoutes,userController.getAllUsers);
+userRouter.get("/:email",getAccessToken,decodeToken,adminRoutes, userController.readUser);
 
 module.exports = userRouter;
