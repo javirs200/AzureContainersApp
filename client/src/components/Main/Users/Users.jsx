@@ -12,6 +12,7 @@ const Users = () => {
 
         const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/users/`, {
           method: "GET",
+          credentials: 'include',
           headers: { "Content-Type": "application/json" },
         });
 
