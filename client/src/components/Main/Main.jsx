@@ -1,7 +1,7 @@
 import React,{useEffect,useContext} from "react";
 import Login from "./Login/Login";
 import Home from "./Home/Home";
-import Offer_View from "./Offer_View/Offer_View";
+import Landing from "./Landing";
 import Users from "./Users/Users"
 import { Route, Routes, Navigate } from "react-router-dom";
 import RoleManager from "../../utils/RoleManager";
@@ -43,7 +43,6 @@ const Main = () => {
 
           <Route path="/login" element={logged ? <Navigate to={"/home"} /> : <Login/>} />
           <Route path="/home" element={logged ? <Home/> : <Navigate to={"/login"} />} />
-          <Route path="/offer" element={logged ? <Offer_View/> : <Navigate to={"/login"} />} />          
           <Route path="/users" element={logged ? <Users/> : <Navigate to={"/login"} />} />
 
           <Route path="/*" element={logged ? <Navigate to={"/home"} /> : <Navigate to={"/login"} /> } />
