@@ -30,7 +30,7 @@ const Main = () => {
             <RoleManager role={role} allowedRoles={['admin']} component={<Users />} />
           } />
         } />
-        <Route path="/*" element={logged ? <Navigate to={"/dashboard"} /> : <Navigate to={"/Landing"} />} />
+        <Route path="/*" element={logged ? <Navigate to={"/dashboard"} /> : <Navigate to={"/"} />} />
       </Routes>
     </main>
   );

@@ -10,13 +10,11 @@ const Nav = () => {
       <img src={foto} alt="logo" className="logo_nav" />
       {logged ?
         <ul>
-          <li><Link className={'link'} to='/home'>Inicio</Link></li>
-          <li><Link className={'link'} to='/offer'>Propuestas</Link></li>
+          <li><Link className={'link'} to='/landing'>Inicio</Link></li>
           <li><Link className={'link'} to='/users'>Usuarios</Link></li>
         </ul>
         : 
         <ul>
-          <li><Link className={'link'} to='/users'>Usuarios</Link></li>
           <li><Link className={'link'} to='/login'>login</Link></li>
         </ul>
         }
