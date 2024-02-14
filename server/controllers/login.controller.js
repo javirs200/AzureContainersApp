@@ -18,7 +18,7 @@ const login = async (req, res) => {
                     const token = createToken({ email: user.email, role: user.rol });
                     res.status(200)
                         .cookie('access_token', token)
-                        .json({ msg: "login ok" });
+                        .json({ msg: "login ok" , role:user.rol  });
                 } else {
                     res.status(400).json({ msg: "Las credenciales proporcionadas son incorrectas" });
                 }

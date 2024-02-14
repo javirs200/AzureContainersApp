@@ -8,7 +8,7 @@ const Login = () => {
   const [emailMessage, setEmailMessage] = useState("");
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
-  const { setLoggedIn } = useContext(UserContext);
+  const { setLoggedIn,setRole } = useContext(UserContext);
 
   useEffect(() => {
     const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{9,}$/
@@ -41,7 +41,9 @@ const Login = () => {
       });
       if (response.status === 200) {
         setLoggedIn(true);
-        navigate("/home");
+        console.log('datos respuesta ',response.data);
+        setRole(response.data.role);
+        navigate("/dashboard");
       } else {
         alert("datos de acceso incorrectos , intentelo de nuevo");
       }
