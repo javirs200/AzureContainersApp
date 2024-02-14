@@ -13,7 +13,7 @@ const Home = () => {
     if (response.status === 200) {
       setLoggedIn(false);
       alert("logout correcto");
-      navigate("/login");
+      navigate("/");
     } else {
       alert("fallo logout");
     }

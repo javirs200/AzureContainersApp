@@ -3,7 +3,10 @@ import { BrowserRouter } from "react-router-dom";
 import Main from './components/Main';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import Autologger from "./utils/Autologger/Autologger";
+
 import { UserContext } from "./context/userContext";
+
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -15,6 +18,7 @@ const darkTheme = createTheme({
 });
 
 import './styles/styles.scss'
+
 
 function App() {
 
@@ -28,7 +32,7 @@ function App() {
       <UserContext.Provider value={{ logged, setLoggedIn, role, setRole }}>
         <BrowserRouter>
           <Header />
-          <Main />
+          <Autologger component={<Main />}/>
           <Footer />
         </BrowserRouter>
       </UserContext.Provider>

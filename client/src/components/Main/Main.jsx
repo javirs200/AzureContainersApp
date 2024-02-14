@@ -7,7 +7,6 @@ import { UserContext } from "../../context/userContext";
 import { Route, Routes, Navigate } from "react-router-dom";
 import RoleManager from "../../utils/RoleManager";
 import ProtectedRoutes from "../../utils/ProtectedRoutes";
-import Autologger from "../../utils/Autologger";
 
 const Main = () => {
 
@@ -16,21 +15,23 @@ const Main = () => {
   return (
 
     <main>
-      <Autologger component={
-        <Routes>
-          <Route path="/" element={logged ? <Navigate to={"/dashboard"} /> : <Landing />} />
+      <Routes>
+        <Route path="/" element={logged ? <Navigate to={"/dashboard"} /> : <Landing />} />
 
-          <Route path="/login" element={logged ? <Navigate to={"/dashboard"} /> : <Login />} />
+        <Route path="/login" element={logged ? <Navigate to={"/dashboard"} /> : <Login />} />
 
-          <Route path="/dashboard" element={<RoleManager role={role} allowedRoles={['admin']}><Home /></RoleManager>} />
-          <Route path="/users" element={
-            <ProtectedRoutes logged={logged} component={
-              <RoleManager role={role} allowedRoles={['admin']} component={<Users />} />
-            } />
+        <Route path="/dashboard" element={
+          <ProtectedRoutes logged={logged} component={
+            <RoleManager role={role} allowedRoles={['admin']} component={<Home />} />
           } />
-          <Route path="/*" element={logged ? <Navigate to={"/landing"} /> : <Navigate to={"/login"} />} />
-        </Routes>
-      } />
+        } />
+        <Route path="/users" element={
+          <ProtectedRoutes logged={logged} component={
+            <RoleManager role={role} allowedRoles={['admin']} component={<Users />} />
+          } />
+        } />
+        <Route path="/*" element={logged ? <Navigate to={"/dashboard"} /> : <Navigate to={"/Landing"} />} />
+      </Routes>
     </main>
   );
 };

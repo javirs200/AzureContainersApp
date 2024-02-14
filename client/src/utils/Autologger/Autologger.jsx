@@ -7,6 +7,9 @@ const Autologger = ({ component }) => {
     const { setRole } = useContext(UserContext)
 
     useEffect(() => {
+
+        console.log('actualizacion');
+
         function getCookie(key) {
             var b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
             return b ? b.pop() : "";
@@ -21,6 +24,7 @@ const Autologger = ({ component }) => {
         };
 
         const jsontoken = getCookie('access_token')
+        
         const decoded = parseJwt(jsontoken)
 
         if (decoded) {

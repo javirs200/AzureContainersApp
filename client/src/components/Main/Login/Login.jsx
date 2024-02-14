@@ -40,9 +40,10 @@ const Login = () => {
         body: JSON.stringify(user),
       });
       if (response.status === 200) {
+        let data = await response.json()
         setLoggedIn(true);
-        console.log('datos respuesta ',response.data);
-        setRole(response.data.role);
+        console.log('datos respuesta ',data);
+        setRole(data.role);
         navigate("/dashboard");
       } else {
         alert("datos de acceso incorrectos , intentelo de nuevo");
