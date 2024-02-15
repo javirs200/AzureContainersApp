@@ -8,7 +8,6 @@ const Landing = () => {
   return (
     <>
       <h1>Landing</h1>
-      <br />
       <Button variant="contained">
         <Link className={'link'} to={`/login`}>login</Link>
       </Button>

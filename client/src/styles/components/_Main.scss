@@ -3,7 +3,7 @@
 
 main{
     @include standard-component;
-    display: flex;
+    flex-direction: column;
 }
 
 

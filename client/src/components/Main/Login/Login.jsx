@@ -1,14 +1,33 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../context/userContext";
+import Button from "@mui/material/Button";
+import IconButton from '@mui/material/IconButton';
+import Input from '@mui/material/Input';
+import InputLabel from '@mui/material/InputLabel';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import TextField from '@mui/material/TextField';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+
 
 const Login = () => {
+
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
-  const { setLoggedIn,setRole } = useContext(UserContext);
+  const { setLoggedIn, setRole } = useContext(UserContext);
 
   useEffect(() => {
     const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{9,}$/
@@ -27,11 +46,12 @@ const Login = () => {
       setEmailMessage("");
     }
   }, [email])
-  
+
   const handleSubmit = (e) => {
     e.preventDefault()
     const fetchUsers = async () => {
       const user = { email: email, password: password };
+      console.log("user data form form -> ", user);
       //peticion api para login con objeto usuario
       const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/login`, {
         method: "POST",
@@ -42,7 +62,7 @@ const Login = () => {
       if (response.status === 200) {
         let data = await response.json()
         setLoggedIn(true);
-        console.log('datos respuesta ',data);
+        console.log('datos respuesta ', data);
         setRole(data.role);
         navigate("/dashboard");
       } else {
@@ -53,30 +73,35 @@ const Login = () => {
   };
 
   return (
-    <section className="form_login">
+    <section className="section_login">
       <h2>Inicia sesión</h2>
-      <form className="forms" onSubmit={handleSubmit}>
-        <input
-          name="email"
-          type="email"
-          className="input_form"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        {emailMessage ? <span>{emailMessage}</span> : ""}
-        <input
-          name="password"
-          type="password"
-          className="input_form"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        {passwordMessage ? <span>{passwordMessage}</span> : ""}
-        <input className="form_button" type="submit" value="Continuar" />
+      <form onSubmit={handleSubmit} className="form_login">
+
+        <TextField sx={{ m: 2, width: '22ch' }} id="email" label="Email" variant="standard" onChange={(e) => setEmail(e.target.value)} />
+
+        <FormControl sx={{ m: 2, width: '22ch' }} variant="standard">
+          <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+          <Input
+            onChange={(e) => setPassword(e.target.value)}
+            id="standard-adornment-password"
+            type={showPassword ? 'text' : 'password'}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
+          />
+        </FormControl>
+
+        <Button variant="contained" type="submit">Continuar</Button>
       </form>
-    </section>
+    </section >
   );
 };
 export default Login;

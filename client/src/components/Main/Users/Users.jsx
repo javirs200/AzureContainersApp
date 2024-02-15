@@ -25,21 +25,10 @@ const Users = () => {
       } catch {
         setUsers([
           {
-            "name": "admin",
-            "email": "admin@admin.com",
+            "name": "demo",
+            "email": "demo@demo.com",
             "rol": "driver"
-          },
-          {
-            "name": "admin2",
-            "email": "admin2@admin.com",
-            "rol": "driver"
-          },
-          {
-            "name": "admin3",
-            "email": "admin3@admin.com",
-            "rol": "driver"
-          },
-         
+          }        
         ])
       }
 

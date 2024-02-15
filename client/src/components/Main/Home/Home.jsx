@@ -21,8 +21,9 @@ const Home = () => {
   return (
     <>
       <h1>HOME</h1>
-      <br />
-      <button onClick={handleClick}>logout</button>
+      <Button variant="contained" onClick={handleClick}>
+        Logout
+      </Button>
     </>
   );
 };
