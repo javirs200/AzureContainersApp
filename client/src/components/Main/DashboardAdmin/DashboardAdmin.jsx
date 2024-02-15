@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { UserContext } from "../../../context/userContext";
 import { useNavigate } from "react-router-dom";
 
-const Home = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
   const { setLoggedIn } = useContext(UserContext);
 
@@ -20,7 +20,7 @@ const Home = () => {
   }
   return (
     <>
-      <h1>HOME</h1>
+      <h1>Dashboard Admin</h1>
       <Button variant="contained" onClick={handleClick}>
         Logout
       </Button>
@@ -28,4 +28,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

@@ -7,6 +7,8 @@ import { UserContext } from "../../context/userContext";
 import { Route, Routes, Navigate } from "react-router-dom";
 import RoleManager from "../../utils/RoleManager";
 import ProtectedRoutes from "../../utils/ProtectedRoutes";
+import DashboardAdmin from "./DashboardAdmin";
+import Dashboard from "./Dashboard";
 
 const Main = () => {
 
@@ -22,7 +24,9 @@ const Main = () => {
 
         <Route path="/dashboard" element={
           <ProtectedRoutes logged={logged} component={
-            <RoleManager role={role} allowedRoles={['admin']} component={<Home />} />
+            <>
+              {role == 'admin' ? <DashboardAdmin />:<Dashboard />}
+            </>
           } />
         } />
         <Route path="/users" element={
