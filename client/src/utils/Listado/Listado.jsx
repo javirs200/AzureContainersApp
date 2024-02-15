@@ -2,17 +2,20 @@ import React from "react";
 import { v4 as uuidv4 } from "uuid";
 import Elemento from "./Elemento";
 
-const Listado = (elementos) => {
+const Listado = ({title,elementos}) => {
 
   const drawList = () => {
+    // console.log('eleementos -> ' , elementos);
     return elementos.map((el, i) => {
-      return <Elemento key={uuidv4()} elemento={el} />
+      // console.log('elemento ', el);
+      return <Elemento key={uuidv4()} obj={el} />
     })
   }
 
   return (
     <div className='listado'>
-      {elementos ? drawList() : ''}
+    {title ? <h2>{title}</h2>:''}
+      <ul>{elementos ? drawList() : ''}</ul>
     </div>
   );
 };

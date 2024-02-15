@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import ListaUsers from "./listaUsers/listaUsers";
+import Listado from '../../../utils/Listado'
 
 const Users = () => {
 
@@ -20,7 +20,18 @@ const Users = () => {
 
         // console.log('todos los usuarios registrados ->', data);
 
-        setUsers(data)
+        if(data){
+          // console.log('users from fetch -> ',data);
+          setUsers(data)
+        }else{
+          setUsers([
+            {
+              "name": "demo",
+              "email": "demo@demo.com",
+              "rol": "driver"
+            }        
+          ])
+        }
 
       } catch {
         setUsers([
@@ -43,7 +54,8 @@ const Users = () => {
 
   return (
     <>
-      <ListaUsers users={users} />
+      
+      <Listado title={'Usuarios'} elementos={users} />
     </>
   );
 };

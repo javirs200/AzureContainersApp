@@ -51,7 +51,7 @@ const Login = () => {
     e.preventDefault()
     const fetchUsers = async () => {
       const user = { email: email, password: password };
-      console.log("user data form form -> ", user);
+      // console.log("user data form form -> ", user);
       //peticion api para login con objeto usuario
       const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/login`, {
         method: "POST",
@@ -62,7 +62,7 @@ const Login = () => {
       if (response.status === 200) {
         let data = await response.json()
         setLoggedIn(true);
-        console.log('datos respuesta ', data);
+        // console.log('datos respuesta ', data);
         setRole(data.role);
         navigate("/dashboard");
       } else {

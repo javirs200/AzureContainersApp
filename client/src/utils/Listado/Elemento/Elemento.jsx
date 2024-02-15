@@ -1,13 +1,15 @@
 import React from "react";
+import { v4 as uuidv4 } from "uuid";
 
 const Elemento = ({ obj }) => {
-
   return (
-    <>
+    <li>
       {obj ? <div className="Elemento">
-        {obj.toString()}
+        {Object.entries(obj).map(
+          (e)=> {return <p key={uuidv4()}> {e.toString()} </p>}
+        )}
       </div> : ''}
-    </>
+    </li>
 
   );
 };

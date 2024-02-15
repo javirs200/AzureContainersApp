@@ -8,7 +8,7 @@ const Autologger = ({ component }) => {
 
     useEffect(() => {
 
-        console.log('actualizacion');
+        // console.log('actualizacion');
 
         function getCookie(key) {
             var b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
@@ -29,7 +29,7 @@ const Autologger = ({ component }) => {
 
         if (decoded) {
             setLoggedIn(true)
-            console.log("cookie rol ->",decoded.role);
+            // console.log("cookie rol ->",decoded.role);
             setRole(decoded.role)
         } else {
             setLoggedIn(false)
