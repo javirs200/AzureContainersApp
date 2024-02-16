@@ -8,6 +8,7 @@ import ProtectedRoutes from "../../utils/ProtectedRoutes";
 import DashboardAdmin from "./DashboardAdmin";
 import Dashboard from "./Dashboard";
 import UsersManager from "./UsersManager";
+import Register from "./Register";
 
 const Main = () => {
 
@@ -20,6 +21,8 @@ const Main = () => {
         <Route path="/" element={logged ? <Navigate to={"/dashboard"} /> : <Landing />} />
 
         <Route path="/login" element={logged ? <Navigate to={"/dashboard"} /> : <Login />} />
+
+        <Route path="/register" element={logged ? <Navigate to={"/dashboard"} /> : <Register />} />
 
         <Route path="/dashboard" element={
           <ProtectedRoutes logged={logged} component={

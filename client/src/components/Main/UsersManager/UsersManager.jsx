@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Listado from '../../../utils/Listado'
+import Listado from '../../../utils/Listado';
 
-const Users = () => {
+const UsersManager = () => {
 
   const [users, setUsers] = useState([]);
+  const [add, setAdd] = useState(false);
 
   const fetchUsers = () => {
 
@@ -20,16 +21,16 @@ const Users = () => {
 
         // console.log('todos los usuarios registrados ->', data);
 
-        if(data){
+        if (data) {
           // console.log('users from fetch -> ',data);
           setUsers(data)
-        }else{
+        } else {
           setUsers([
             {
               "name": "demo",
               "email": "demo@demo.com",
               "rol": "driver"
-            }        
+            }
           ])
         }
 
@@ -39,7 +40,7 @@ const Users = () => {
             "name": "demo",
             "email": "demo@demo.com",
             "rol": "driver"
-          }        
+          }
         ])
       }
 
@@ -52,12 +53,12 @@ const Users = () => {
     fetchUsers()
   }, [])
 
+  
   return (
-    <>
-      
-      <Listado title={'Usuarios'} elementos={users} />
-    </>
+      <section className="users">
+        <Listado title={'Usuarios'} elementos={users} />
+      </section>
   );
 };
 
-export default Users;
+export default UsersManager;

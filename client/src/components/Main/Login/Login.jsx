@@ -49,7 +49,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const fetchUsers = async () => {
+    const loginUser = async () => {
       const user = { email: email, password: password };
       // console.log("user data form form -> ", user);
       //peticion api para login con objeto usuario
@@ -69,7 +69,7 @@ const Login = () => {
         alert("datos de acceso incorrectos , intentelo de nuevo");
       }
     };
-    fetchUsers();
+    loginUser();
   };
 
   return (
