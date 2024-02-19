@@ -121,7 +121,7 @@ const deleteUser = async (req, res) => {
       else
         res
           .status(200)
-          .json({ message: "User BORRADO", user: { data } });
+          .json({ message: "User BORRADO", result });
     } else {
       res.status(400).json({ message: "formato de User erroneo" });
     }

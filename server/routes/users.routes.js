@@ -17,5 +17,7 @@ userRouter.post("/register",userController.createUserDriver);
 userRouter.put("/privileges",getAccessToken,decodeToken,adminRoutes,userController.updatePrivileges);
 userRouter.get('/',getAccessToken,decodeToken,adminRoutes,userController.getAllUsers);
 userRouter.get("/:email",getAccessToken,decodeToken,adminRoutes, userController.readUser);
+userRouter.delete("/delete",getAccessToken,decodeToken,adminRoutes, userController.deleteUser);
+
 
 module.exports = userRouter;

@@ -78,6 +78,8 @@ const Register = () => {
                 if (response.status === 200) {
                     let data = await response.json()
                     console.log("ok register , data api -> ", data);
+                    alert('usuario registrado ')
+                    navigate("/dashboard");
                 } else {
                     let data = await response.json()
                     console.log("data api -> ", data);

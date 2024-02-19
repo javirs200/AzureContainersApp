@@ -74,12 +74,12 @@ const UsersManager = () => {
         });
         if (response.status === 200) {
           let data = await response.json()
-          alert('usuario acturlizado')
+          alert('usuario actualizado')
           // console.log("ok update , data api -> ", data);
           fetchUsers()
         } else {
           let data = await response.json()
-          alert('error usuario no acturlizado')
+          alert('error usuario no actualizado')
           console.log("data api -> ", data);
         }
 
@@ -91,6 +91,35 @@ const UsersManager = () => {
 
     }
     updateUser()
+  }
+
+  const handleSubmitDelete = (e) => {
+    e.preventDefault()
+    const deleteUser = async () => {
+      // console.log(edit);
+      try {
+        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/users/delete`, {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          credentials: 'include',
+          body: JSON.stringify({'email':selectEmail}),
+        });
+        if (response.status === 200) {
+          let data = await response.json()
+          alert('usuario borrado')
+          console.log("ok delete , data api -> ", data);
+          fetchUsers()
+        } else {
+          let data = await response.json()
+          alert('error usuario no borrado')
+          console.log("data api -> ", data);
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    deleteUser()
   }
   
 
@@ -111,17 +140,16 @@ const UsersManager = () => {
         <Listado title={'Usuarios'} elementos={users} />
       </section>
       <section className="usersControls">
-
         <form onSubmit={handleSubmit} className="form_privileges">
           <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="nameSelectLabel">Email</InputLabel>
+            <InputLabel id="emailSelectLabel">Email</InputLabel>
             <Select
               required
-              labelId="nameSelectLabel"
-              id="nameSelect"
+              labelId="emailSelectLabel"
+              id="EmailSelect"
               value={selectEmail}
               onChange={(e) => setSelectEmail(e.target.value)}
-              label="Name"
+              label="Email"
             >
               <MenuItem value="">
                 <em>None</em>
@@ -148,6 +176,26 @@ const UsersManager = () => {
           </FormControl>
 
           <Button variant="contained" type="submit">Send</Button>
+        </form>
+
+        <form onSubmit={handleSubmitDelete} className="form_Delete">
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+            <InputLabel id="emailSelectLabel">Email</InputLabel>
+            <Select
+              required
+              labelId="emailSelectLabel"
+              id="emailSelect"
+              value={selectEmail}
+              onChange={(e) => setSelectEmail(e.target.value)}
+              label="Email"
+            >
+              <MenuItem value="">
+                <em>None</em>
+              </MenuItem>
+              {addSelectItems()}
+            </Select>
+          </FormControl>
+          <Button variant="contained" type="submit">Delete</Button>
         </form>
       </section>
     </>
