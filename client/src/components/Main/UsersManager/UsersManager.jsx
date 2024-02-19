@@ -6,6 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
+import UpdateIcon from "@mui/icons-material/Cached"
 
 const UsersManager = () => {
 
@@ -137,7 +138,7 @@ const UsersManager = () => {
   return (
     <>
       <section className="users">
-        <Listado title={'Usuarios'} elementos={users} />
+        <Listado title={'Usuarios'} elementos={users} mode={1}/>
       </section>
       <section className="usersControls">
         <form onSubmit={handleSubmit} className="form_privileges">
@@ -175,7 +176,7 @@ const UsersManager = () => {
             </Select>
           </FormControl>
 
-          <Button variant="contained" type="submit">Send</Button>
+          <Button variant="contained" type="submit" endIcon={<UpdateIcon/>}>Update User</Button>
         </form>
 
         <form onSubmit={handleSubmitDelete} className="form_Delete">
@@ -195,7 +196,7 @@ const UsersManager = () => {
               {addSelectItems()}
             </Select>
           </FormControl>
-          <Button variant="contained" type="submit">Delete</Button>
+          <Button variant="outlined" type="submit" color="error">Delete User</Button>
         </form>
       </section>
     </>
