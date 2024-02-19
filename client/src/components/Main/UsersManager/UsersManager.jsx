@@ -103,7 +103,7 @@ const UsersManager = () => {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
           credentials: 'include',
-          body: JSON.stringify({'email':selectEmail}),
+          body: JSON.stringify({ 'email': selectEmail }),
         });
         if (response.status === 200) {
           let data = await response.json()
@@ -122,12 +122,12 @@ const UsersManager = () => {
     }
     deleteUser()
   }
-  
+
 
   useEffect(() => {
     console.log('reload list');
   }, [users])
-  
+
 
   const addSelectItems = () => {
     return users.map((e, i) => {
@@ -138,7 +138,7 @@ const UsersManager = () => {
   return (
     <>
       <section className="users">
-        <Listado title={'Usuarios'} elementos={users} mode={1}/>
+        <Listado title={'Usuarios'} elementos={users} mode={1} />
       </section>
       <section className="usersControls">
         <form onSubmit={handleSubmit} className="form_privileges">
@@ -176,26 +176,10 @@ const UsersManager = () => {
             </Select>
           </FormControl>
 
-          <Button variant="contained" type="submit" endIcon={<UpdateIcon/>}>Update User</Button>
+          <Button variant="contained" type="submit" endIcon={<UpdateIcon />}>Update User</Button>
         </form>
 
         <form onSubmit={handleSubmitDelete} className="form_Delete">
-          <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
-            <InputLabel id="emailSelectLabel">Email</InputLabel>
-            <Select
-              required
-              labelId="emailSelectLabel"
-              id="emailSelect"
-              value={selectEmail}
-              onChange={(e) => setSelectEmail(e.target.value)}
-              label="Email"
-            >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              {addSelectItems()}
-            </Select>
-          </FormControl>
           <Button variant="outlined" type="submit" color="error">Delete User</Button>
         </form>
       </section>

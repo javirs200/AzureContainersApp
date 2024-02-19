@@ -4,20 +4,29 @@ import foto from "../../../assets/favicon.svg";
 import { UserContext } from "../../../context/userContext";
 
 const Nav = () => {
-  const { logged } = useContext(UserContext)
+  const { logged, role } = useContext(UserContext);
   return (
     <nav>
       <img src={foto} alt="logo" className="logo_nav" />
       {logged ?
-        <ul>
-          <li><Link className={'link'} to='/landing'>Inicio</Link></li>
-          <li><Link className={'link'} to='/users'>Usuarios</Link></li>
-        </ul>
-        : 
+        role == 'admin' ?
+          <ul>
+            <li><Link className={'link'} to='/landing'>Inicio</Link></li>
+            <li><Link className={'link'} to='/users'>Usuarios</Link></li>
+            <li><Link className={'link'} to='/register'>Register</Link></li>
+          </ul>
+          :
+          <ul>
+            <li><Link className={'link'} to='/landing'>Inicio</Link></li>
+            <li>Mis Coches</li>
+            <li>Pruebas</li>
+          </ul>
+        :
         <ul>
           <li><Link className={'link'} to='/login'>login</Link></li>
+          <li>Tiempos</li>
         </ul>
-        }
+      }
     </nav>
   );
 };
