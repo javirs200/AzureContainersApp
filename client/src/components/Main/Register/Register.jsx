@@ -23,6 +23,7 @@ const Register = () => {
     };
 
     const navigate = useNavigate();
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [emailMessage, setEmailMessage] = useState("");
     const [password1, setPassword1] = useState("");
@@ -63,9 +64,27 @@ const Register = () => {
         e.preventDefault()
         const registerUser = async () => {
 
-            const user = { email: email, password: password1, role: 'driver' }; // default role , not posible toregister as admin , admin user must elevate your privileges
+            try {
+                const user = { name:name ,email: email, password: password1}; // default role , not posible toregister as admin , admin user must elevate your privileges
 
-            console.log(user);
+                console.log(user);
+
+                const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/users/register`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: 'include',
+                    body: JSON.stringify(user),
+                });
+                if (response.status === 200) {
+                    let data = await response.json()
+                    console.log("ok register , data api -> ", data);
+                } else {
+                    let data = await response.json()
+                    console.log("data api -> ", data);
+                }
+            } catch (error) {
+                console.log(error);
+            }
         };
         registerUser();
     };
@@ -74,7 +93,9 @@ const Register = () => {
         <section>
             <form onSubmit={handleSubmit} className="form_register">
 
-                <TextField sx={{ m: 2, width: '22ch' }} id="email" label="Email" variant="standard" onChange={(e) => setEmail(e.target.value)} />
+                <TextField sx={{ m: 2, width: '22ch' }} id="name" label="name" variant="standard" onChange={(e) => setName(e.target.value)} required />
+
+                <TextField sx={{ m: 2, width: '22ch' }} id="email" label="Email" variant="standard" onChange={(e) => setEmail(e.target.value)} required />
 
                 <FormControl sx={{ m: 2, width: '22ch' }} variant="standard">
                     <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
@@ -83,6 +104,7 @@ const Register = () => {
                         id="standard-adornment-password"
                         type={showPassword ? 'text' : 'password'}
                         error={passwordMessage ? true : false}
+                        required
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
@@ -106,6 +128,7 @@ const Register = () => {
                         id="standard-adornment-password"
                         type={showPassword ? 'text' : 'password'}
                         error={passwordMessage2 ? true : false}
+                        required
                         endAdornment={
                             <InputAdornment position="end">
                                 <IconButton
@@ -120,8 +143,6 @@ const Register = () => {
                     />
                     {passwordMessage2 ? <FormHelperText>{passwordMessage2}</FormHelperText> : ''}
                 </FormControl>
-
-    
 
                 <Button variant="contained" type="submit">Continuar</Button>
             </form>

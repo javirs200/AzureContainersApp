@@ -44,7 +44,7 @@ const addTime = async (req, res) => {
 
         data["t"+index.toString()] = time
 
-        console.log("my data -> ", data);
+        // console.log("my data -> ", data);
 
         let participation = await participationsModel.update(data,{ where: { carUuid, eventUuid } });
         if (participation) {

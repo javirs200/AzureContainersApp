@@ -9,7 +9,6 @@ const Landing = () => {
       <Button variant="contained">
         <Link className={'link'} to={`/login`}>login</Link>
       </Button>
-
       <Button variant="contained">
         <Link className={'link'} to={`/Register`}>Register</Link>
       </Button>

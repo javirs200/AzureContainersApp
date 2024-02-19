@@ -15,7 +15,7 @@ apiKeyValidator.use(async (req, res, next) => {
     }
 
     if (req.body.apiKey === MY_API_KEY && (apiKeyUSES > 0)) {
-        console.log("ACCESO CON CLAVE API");
+        console.log("ACCESO API CON APIKEY");
         apiKeyUSES --;
         next();
     }else{
