@@ -4,7 +4,7 @@ import { UserContext } from "../../context/userContext";
 const Autologger = ({ component }) => {
 
     const { setLoggedIn } = useContext(UserContext);
-    const { setRole } = useContext(UserContext)
+    const { setRole,setEmail } = useContext(UserContext)
 
     useEffect(() => {
 
@@ -31,6 +31,7 @@ const Autologger = ({ component }) => {
             setLoggedIn(true)
             // console.log("cookie rol ->",decoded.role);
             setRole(decoded.role)
+            setEmail(decoded.email)
         } else {
             setLoggedIn(false)
         }

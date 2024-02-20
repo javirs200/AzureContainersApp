@@ -9,6 +9,7 @@ import DashboardAdmin from "./DashboardAdmin";
 import Dashboard from "./Dashboard";
 import UsersManager from "./UsersManager";
 import Register from "./Register";
+import CarsManager from "./CarsManager/CarsManager";
 
 const Main = () => {
 
@@ -29,6 +30,11 @@ const Main = () => {
             <>
               {role == 'admin' ? <DashboardAdmin />:<Dashboard />}
             </>
+          } />
+        } />
+        <Route path="/myCars" element={
+          <ProtectedRoutes logged={logged} component={
+            <RoleManager role={role} allowedRoles={['driver']} component={<CarsManager />} />
           } />
         } />
         <Route path="/users" element={

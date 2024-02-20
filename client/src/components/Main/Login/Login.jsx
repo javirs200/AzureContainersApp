@@ -23,11 +23,11 @@ const Login = () => {
   };
 
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
+  const [emailField, setEmailField] = useState("");
   const [emailMessage, setEmailMessage] = useState("");
   const [password, setPassword] = useState("");
   const [passwordMessage, setPasswordMessage] = useState("");
-  const { setLoggedIn, setRole } = useContext(UserContext);
+  const { setLoggedIn, setRole,setEmail } = useContext(UserContext);
 
   useEffect(() => {
     const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{9,}$/
@@ -40,17 +40,17 @@ const Login = () => {
 
   useEffect(() => {
     const emailValidation = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    if (!emailValidation.test(email) && email.length > 0) {
+    if (!emailValidation.test(emailField) && emailField.length > 0) {
       setEmailMessage("Email must have a valid format");
     } else {
       setEmailMessage("");
     }
-  }, [email])
+  }, [emailField])
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const loginUser = async () => {
-      const user = { email: email, password: password };
+      const user = { email: emailField, password: password };
       // console.log("user data form form -> ", user);
       //peticion api para login con objeto usuario
       const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/login`, {
@@ -64,6 +64,7 @@ const Login = () => {
         setLoggedIn(true);
         // console.log('datos respuesta ', data);
         setRole(data.role);
+        setEmail(emailField);
         navigate("/dashboard");
       } else {
         alert("datos de acceso incorrectos , intentelo de nuevo");
@@ -77,7 +78,7 @@ const Login = () => {
       <h2>Inicia sesión</h2>
       <form onSubmit={handleSubmit} className="form_login">
 
-        <TextField sx={{ m: 2, width: '22ch' }} id="email" label="Email" variant="standard" onChange={(e) => setEmail(e.target.value)} />
+        <TextField sx={{ m: 2, width: '22ch' }} id="email" label="Email" variant="standard" onChange={(e) => setEmailField(e.target.value)} />
 
         <FormControl sx={{ m: 2, width: '22ch' }} variant="standard">
           <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
