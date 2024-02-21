@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 
 const CarsManager = () => {
 
-  const [cars, setCars] = useState([{}]);
+  const [cars, setCars] = useState([]);
   const [Brand, setBrand] = useState('');
   const [Model, setModel] = useState('');
   const [Body, setBody] = useState('');
@@ -34,10 +34,10 @@ const CarsManager = () => {
         if (data) {
           setCars(data)
         } else {
-          setCars([{}])
+          setCars([])
         }
       } catch {
-        setCars([{}])
+        setCars([])
       }
     }
     fetchApi();

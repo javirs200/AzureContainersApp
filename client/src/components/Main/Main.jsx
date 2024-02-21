@@ -9,7 +9,8 @@ import DashboardAdmin from "./DashboardAdmin";
 import Dashboard from "./Dashboard";
 import UsersManager from "./UsersManager";
 import Register from "./Register";
-import CarsManager from "./CarsManager/CarsManager";
+import CarsManager from "./CarsManager";
+import EventsManager from "./EventsManager"
 
 const Main = () => {
 
@@ -20,6 +21,8 @@ const Main = () => {
     <main>
       <Routes>
         <Route path="/" element={logged ? <Navigate to={"/dashboard"} /> : <Landing />} />
+
+        <Route path="/events" element={logged ? <EventsManager /> : <Navigate to={"/dashboard"} />} />
 
         <Route path="/login" element={logged ? <Navigate to={"/dashboard"} /> : <Login />} />
 
