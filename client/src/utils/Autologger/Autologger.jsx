@@ -4,11 +4,11 @@ import { UserContext } from "../../context/userContext";
 const Autologger = ({ component }) => {
 
     const { setLoggedIn } = useContext(UserContext);
-    const { setRole } = useContext(UserContext)
+    const { setRole,setEmail } = useContext(UserContext)
 
     useEffect(() => {
 
-        console.log('actualizacion');
+        // console.log('actualizacion');
 
         function getCookie(key) {
             var b = document.cookie.match("(^|;)\\s*" + key + "\\s*=\\s*([^;]+)");
@@ -29,8 +29,9 @@ const Autologger = ({ component }) => {
 
         if (decoded) {
             setLoggedIn(true)
-            console.log("cookie rol ->",decoded.role);
+            // console.log("cookie rol ->",decoded.role);
             setRole(decoded.role)
+            setEmail(decoded.email)
         } else {
             setLoggedIn(false)
         }

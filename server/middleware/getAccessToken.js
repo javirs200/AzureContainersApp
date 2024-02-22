@@ -3,7 +3,7 @@ const getAccessToken = express.Router();
 
 
 getAccessToken.use(async (req, res, next) => {
-    console.log('headers -> ',req);
+    // console.log('headers -> ',req);
     const { cookie } = req.headers;
     if(cookie){
         if (cookie.includes(`access_token=`)) {

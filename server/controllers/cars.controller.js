@@ -13,8 +13,8 @@ const getMyCars = async (req, res) => {
     let user = await usersModel.findOne({ where: { email: email } ,attributes: ['uuid']});
     if (user) {
       const userUuid = user.uuid 
-      let cars = await carsModel.findOne({ where: { userUuid } });
-      res.status(200).json({'userCars':cars});
+      let cars = await carsModel.findAll({ attributes: ['uuid','brand', 'model', 'body'] },{ where: { userUuid } });
+      res.status(200).json(cars);
     } else {
       res.status(400).json({ msg: "Las credenciales proporcionadas son incorrectas" });
     }

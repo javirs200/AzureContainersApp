@@ -3,52 +3,9 @@
 
 main{
     @include standard-component;
-    display: flex;
-}
-
-
-.forms {
-    display: flex;
-    width: 100%;
     flex-direction: column;
-    align-items: center;
-    gap: 16px;
 }
 
-.form_button {
-    font-family: $font;
-    color:$white;
-    background-color: $red;
-    // color: #FDFCFC;
-    display: flex;
-    width: 25%;
-    height: 3vh;
-    justify-content: center;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-}
-
-.form_button:hover {
-    background-color: $lightred;
-}
-
-.input_form {
-    outline: none;
-    border: none;
-    border-bottom: 1px solid var(--Secondary-Red-300, $lightred);
-    width: 30%;
-    height: 4vh;
-    padding: 1%;
-    gap: 2%;
-}
-
-.input_form_match {
-    border: none;
-    border-bottom: 1px solid var(--Secondary-Red-300, #0ac107);
-    width: 301px;
-    height: 40px;
-    padding: 8px;
-    gap: 16px;
-
+ul{
+    list-style: none;
 }

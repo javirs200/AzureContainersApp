@@ -1,17 +1,25 @@
 import React from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
+import QrComponent from "../../../utils/QrComponent";
 
 const Landing = () => {
+
   const navigate = useNavigate();
 
   return (
     <>
-      <h1>Landing</h1>
-      <br />
-      <Button variant="contained">
-        <Link className={'link'} to={`/login`}>login</Link>
-      </Button>
+      <h1>CronoTimer</h1>
+      <section>
+        <h2>Get Started</h2>
+        <Button variant="contained" onClick={() => { navigate("/login") }}>
+          Login
+        </Button>
+        <Button variant="text" onClick={() => { navigate("/register") }}>
+          Register
+        </Button>
+      </section>  
+      <QrComponent/>
     </>
   );
 };

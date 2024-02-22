@@ -1,8 +1,9 @@
 import React, { useEffect, useContext } from "react";
 import { UserContext } from "../../../context/userContext";
 import { useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
 
-const Home = () => {
+const Dashboard = () => {
   const navigate = useNavigate();
   const { setLoggedIn } = useContext(UserContext);
 
@@ -20,11 +21,12 @@ const Home = () => {
   }
   return (
     <>
-      <h1>HOME</h1>
-      <br />
-      <button onClick={handleClick}>logout</button>
+      <h1>Dashboard</h1>
+      <Button variant="contained" onClick={handleClick}>
+        Logout
+      </Button>
     </>
   );
 };
 
-export default Home;
+export default Dashboard;
