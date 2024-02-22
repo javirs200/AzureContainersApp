@@ -3,12 +3,11 @@ nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 10px;
-    margin-bottom: 30px;
+    padding: 5%;
   }
   
   .logo_nav {
-    width: 10%; /* Ajusta el ancho según tus necesidades */
+    width: 20%; /* Ajusta el ancho según tus necesidades */
     height: auto;
   }
   
@@ -16,7 +15,7 @@ nav {
     list-style: none;
     display: flex;
     flex-direction: row;
-    margin: 0;
+    margin: 5%;
     padding: 0;
   }
 
@@ -26,6 +25,7 @@ nav {
   }
   
   a.link{
+    width: 50%;
     color: inherit; /* blue colors for links too */
     text-decoration: inherit; /* no underline */
   }

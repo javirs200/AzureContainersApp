@@ -7,7 +7,9 @@ const Nav = () => {
   const { logged, role } = useContext(UserContext);
   return (
     <nav>
-      <img src={foto} alt="logo" className="logo_nav" />
+      <Link className={'link'} to='/landing'>
+        <img src={foto} alt="logo" className="logo_nav" />
+      </Link>
       {logged ?
         role == 'admin' ?
           <ul>

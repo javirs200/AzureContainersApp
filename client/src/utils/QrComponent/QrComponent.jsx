@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { Button } from "@mui/material";
 import QRCode from "react-qr-code";
 
-const QrComponent = ({ url }) => {
+const QrComponent = () => {
 
     const [show, setShow] = useState(false)
 
+    let url = window.location.href
+
     if (!url) {
-        url = 'http://192.168.1.144:80/'
+        url = 'url no encontrada'
     }
 
     return (

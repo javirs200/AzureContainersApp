@@ -13,7 +13,7 @@
   <sodipodi:namedview
      id="namedview1"
      pagecolor="#505050"
-     bordercolor="#eeeeee"
+     bordercolor="#ffffff"
      borderopacity="1"
      inkscape:showpageshadow="0"
      inkscape:pageopacity="0"
@@ -40,34 +40,34 @@
     </style>
   </defs>
   <circle
-     style="fill:#000000;fill-opacity:0;stroke:#000000;stroke-width:2.08532;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#000000;fill-opacity:0;stroke:#ffffff;stroke-width:2.08532;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="path1"
      cx="9.2225494"
      cy="10.313389"
      r="7.7694855" />
   <circle
-     style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.37795276;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:0.37795276;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
      id="path2"
      cx="9.2225504"
      cy="10.214222"
      r="0.9916721" />
   <path
-     style="fill:none;stroke:#000000;stroke-width:1.00157;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+     style="fill:none;stroke:#ffffff;stroke-width:1.00157;stroke-linecap:round;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
      d="M 9.1875,8.25 9.125,4.625"
      id="path5"
      sodipodi:nodetypes="cc" />
   <path
-     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+     style="fill:none;stroke:#ffffff;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
      d="M 11.4375,10.21875 14.40625,10.25"
      id="path6"
      sodipodi:nodetypes="cc" />
   <path
-     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+     style="fill:none;stroke:#ffffff;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
      d="M 1.8880029,3.4966308 4.2682471,1.7221192"
      id="path6-1"
      sodipodi:nodetypes="cc" />
   <path
-     style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+     style="fill:none;stroke:#ffffff;stroke-width:1px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
      d="m 14.076302,1.4085478 2.378646,1.7766544"
      id="path6-2"
      sodipodi:nodetypes="cc" />
