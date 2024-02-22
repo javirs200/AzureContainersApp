@@ -10,8 +10,14 @@ const apiKeyValidator = require('../middleware/apiKeyValidator')
 
 // // POST // con api key para primer user
 userRouter.post("/create",apiKeyValidator, userController.createUser);
+// // POST // allow regiistration with default role
+userRouter.post("/register",userController.createUserDriver);
 
+// protected routes jwt
+userRouter.put("/privileges",getAccessToken,decodeToken,adminRoutes,userController.updatePrivileges);
 userRouter.get('/',getAccessToken,decodeToken,adminRoutes,userController.getAllUsers);
 userRouter.get("/:email",getAccessToken,decodeToken,adminRoutes, userController.readUser);
+userRouter.delete("/delete",getAccessToken,decodeToken,adminRoutes, userController.deleteUser);
+
 
 module.exports = userRouter;

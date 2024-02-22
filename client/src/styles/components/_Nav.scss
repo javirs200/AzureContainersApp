@@ -3,38 +3,29 @@ nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 10px;
-    margin-bottom: 30px;
+    padding: 5%;
   }
   
   .logo_nav {
-    width: 100px; /* Ajusta el ancho según tus necesidades */
+    width: 20%; /* Ajusta el ancho según tus necesidades */
     height: auto;
   }
   
-  ul {
+  nav > ul {
     list-style: none;
     display: flex;
-    margin: 0;
+    flex-direction: row;
+    margin: 5%;
     padding: 0;
   }
-  
-  li {
-    // color: black;
-    margin-right: 20px;
-    cursor: pointer;
-  }
 
+  nav>ul>li{
+    margin-left: 5%;
+    margin-right: 5%;
+  }
+  
   a.link{
+    width: 50%;
     color: inherit; /* blue colors for links too */
     text-decoration: inherit; /* no underline */
-  }
-  
-  li:hover {
-    color: red; /* Cambia el color al hacer hover */
-  }
-  
-  p {
-    // color: black;
-    margin: 0;
   }

@@ -25,7 +25,7 @@ const newEvent = async (req, res) => {
 
 const getAll = async (req, res) => {
     try {
-        const users = await eventsModel.findAll({ attributes: ['name', 'email', 'rol'] });
+        const users = await eventsModel.findAll({ attributes: ['name', 'date', 'description'] });
         res.status(200).json(users);
     } catch (error) {
         console.log(`ERROR: ${error}`);
@@ -41,7 +41,7 @@ const getByName = async (req, res) => {
     }
     try {
         const name = req.params.name
-        let event = await eventsModel.findOne({ where: { name: name }});
+        let event = await eventsModel.findOne({ where: { 'name': name }});
         if (event) {
             res.status(200).json({ 'EventData': event });
         } else {

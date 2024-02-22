@@ -23,13 +23,15 @@ import './styles/styles.scss'
 function App() {
 
   const [logged, setLoggedIn] = useState(false);
-  // roles , 'admin' 'user'
-  const [role, setRole] = useState('user');
+  // roles , 'admin' 'driver'
+  const [role, setRole] = useState('driver');
+  const [email, setEmail] = useState('');
+  const [carUuid,setCarUuid] = useState('');
 
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <UserContext.Provider value={{ logged, setLoggedIn, role, setRole }}>
+      <UserContext.Provider value={{ logged, setLoggedIn, role, setRole,email,setEmail,carUuid,setCarUuid }}>
         <BrowserRouter>
           <Header />
           <Autologger component={<Main />}/>

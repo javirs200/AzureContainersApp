@@ -8,9 +8,9 @@ const adminRoutes = require('../middleware/adminRoutes');
 const clientRoutes = require('../middleware/clientRoutes');
 const apiKeyValidator = require('../middleware/apiKeyValidator')
 
-carsRouter.get("/getfromUser/:email", carsController.getMyCars);
-carsRouter.post("/addtoUser/",carsController.addCar)
-carsRouter.put("/update/", carsController.updateCar);
-carsRouter.delete("/remove/", carsController.deleteCar);
+carsRouter.get("/getfromUser/:email",getAccessToken,decodeToken,clientRoutes,carsController.getMyCars);
+carsRouter.post("/addtoUser/",getAccessToken,decodeToken,clientRoutes,carsController.addCar)
+carsRouter.put("/update/",getAccessToken,decodeToken,clientRoutes,carsController.updateCar);
+carsRouter.delete("/remove/",getAccessToken,decodeToken,clientRoutes,carsController.deleteCar);
 
 module.exports = carsRouter;
