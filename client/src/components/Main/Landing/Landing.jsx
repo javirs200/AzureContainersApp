@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
+import QrComponent from "../../../utils/QrComponent";
 
 const Landing = () => {
 
@@ -8,13 +9,17 @@ const Landing = () => {
 
   return (
     <>
-      <h1>Landing</h1>
-      <Button variant="contained" onClick={()=>{navigate("/login")}}>
-        Login
-      </Button>
-      <Button variant="text" onClick={()=>{navigate("/register")}}>
-        Register
-      </Button>
+      <h1>CronoTimer</h1>
+      <section>
+        <h2>Get Started</h2>
+        <Button variant="contained" onClick={() => { navigate("/login") }}>
+          Login
+        </Button>
+        <Button variant="text" onClick={() => { navigate("/register") }}>
+          Register
+        </Button>
+      </section>  
+      <QrComponent/>
     </>
   );
 };
