@@ -127,7 +127,7 @@ const Register = () => {
                     <InputLabel htmlFor="standard-adornment-password" >Password</InputLabel>
                     <Input
                         onChange={(e) => setPassword2(e.target.value)}
-                        id="standard-adornment-password"
+                        id="standard-adornment-password2"
                         type={showPassword ? 'text' : 'password'}
                         error={passwordMessage2 ? true : false}
                         required
