@@ -17,7 +17,7 @@ const login = async (req, res) => {
                 if (result) {
                     const token = createToken({ email: user.email, role: user.rol });
                     res.status(200)
-                        .cookie('access_token', token)
+                        .cookie('access_token', token  ,{domain:'.azurecontainer.io',httpOnly: true})
                         .json({ msg: "login ok" , role:user.rol  });
                 } else {
                     res.status(400).json({ msg: "Las credenciales proporcionadas son incorrectas" });
