@@ -18,8 +18,12 @@ COPY ./client/ ./
 # build vite app
 RUN npm run build
 
+RUN printenv > pre.txt
+
 # delete source code after build
 RUN rm -rf ./src
+
+RUN printenv > pos.txt
 
 # El puerto en el que se ejecutará la aplicación
 EXPOSE 80
