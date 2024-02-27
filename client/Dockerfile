@@ -15,8 +15,14 @@ RUN npm install
 # copy rest of app
 COPY ./client/ ./
 
+# build vite app
+RUN npm run build
+
+# delete source code after build
+RUN rm -rf ./src
+
 # El puerto en el que se ejecutará la aplicación
 EXPOSE 80
 
 # Comando para iniciar la aplicación
-CMD ["npm", "run" ,"dev_expose"]
+CMD ["npm", "run" ,"start"]
