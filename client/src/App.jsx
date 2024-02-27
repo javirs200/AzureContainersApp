@@ -19,7 +19,6 @@ const darkTheme = createTheme({
 
 import './styles/styles.scss'
 
-
 function App() {
 
   const [logged, setLoggedIn] = useState(false);
@@ -28,6 +27,12 @@ function App() {
   const [email, setEmail] = useState('');
   const [carUuid,setCarUuid] = useState('');
 
+  console.log('variables de entorno cargadas -> ',import.meta.env);
+  
+  if (import.meta.env.PROD) {
+    console.log('variables de entorno cargadas -> ',process.env);
+  }
+  
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
