@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev expose": "vite --host",
-    "start": "vite preview --host",
+    "dev_expose": "vite --host",
+    "start": "serve ./dist -p 80",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -23,6 +23,7 @@
     "react-qr-code": "^2.0.12",
     "react-router-dom": "^6.21.2",
     "sass": "^1.69.5",
+    "serve": "^14.2.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
