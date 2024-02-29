@@ -17,11 +17,11 @@ const eventRoutes = require('./routes/events.routes');
 const database = require('./config/db_pgsql')
 database.connectSQL();
 
-// if(process.env.CORS_ORIGIN){
-//   app.use(cors({credentials: true,origin: process.env.CORS_ORIGIN}));
-// }else{
-//   app.use(cors({credentials: true,origin: 'http://localhost'}));
-// }
+if(process.env.CORS_ORIGIN){
+  app.use(cors({credentials: true,origin: process.env.CORS_ORIGIN}));
+}else{
+  app.use(cors({credentials: true,origin: 'http://localhost'}));
+}
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet());
