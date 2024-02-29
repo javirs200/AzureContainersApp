@@ -5,6 +5,7 @@ const getAccessToken = express.Router();
 getAccessToken.use(async (req, res, next) => {
     // console.log('headers -> ',req);
     const { cookie } = req.headers;
+    console.log("middleware get cockies del dominio ->",cookie);
     if(cookie){
         if (cookie.includes(`access_token=`)) {
             const cookies = cookie.split(',');
