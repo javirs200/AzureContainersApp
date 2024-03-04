@@ -67,7 +67,7 @@ const Register = () => {
             try {
                 const user = { name:name ,email: email, password: password1}; // default role , not posible toregister as admin , admin user must elevate your privileges
 
-                console.log(user);
+                // console.log(user);
 
                 const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/users/register`, {
                     method: "POST",
@@ -77,7 +77,7 @@ const Register = () => {
                 });
                 if (response.status === 200) {
                     let data = await response.json()
-                    console.log("ok register , data api -> ", data);
+                    // console.log("ok register , data api -> ", data);
                     alert('usuario registrado ')
                 } else {
                     let data = await response.json()

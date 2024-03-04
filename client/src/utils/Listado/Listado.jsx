@@ -15,7 +15,7 @@ const Listado = ({title,elementos,mode}) => {
   return (
     <div className='listado'>
     {title ? <h2>{title}</h2>:''}
-      <ul>{elementos ? drawList() : ''}</ul>
+      {elementos ? <ul>{drawList()}</ul> : <p>No hay {title} todavia</p>}
     </div>
   );
 };

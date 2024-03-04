@@ -21,7 +21,6 @@ const Nav = () => {
           <ul>
             <li><Link className={'link'} to='/landing'>Inicio</Link></li>
             <li><Link className={'link'} to='/myCars'>Mis Coches</Link></li>
-            <li><Link className={'link'} to='/events'>Eventos</Link></li>
           </ul>
         :
         <ul>

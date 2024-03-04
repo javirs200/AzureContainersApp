@@ -2,6 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { UserContext } from "../../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
+import EventsList from "../EventsList";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const Dashboard = () => {
   return (
     <>
       <h1>Dashboard</h1>
+      <EventsList/>
       <Button variant="contained" onClick={handleClick}>
         Logout
       </Button>
