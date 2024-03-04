@@ -11,6 +11,7 @@ import UsersManager from "./UsersManager";
 import Register from "./Register";
 import CarsManager from "./CarsManager";
 import EventsManager from "./EventsManager"
+import QrComponent from "../../utils/QrComponent/QrComponent";
 
 const Main = () => {
 
@@ -47,6 +48,7 @@ const Main = () => {
         } />
         <Route path="/*" element={logged ? <Navigate to={"/dashboard"} /> : <Navigate to={"/"} />} />
       </Routes>
+      <QrComponent/>
     </main>
   );
 };

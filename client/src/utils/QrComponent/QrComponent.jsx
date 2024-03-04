@@ -20,7 +20,7 @@ const QrComponent = () => {
             {show ?
                 <section className="qrcode_section">
                     < h1 > Share this app</h1 >
-                    <div className="qrcode_container" style={{ background: 'white', padding: '16px' }}>
+                    <div className="qrcode_container">
                         <QRCode value={url} size={300} />
                     </div>
                 </section >

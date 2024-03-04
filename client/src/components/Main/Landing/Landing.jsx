@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from '@mui/material/Button';
-import QrComponent from "../../../utils/QrComponent";
+
 
 const Landing = () => {
 
@@ -19,7 +19,6 @@ const Landing = () => {
           Register
         </Button>
       </section>  
-      <QrComponent/>
     </>
   );
 };
