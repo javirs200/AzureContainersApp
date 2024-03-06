@@ -3,7 +3,7 @@ nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    padding: 5%;
+    padding: 0;
   }
   
   .logo_nav {
@@ -28,4 +28,11 @@ nav {
     width: 50%;
     color: inherit; /* blue colors for links too */
     text-decoration: inherit; /* no underline */
+  }
+
+  @media screen and (min-width: 600px){
+    .logo_nav {
+      width: 10%; /* Ajusta el ancho según tus necesidades */
+      height: auto;
+    }
   }

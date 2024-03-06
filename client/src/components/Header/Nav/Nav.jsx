@@ -21,13 +21,12 @@ const Nav = () => {
           <ul>
             <li><Link className={'link'} to='/landing'>Inicio</Link></li>
             <li><Link className={'link'} to='/myCars'>Mis Coches</Link></li>
-            <li><Link className={'link'} to='/events'>Eventos</Link></li>
           </ul>
         :
         <ul>
           <li><Link className={'link'} to='/login'>login</Link></li>
           <li><Link className={'link'} to='/register'>Registro</Link></li>
-          <li>Tiempos</li>
+          <li><Link className={'link'} to='/times'>Tiempos</Link></li>
         </ul>
       }
     </nav>

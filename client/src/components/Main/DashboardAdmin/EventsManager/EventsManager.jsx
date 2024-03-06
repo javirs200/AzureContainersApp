@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Listado from '../../../utils/Listado';
+import Listado from '../../../../utils/Listado';
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -28,7 +28,7 @@ const EventsManager = () => {
 
         const data = await response.json()
 
-        console.log('todos los eventos ', data);
+        // console.log('todos los eventos ', data);
 
         if (data) {
           setEvents(data)
@@ -50,7 +50,7 @@ const EventsManager = () => {
     e.preventDefault()
     const createEvent = async () => {
       const event = { 'name': name, 'description': description, 'date': new Date(date) }
-      console.log("evento para crear ", event);
+      // console.log("evento para crear ", event);
       try {
         const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/events/new`, {
           method: "POST",
@@ -61,7 +61,7 @@ const EventsManager = () => {
         if (response.status === 201) {
           let data = await response.json()
           alert('evento creado')
-          console.log("ok create , data api -> ", data);
+          // console.log("ok create , data api -> ", data);
           fetchEvents()
         } else {
           let data = await response.json()

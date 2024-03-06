@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
-import Listado from '../../../utils/Listado';
-import { UserContext } from "../../../context/userContext";
+import Listado from '../../../../utils/Listado';
+import { UserContext } from "../../../../context/userContext";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -12,7 +12,7 @@ const CarsManager = () => {
   const [Model, setModel] = useState('');
   const [Body, setBody] = useState('');
 
-  const { email, carUuid } = useContext(UserContext);
+  const { email, carUuid, carName } = useContext(UserContext);
 
   // useEffect(() => { console.log('uuid coche -> ', carUuid); }, [carUuid])
 
@@ -104,6 +104,7 @@ const CarsManager = () => {
       }
     }
     deleteUser()
+
   }
 
   return (
@@ -118,6 +119,7 @@ const CarsManager = () => {
           <TextField sx={{ m: 2, width: '22ch' }} id="Body" label="Carroceria" variant="standard" onChange={(e) => setBody(e.target.value)} required />
           <Button variant="contained" type="submit">Añadir</Button>
         </form>
+        <h3>coche Selecionado : {carName}</h3>
         <form onSubmit={handleSubmitDelete} className="form_delete_car">
           <Button variant="outlined" type="submit" color="error">Borrar</Button>
         </form>

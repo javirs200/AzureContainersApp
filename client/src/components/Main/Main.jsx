@@ -5,12 +5,16 @@ import { UserContext } from "../../context/userContext";
 import { Route, Routes, Navigate } from "react-router-dom";
 import RoleManager from "../../utils/RoleManager";
 import ProtectedRoutes from "../../utils/ProtectedRoutes";
+import QrComponent from "../../utils/QrComponent/QrComponent";
 import DashboardAdmin from "./DashboardAdmin";
 import Dashboard from "./Dashboard";
-import UsersManager from "./UsersManager";
 import Register from "./Register";
-import CarsManager from "./CarsManager";
-import EventsManager from "./EventsManager"
+import Times from "./Times";
+
+import UsersManager from "./DashboardAdmin/UsersManager";
+import EventsManager from "./DashboardAdmin/EventsManager";
+import CarsManager from "./Dashboard/CarsManager";
+
 
 const Main = () => {
 
@@ -45,8 +49,13 @@ const Main = () => {
             <RoleManager role={role} allowedRoles={['admin']} component={<UsersManager />} />
           } />
         } />
+        <Route path="/times" element={<Times />} />
+
         <Route path="/*" element={logged ? <Navigate to={"/dashboard"} /> : <Navigate to={"/"} />} />
       </Routes>
+      
+
+      <QrComponent/>
     </main>
   );
 };
