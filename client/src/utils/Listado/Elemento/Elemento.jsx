@@ -25,8 +25,8 @@ const Elemento = ({ obj, mode }) => {
       return (
         <li>
           {obj ? <div className="Elemento">
-            {Object.keys(obj).map(
-              (e) => { return <p key={uuidv4()}> {e.toString()} </p> }
+            {Object.values(obj).map(
+              (e, i) => { if (i > 0) return <p key={uuidv4()}> {e.toString()}</p> }
             )}
           </div> : ''}
         </li>

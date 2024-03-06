@@ -79,7 +79,7 @@ const EventsManager = () => {
   return (
     <>
       <section className="Events">
-        <Listado title={'Eventos'} elementos={events} mode={1} />
+        <Listado title={'Eventos'} elementos={events} mode={0} />
       </section>
       <section className="eventControls">
         <form onSubmit={handleSubmitCreate} className="form_add_event">
