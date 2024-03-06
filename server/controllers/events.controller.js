@@ -25,7 +25,7 @@ const newEvent = async (req, res) => {
 
 const getAll = async (req, res) => {
     try {
-        const users = await eventsModel.findAll({ attributes: ['name', 'date', 'description'] });
+        const users = await eventsModel.findAll({ attributes: ['uuid','name', 'date', 'description'] });
         res.status(200).json(users);
     } catch (error) {
         console.log(`ERROR: ${error}`);
