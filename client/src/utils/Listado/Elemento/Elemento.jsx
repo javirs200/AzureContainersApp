@@ -1,14 +1,22 @@
-import React,{useContext} from "react";
+import React, { useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { UserContext } from "../../../context/userContext";
 
 const Elemento = ({ obj, mode }) => {
 
-  const {setCarUuid} = useContext(UserContext)
+  const { setCarUuid, setEventUuid,setEventName,setCarName } = useContext(UserContext)
 
-  const handleClick = ()=>{
-    if(obj.uuid){
+  const handleClickCar = () => {
+    if (obj.uuid) {
       setCarUuid(obj.uuid)
+      setCarName(obj.body)
+    }
+  }
+
+  const handleClickevent = () => {
+    if (obj.uuid) {
+      setEventUuid(obj.uuid)
+      setEventName(obj.name)
     }
   }
 
@@ -36,9 +44,19 @@ const Elemento = ({ obj, mode }) => {
     case 2:
       return (
         <li>
-          {obj ? <div className="Elemento" onClick={handleClick}>
+          {obj ? <div className="Elemento" onClick={handleClickCar}>
             {Object.values(obj).map(
-              (e,i) => { if(i>0) return <p key={uuidv4()}> {e.toString()}</p> }
+              (e, i) => { if (i > 0) return <p key={uuidv4()}> {e.toString()}</p> }
+            )}
+          </div> : ''}
+        </li>
+      );
+    case 3:
+      return (
+        <li>
+          {obj ? <div className="Elemento" onClick={handleClickevent}>
+            {Object.values(obj).map(
+              (e, i) => { if (i > 0) return <p key={uuidv4()}> {e.toString()}</p> }
             )}
           </div> : ''}
         </li>

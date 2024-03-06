@@ -25,7 +25,10 @@ function App() {
   // roles , 'admin' 'driver'
   const [role, setRole] = useState('driver');
   const [email, setEmail] = useState('');
+  const [carName, setCarName] = useState([]);
   const [carUuid,setCarUuid] = useState('');
+  const [eventName, setEventName] = useState([]);
+  const [eventUuid,setEventUuid] = useState('');
 
   // console.log('variables de entorno cargadas -> ',import.meta.env);
   
@@ -36,7 +39,7 @@ function App() {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <UserContext.Provider value={{ logged, setLoggedIn, role, setRole,email,setEmail,carUuid,setCarUuid }}>
+      <UserContext.Provider value={{ logged, setLoggedIn,role,setRole,email,setEmail,carUuid,setCarUuid,carName,setCarName,eventUuid,setEventUuid,eventName,setEventName}}>
         <BrowserRouter>
           <Header />
           <Autologger component={<Main />}/>

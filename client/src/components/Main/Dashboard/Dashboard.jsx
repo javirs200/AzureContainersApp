@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from "react";
 import { UserContext } from "../../../context/userContext";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@mui/material";
-import EventsList from "../EventsList";
+import EventsList from "./EventsList";
 
 const Dashboard = () => {
   const navigate = useNavigate();
