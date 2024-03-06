@@ -9,9 +9,9 @@ const clientRoutes = require('../middleware/clientRoutes');
 const apiKeyValidator = require('../middleware/apiKeyValidator')
 
 eventRouter.get("/all", eventController.getAll);
-eventRouter.get("/byName/:name", eventController.getByName);
-eventRouter.post("/new/",eventController.newEvent)
-eventRouter.put("/update/", eventController.updateByName);
-eventRouter.delete("/remove/", eventController.deleteEvent);
+eventRouter.get("/byName/:name", getAccessToken,decodeToken,clientRoutes,eventController.getByName);
+eventRouter.post("/new/",getAccessToken,decodeToken,adminRoutes,eventController.newEvent)
+eventRouter.put("/update/",getAccessToken,decodeToken,adminRoutes, eventController.updateByName);
+eventRouter.delete("/remove/",getAccessToken,decodeToken,adminRoutes, eventController.deleteEvent);
 
 module.exports = eventRouter;

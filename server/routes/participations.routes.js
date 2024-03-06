@@ -8,7 +8,7 @@ const adminRoutes = require('../middleware/adminRoutes');
 const clientRoutes = require('../middleware/clientRoutes');
 const apiKeyValidator = require('../middleware/apiKeyValidator')
 
-participationsRouter.post("/new/",participationsController.newParticipation)
+participationsRouter.post("/new/",getAccessToken,participationsController.newParticipation)
 participationsRouter.put("/addTime/", participationsController.addTime);
 
 module.exports = participationsRouter;

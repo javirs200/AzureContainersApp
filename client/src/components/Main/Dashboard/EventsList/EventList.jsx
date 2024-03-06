@@ -1,13 +1,15 @@
-import React, { useState, useEffect,useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Listado from '../../../../utils/Listado';
 import { UserContext } from "../../../../context/userContext";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 
-import { FormControl, Button, Select, MenuItem ,InputLabel} from "@mui/material";
+import { FormControl, Button, Select, MenuItem, InputLabel } from "@mui/material";
 
 const EventsList = () => {
 
-  const { email, eventUuid,eventName } = useContext(UserContext)
+  const navigate = useNavigate();
+  const { email, eventUuid, eventName } = useContext(UserContext)
   const [events, setEvents] = useState([]);
   const [cars, setCars] = useState([]);
   const [carUuid, setCarUuid] = useState('');
@@ -73,17 +75,39 @@ const EventsList = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log("apuntar al coche ",carUuid,"en el evento con uuid ",eventUuid);
-    alert("apuntar al coche " + carUuid + " en el evento con uuid " + eventUuid);
+    const newParticipation = async () => {
+      try {
+        const participation = { carUuid: carUuid, eventUuid: eventUuid };
+
+        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/participations/new`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: 'include',
+          body: JSON.stringify(participation),
+        });
+        if (response.status === 201) {
+          let data = await response.json()
+          alert('participacion registrada !')
+        } else {
+          let data = await response.json()
+          alert('participacion response warning')
+          console.log("warning",data);
+        }
+        navigate("/");
+      } catch (error) {
+        alert('participacion error ' + error.toString())
+      }
+    };
+    newParticipation();
   }
 
-  const handleChange = (e) =>{
-    console.log("coche elegido",e.target.value);
+  const handleChange = (e) => {
+    console.log("coche elegido", e.target.value);
     setCarUuid(e.target.value)
   }
 
-  const drawList = ()=>{
-    console.log("dibujando coches ",cars);
+  const drawList = () => {
+    console.log("dibujando coches ", cars);
     return cars.map((el) => {
       return <MenuItem key={uuidv4()} value={el.uuid}>{el.body}</MenuItem>
     })
