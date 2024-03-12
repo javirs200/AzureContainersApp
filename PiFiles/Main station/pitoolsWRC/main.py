@@ -9,7 +9,7 @@ import json
 rdr = RFID()
 util = rdr.util()
 
-serverURL = "https://timerwrc.azurewebsites.net"
+apiURL = "http://cronos-timer.westeurope.cloudapp.azure.com:4000/api/"
 
 uidsScaned = []
 timers = []
@@ -22,7 +22,6 @@ def strfdelta(tdel:timedelta):
     tmp = str(tdel.days) + ":" + str(tdel.seconds) + "," + str(tdel.microseconds)
     return tmp
     
-
 def decodeList(byte_array:list):
         dec_string = ""
         for b in byte_array:
@@ -102,7 +101,7 @@ def rfidCall():
     pass
 
 def launchPOST(rfid:str):
-    url = 'https://timerwrc.azurewebsites.net/setTpmRfid'
+    url = apiURL + ''
     datar = {
         "data": rfid
         }
@@ -116,4 +115,3 @@ def main():
 if __name__ == '__main__':
     init()
     main()
-
