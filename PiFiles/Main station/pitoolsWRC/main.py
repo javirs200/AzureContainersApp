@@ -3,6 +3,7 @@ from pirc522 import RFID
 import RPi.GPIO as GPIO
 import time
 
+import socket
 import requests
 import json
 
@@ -13,6 +14,17 @@ apiURL = "http://cronos-timer.westeurope.cloudapp.azure.com:4000/api/"
 
 uidsScaned = []
 timers = []
+
+def sendTCP(message=''):
+   HOST, PORT = "", 3000
+   sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+   try:
+      sock.connect((HOST, PORT))
+   except socket.error:
+      pass
+   else:
+      sock.send(message) #the message is the order
+   sock.close()
 
 def init():
     print("some init")
