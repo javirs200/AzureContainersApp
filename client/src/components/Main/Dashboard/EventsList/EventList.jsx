@@ -3,10 +3,13 @@ import Listado from '../../../../utils/Listado';
 import { UserContext } from "../../../../context/userContext";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import FetchUtil from "../../../../utils/FetchUtil";
 
 import { FormControl, Button, Select, MenuItem, InputLabel } from "@mui/material";
 
 const EventsList = () => {
+
+  const { fetchEvents, fetchCars } = FetchUtil;
 
   const navigate = useNavigate();
   const { email, eventUuid, eventName } = useContext(UserContext)
@@ -14,63 +17,9 @@ const EventsList = () => {
   const [cars, setCars] = useState([]);
   const [carUuid, setCarUuid] = useState('');
 
-  const fetchEvents = () => {
-
-    const fetchApi = async () => {
-      try {
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/events/all`, {
-          method: "GET",
-          credentials: 'include',
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const data = await response.json()
-
-        // console.log('todos los eventos ', data);
-
-        if (data) {
-          setEvents(data)
-        } else {
-          setEvents([])
-        }
-      } catch {
-        setEvents([])
-      }
-    }
-    fetchApi();
-  }
-
-  const fetchCars = () => {
-
-    const fetchApi = async () => {
-      try {
-
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/cars/getfromUser/${email}`, {
-          method: "GET",
-          credentials: 'include',
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const data = await response.json()
-
-        // console.log('todos los coches de ', email, ' -> ', data);
-
-        if (data) {
-          setCars(data)
-        } else {
-          setCars([])
-        }
-      } catch {
-        setCars([])
-      }
-    }
-    fetchApi();
-  }
-
-
   useEffect(() => {
-    fetchEvents()
-    fetchCars()
+    fetchCars(email).then((data) => setCars(data));
+    fetchEvents().then((data) => setEvents(data));
   }, [])
 
   const handleSubmit = (e) => {
