@@ -3,11 +3,13 @@ import Listado from '../../../../utils/Listado';
 import { UserContext } from "../../../../context/userContext";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
-import {fetchCars,fetchEvents} from "../../../../utils/FetchUtil";
+import FetchUtil from "../../../../utils/FetchUtil";
 
 import { FormControl, Button, Select, MenuItem, InputLabel } from "@mui/material";
 
 const EventsList = () => {
+
+  const { fetchEvents, fetchCars } = FetchUtil;
 
   const navigate = useNavigate();
   const { email, eventUuid, eventName } = useContext(UserContext)
@@ -16,8 +18,8 @@ const EventsList = () => {
   const [carUuid, setCarUuid] = useState('');
 
   useEffect(() => {
-    setEvents(fetchEvents());
-    setCars(fetchCars(email));
+    fetchCars(email).then((data) => setCars(data));
+    fetchEvents().then((data) => setEvents(data));
   }, [])
 
   const handleSubmit = (e) => {

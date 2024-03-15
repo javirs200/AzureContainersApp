@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Listado from '../../../../utils/Listado';
-import {fetchEvents} from "../../../../utils/FetchUtil";
+import FetchUtil from "../../../../utils/FetchUtil";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -12,13 +12,17 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const EventsManager = () => {
 
+  console.log("EventsManager -> FetchUtil", FetchUtil);
+
+  const { fetchEvents } = FetchUtil;
+
   const [events, setEvents] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(dayjs());
 
   useEffect(() => {
-    setEvents(fetchEvents());
+    fetchEvents().then((data) => setEvents(data));
   }, [])
 
   const handleSubmitCreate = (e) => {
@@ -37,7 +41,7 @@ const EventsManager = () => {
           let data = await response.json()
           alert('evento creado')
           // console.log("ok create , data api -> ", data);
-          fetchEvents()
+          fetchEvents().then((data) => setEvents(data));
         } else {
           let data = await response.json()
           alert('error')
@@ -54,7 +58,7 @@ const EventsManager = () => {
   return (
     <>
       <section className="Events">
-        <Listado title={'Eventos'} elementos={events} mode={0} />
+        <Listado title={'Eventos'} elementos={events} mode={1} />
       </section>
       <section className="eventControls">
         <form onSubmit={handleSubmitCreate} className="form_add_event">
