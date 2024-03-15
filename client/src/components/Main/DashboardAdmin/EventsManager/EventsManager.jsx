@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Listado from '../../../../utils/Listado';
+import {fetchEvents} from "../../../../utils/FetchUtil";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -16,34 +17,8 @@ const EventsManager = () => {
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(dayjs());
 
-  const fetchEvents = () => {
-
-    const fetchApi = async () => {
-      try {
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/events/all`, {
-          method: "GET",
-          credentials: 'include',
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const data = await response.json()
-
-        // console.log('todos los eventos ', data);
-
-        if (data) {
-          setEvents(data)
-        } else {
-          setEvents([])
-        }
-      } catch {
-        setEvents([])
-      }
-    }
-    fetchApi();
-  }
-
   useEffect(() => {
-    fetchEvents()
+    setEvents(fetchEvents());
   }, [])
 
   const handleSubmitCreate = (e) => {
