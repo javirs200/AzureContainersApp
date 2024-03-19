@@ -6,16 +6,33 @@ import time
 import requests
 import json
 
+from testDevelopment import ultra
+
 rdr = RFID()
 util = rdr.util()
 
-apiURL = "http://cronos-timer.westeurope.cloudapp.azure.com:4000/api/"
+# apiURL = "http://cronos-timer.westeurope.cloudapp.azure.com:4000/api/"
+apiURL = "http://192.168.137.1:4000/api/"
+
 
 uidsScaned = []
 timers = []
 
+global farMeasure
+global distError
+
 def init():
+    global farMeasure
+    global distError 
     print("some init")
+    farMeasure = 0
+    distError = 20
+    for i in range(0,4):
+        m = ultra.measure()
+        print("claibration " + str(m))
+        if(m > farMeasure):
+            farMeasure = m
+        time.sleep(1)
     pass
 
 def strfdelta(tdel:timedelta):
@@ -44,7 +61,7 @@ def timer():
                 
                     strUid = decodeList(uid)
                     nowtimer = datetime.utcnow()
-                    
+
                     try:
                         index = uidsScaned.index(strUid)
                         oldtimer = timers[index]
@@ -70,6 +87,8 @@ def timer():
     pass
 
 def rfidCall():
+    global farMeasure
+    global distError
     try:
         while(True):
             print("ready for read")
@@ -83,11 +102,21 @@ def rfidCall():
                 
                     strUid = decodeList(uid)
 
-                    print("launch post call")
+                    treshold = (farMeasure - distError)
 
-                    res = launchPOST(strUid)
+                    dist = (farMeasure + distError)
 
-                    print("response -> " + str(res))
+                    print("treshold " + str(treshold))
+
+                    while dist > treshold :
+                        dist = ultra.measure()
+                        print("distance measured " + str(dist) + " treshold " + str(treshold) + str( ( dist < treshold ) ))
+
+                    print("launch post call with "+ str(strUid) + " and distance measure " + str(dist))
+
+                    # res = launchPOST(strUid)
+
+                    # print("response -> " + str(res))
 
                     time.sleep(2)
 

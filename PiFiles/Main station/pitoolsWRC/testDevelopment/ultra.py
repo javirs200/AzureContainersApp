@@ -3,18 +3,22 @@ import RPi.GPIO as GPIO
 import time
 
 distance = 0
+        
+PIN_TRIGGER = 40  
+PIN_ECHO = 38
+
+GPIO.setmode(GPIO.BOARD)
+
+GPIO.setup(PIN_TRIGGER, GPIO.OUT)
+GPIO.setup(PIN_ECHO, GPIO.IN)
+
+GPIO.output(PIN_TRIGGER, GPIO.LOW)
 
 def measure():
     global distance
     try:
         distance = 0
         
-        PIN_TRIGGER = 23  
-        PIN_ECHO = 24
-
-        GPIO.setup(PIN_TRIGGER, GPIO.OUT)
-        GPIO.setup(PIN_ECHO, GPIO.IN)
-
         GPIO.output(PIN_TRIGGER, GPIO.LOW)
 
         time.sleep(0.1)
