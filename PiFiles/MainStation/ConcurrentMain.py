@@ -43,16 +43,16 @@ if __name__ == "__main__":
     start_time2 = time.time()
 
     # Create two threads, each running a CPU-bound task
-    process1 = multiprocessing.Process(target=count_up)
-    process2 = multiprocessing.Process(target=count_down)
+    thread1 = threading.Thread(target=count_up)
+    thread2 = threading.Thread(target=count_down)
 
     # Start both threads
-    process1.start()
-    process2.start()
+    thread1.start()
+    thread2.start()
 
     # Wait for both threads to finish
-    process1.join()
-    process2.join()
+    thread1.join()
+    thread2.join()
 
     end_time2 = time.time()
 
