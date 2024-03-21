@@ -2,20 +2,59 @@
 import RPi.GPIO as GPIO
 import time
 
-distance = 0
-        
-PIN_TRIGGER = 40  
-PIN_ECHO = 38
+global farMeasure
+global distError
+global PIN_TRIGGER
+global PIN_ECHO
 
-GPIO.setmode(GPIO.BOARD)
+def ultraInit():
+    global farMeasure
+    global distError
+    global PIN_TRIGGER
+    global PIN_ECHO
 
-GPIO.setup(PIN_TRIGGER, GPIO.OUT)
-GPIO.setup(PIN_ECHO, GPIO.IN)
+    PIN_TRIGGER = 40  
+    PIN_ECHO = 38
 
-GPIO.output(PIN_TRIGGER, GPIO.LOW)
+    GPIO.setmode(GPIO.BOARD)
+
+    GPIO.setup(PIN_TRIGGER, GPIO.OUT)
+    GPIO.setup(PIN_ECHO, GPIO.IN)
+
+    GPIO.output(PIN_TRIGGER, GPIO.LOW)
+
+    print("some init")
+    farMeasure = 0
+    distError = 20
+    for i in range(0,4):
+        m = measure()
+        print("claibration " + str(m))
+        if(m > farMeasure):
+            farMeasure = m
+        time.sleep(1)
+    pass
+
+def measureForever():
+    global farMeasure
+    global distError
+
+    try:
+        while True:
+            treshold = (farMeasure - distError)
+
+            dist = (farMeasure + distError)
+
+            print("treshold " + str(treshold))
+
+            while dist > treshold :
+                dist = measure()
+                print("distance measured " + str(dist) + " treshold " + str(treshold) + str( ( dist < treshold ) ))
+            time.sleep(1)
+    except KeyboardInterrupt:
+        print("Measurement stopped by User")
+        GPIO.cleanup()
 
 def measure():
-    global distance
     try:
         distance = 0
         
