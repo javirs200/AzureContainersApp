@@ -60,8 +60,8 @@ if __name__ == "__main__":
 
     async def main_async():
         # Create two tasks, each running a CPU-bound task
-        task1 = asyncio.create_task(count_up())
-        task2 = asyncio.create_task(count_down())
+        task1 = asyncio.create_task(count_up_async())
+        task2 = asyncio.create_task(count_down_async())
 
         # Wait for both tasks to finish
         await asyncio.gather(task1, task2)
