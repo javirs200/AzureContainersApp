@@ -40,6 +40,8 @@ if __name__ == "__main__":
 
     end_time = time.time()
 
+    print(f"Time taken multiprocesing: {end_time - start_time} seconds")
+
     start_time2 = time.time()
 
     # Create two threads, each running a CPU-bound task
@@ -56,6 +58,8 @@ if __name__ == "__main__":
 
     end_time2 = time.time()
 
+    print(f"Time taken multitread: {end_time2 - start_time2} seconds")
+
     start_time3 = time.time()
 
     async def main_async():
@@ -70,6 +74,4 @@ if __name__ == "__main__":
 
     end_time3 = time.time()
     
-    print(f"Time taken multiprocesing: {end_time - start_time} seconds")
-    print(f"Time taken multitread: {end_time2 - start_time2} seconds")
     print(f"Time taken asyncio: {end_time3 - start_time3} seconds")
