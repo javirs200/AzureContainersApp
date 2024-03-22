@@ -48,7 +48,10 @@ def measureForever():
 
             while dist > treshold :
                 dist = measure()
-                print("distance measured " + str(dist) + " treshold " + str(treshold) + str( ( dist < treshold ) ))
+                time.sleep(0.5)
+            
+            print("distance measured " + str(dist) + " treshold " + str(treshold))
+
             time.sleep(1)
     except KeyboardInterrupt:
         print("Measurement stopped by User")

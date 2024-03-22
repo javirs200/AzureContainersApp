@@ -1,5 +1,6 @@
 from pirc522 import RFID
 import RPi.GPIO as GPIO
+import time
 
 global rdr
 global util
@@ -25,15 +26,20 @@ def rfidCall():
     global rdr
     global uidsScaned
     try:
+        print("ready for read")
         while(True):
-            print("ready for read")
             rdr.wait_for_tag()
             (error, data) = rdr.request()
             if not error:
                 (error, uid) = rdr.anticoll()
                 if not error:
-                    print("Detected new tag")
-                    uidsScaned.append(decodeList(uid))
+                    print("Detected tag")
+                    UUID = decodeList(uid)
+                    if UUID not in uidsScaned:
+                        uidsScaned.append(UUID)
+                        print("new tag UID: " + UUID)
+                    print("Scaned tags: " + str(uidsScaned))
+                    time.sleep(1)
     except Exception as e:
             print("ops somehing goes wrong")
             print(str(e))
