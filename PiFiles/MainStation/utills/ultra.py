@@ -2,14 +2,14 @@
 import RPi.GPIO as GPIO
 import time
 
-global farMeasure
-global distError
+global treshold
+global dist
 global PIN_TRIGGER
 global PIN_ECHO
 
 def ultraInit():
-    global farMeasure
-    global distError
+    global treshold
+    global dist
     global PIN_TRIGGER
     global PIN_ECHO
 
@@ -31,28 +31,30 @@ def ultraInit():
         print("claibration " + str(m))
         if(m > farMeasure):
             farMeasure = m
-        time.sleep(1)
+       
+        treshold = (farMeasure - distError)
+
+        dist = (farMeasure + distError)
+
+        print("treshold " + str(treshold))
     pass
 
-def measureForever():
-    global farMeasure
-    global distError
+def measureForever(uidsScaned):
+    global treshold
+    global dist
 
     try:
+        
         while True:
-            treshold = (farMeasure - distError)
-
-            dist = (farMeasure + distError)
-
-            print("treshold " + str(treshold))
-
-            while dist > treshold :
+            if len(uidsScaned) > 0:
                 dist = measure()
-                time.sleep(0.5)
-            
-            print("distance measured " + str(dist) + " treshold " + str(treshold))
-
-            time.sleep(1)
+                if dist < treshold :
+                    print("RFID tags detected: " + str(uidsScaned))
+                    print("distance measured " + str(dist) + "cm assigned to user: " + uidsScaned.pop(0))     
+                    print("RFID tags detected: " + str(uidsScaned))               
+                    time.sleep(1)                       
+            time.sleep(0.5)                   
+                
     except KeyboardInterrupt:
         print("Measurement stopped by User")
         GPIO.cleanup()

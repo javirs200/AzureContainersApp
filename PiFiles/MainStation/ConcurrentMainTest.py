@@ -1,24 +1,27 @@
-import multiprocessing
-import time
+from multiprocessing import Process,Manager
 
 from utills import ultra
 from utills import rfid
 
 
-def readRfid():
+def readRfid(uidsScaned):
     rfid.rfidInit()
-    rfid.rfidCall()
+    rfid.rfidCall(uidsScaned)
 
-def ultrasonicMeasure():
+def ultrasonicMeasure(uidsScaned):
     ultra.ultraInit()
-    ultra.measureForever()
+    ultra.measureForever(uidsScaned)
 
 
 if __name__ == "__main__":
 
+    uidsScaned = Manager().list()	
+
+    print("Starting main station" + "\n uuids: " + str(uidsScaned))
+
     # Create two threads, each running a CPU-bound task
-    process1 = multiprocessing.Process(target=readRfid)
-    process2 = multiprocessing.Process(target=ultrasonicMeasure)
+    process1 = Process(target=readRfid,args=(uidsScaned,))
+    process2 = Process(target=ultrasonicMeasure,args=(uidsScaned,))
 
     # Start both threads
     process1.start()

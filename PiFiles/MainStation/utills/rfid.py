@@ -4,17 +4,14 @@ import time
 
 global rdr
 global util
-global uidsScaned
 
 def rfidInit():
     global rdr
     global util
-    global uidsScaned
     rdr = RFID()
     util = rdr.util()
     # Set util debug to true - it will print what's going on
     util.debug = True
-    uidsScaned = []
 
 def decodeList(byte_array:list):
         dec_string = ""
@@ -22,9 +19,11 @@ def decodeList(byte_array:list):
                 dec_string = dec_string + str(b)
         return dec_string
 
-def rfidCall():
+def rfidCall(uidsScaned):
     global rdr
-    global uidsScaned
+
+    print(str(uidsScaned))
+
     try:
         print("ready for read")
         while(True):
