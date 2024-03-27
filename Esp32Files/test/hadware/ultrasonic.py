@@ -1,55 +1,64 @@
 from machine import Pin
-import time
-import uasyncio
-from mymath.utils import mean,median,mode
+import utime
 
 class ultrasonic:
-    def __init__(self):
-        self.trigPin1=Pin(4,Pin.OUT,0)
-        self.echoPin1=Pin(14,Pin.IN,0)
+    def getMeasureUltrasonic(self):
+        distance=0
+        self.PIN_TRIGGER.value(0)
+        utime.sleep_us(100)
+        self.PIN_TRIGGER.value(1)
+        utime.sleep_us(10)
+        self.PIN_TRIGGER.value(0)
+        # esparar hasta recibir una lectura del pin echo
+        while not self.PIN_ECHO.value():
+            pass
+        pingStart=utime.ticks_us()
+        while self.PIN_ECHO.value():
+            pass
+        pingStop=utime.ticks_us()
+        pingTime=utime.ticks_diff(pingStop,pingStart)
 
-        self.trigPin2=Pin(5,Pin.OUT,0)
-        self.echoPin2=Pin(25,Pin.IN,0)
+        # d=v*t 
+        distance=self.VelocidadSonido*pingTime
+        return int(distance)
+    
+    def __init__(self):
+
+        self.PIN_TRIGGER=Pin(4,Pin.OUT,0)
+        self.PIN_ECHO=Pin(14,Pin.IN,0)
 
         # velocidad del sonido en atmosfera terrestre 343.2 m/s
         # /10k convertir cm/microsegundo 
         # /2 ida y vuelta del pulso 
         self.VelocidadSonido = 0.01716
 
-    def getMeasureUltrasonic(self):
-        distance=0
-        self.trigPin.value(1)
-        time.sleep_us(10)
-        self.trigPin.value(0)
-        # esparar hasta recibir una lectura del pin echo
-        while not self.echoPin.value():
-            pass
-        pingStart=time.ticks_us()
-        while self.echoPin.value():
-            pass
-        pingStop=time.ticks_us()
-        pingTime=time.ticks_diff(pingStop,pingStart)
+        print("some init")
+        farMeasure = 0
+        distError = 20
+        for i in range(0,4):
+            m = self.getMeasureUltrasonic()
+            print("claibration " + str(m))
+            if(m > farMeasure):
+                farMeasure = m
+        
+            self.treshold = (farMeasure - distError)
 
-        # d=v*t 
-        distance=self.VelocidadSonido*pingTime
-        return int(distance)
+            self.dist = (farMeasure + distError)
 
-    async def calibrate(self):
-        measures1 = []
-        measures2 = []
+            print("treshold " + str(self.treshold))
+        pass
 
-        for i in range(1,5):
-            measures1.append(uasyncio.run(self.getMeasureUltrasonic()))
-            time.sleep_ms(50)
-
-        for i in range(1,5):
-            measures2.append(uasyncio.run(self.getMeasureUltrasonic()))
-            time.sleep_ms(50)
-
-        dataset = measures1 + measures2
-
-        maxd = max(dataset)
-        modes = mode(dataset)
-        meand = mean(dataset)
-        meadiand = median(dataset)
-        return maxd,modes,meand,meadiand
+    async def measureForever(self,uidsScaned):
+        try:
+            while True:
+                if len(uidsScaned) > 0:
+                    self.dist = self.getMeasureUltrasonic()
+                    if self.dist < self.treshold :
+                        print("RFID tags detected: " + str(uidsScaned))
+                        print("distance measured " + str(self.dist) + "cm assigned to user: " + uidsScaned.pop(0))     
+                        print("RFID tags detected: " + str(uidsScaned))               
+                        utime.sleep(1)                       
+                utime.sleep(0.5)                   
+        except Exception as e:
+            print("Measurement stopped in ultrasonic")
+            print(e)
