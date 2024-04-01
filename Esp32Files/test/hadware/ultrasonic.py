@@ -50,17 +50,16 @@ class ultrasonic:
         print("farMeasure " + str(farMeasure))  
         print("ready to measures")
 
-    async def measureForever(self,uidsScaned):
+    async def measureForever(self,timestamps):
         try:
             while True:
-                if len(uidsScaned) > 0:
-                    self.dist = self.getMeasureUltrasonic()
-                    if self.dist < self.treshold :
-                        print("RFID tags detected: " + str(uidsScaned))
-                        print("distance measured " + str(self.dist) + "cm assigned to user: " + uidsScaned.pop(0))     
-                        print("RFID tags detected: " + str(uidsScaned))               
-                        await sleep(1)                    
-                await sleep(0.5)                    
+                self.dist = self.getMeasureUltrasonic()
+                print("distance measured " + str(self.dist) + "cm")
+                print("timestamps ",timestamps)
+                if self.dist < self.treshold  :
+                    print("distance less than treshold")
+                    timestamps.append(utime.ticks_ms())
+                await sleep(0.2)                              
         except Exception as e:
             print("Measurement stopped in ultrasonic")
             print(e)

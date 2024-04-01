@@ -1,7 +1,6 @@
-from time import sleep_ms
+from uasyncio import sleep_ms
 from machine import Pin, SoftSPI
 from lib.mfrc522 import MFRC522
-from uasyncio import sleep_ms as sleep_ms_async
 
 class rfid:
     def __init__(self):
@@ -17,27 +16,13 @@ class rfid:
 
     def read(self):
         try:
-            while True:
-                (stat, tag_type) = self.rdr.request(self.rdr.REQIDL)
+            (stat, tag_type) = self.rdr.request(self.rdr.REQIDL)
+            if stat == self.rdr.OK:
+                (stat, raw_uid) = self.rdr.anticoll()
                 if stat == self.rdr.OK:
-                    (stat, raw_uid) = self.rdr.anticoll()
-                    if stat == self.rdr.OK:
-                        uid = ("0x%02x%02x%02x%02x" % (raw_uid[0], raw_uid[1], raw_uid[2], raw_uid[3]))
-                        return uid
-                sleep_ms(100)
+                    uid = ("0x%02x%02x%02x%02x" % (raw_uid[0], raw_uid[1], raw_uid[2], raw_uid[3]))
+                    return uid
+            return None
         except:
             print("ops somehing goes wrong")
-
-    async def do_read(self,uidsScaned):
-        try:
-            while True:
-                (stat, tag_type) = self.rdr.request(self.rdr.REQIDL)
-                if stat == self.rdr.OK:
-                    (stat, raw_uid) = self.rdr.anticoll()
-                    if stat == self.rdr.OK:
-                        self.uid = ("0x%02x%02x%02x%02x" % (raw_uid[0], raw_uid[1], raw_uid[2], raw_uid[3]))
-                        print(self.uid)
-                        uidsScaned.append(self.uid)
-                await sleep_ms_async(100)
-        except KeyboardInterrupt:
-            print("Bye")
+            return None

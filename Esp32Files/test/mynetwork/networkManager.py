@@ -1,4 +1,3 @@
-import socket
 import network
 import json
 from hadware.leds import led
@@ -21,10 +20,6 @@ class myNetwork:
         self.sta_if = network.WLAN(network.STA_IF) # wifi station mode
         self.sta_if.active(True) # wifi on
         
-        # self.s = socket.socket()
-    
-        # self.sconected = False
-        
         self.myled = led()
 
 
@@ -34,25 +29,18 @@ class myNetwork:
                 self.myled.turnOn()
                 try:
                     print("connecting to ",n["ssid"])
-                    time.sleep(1)
                     self.sta_if.connect(n["ssid"],n["pass"])
-                    time.sleep(1)
-                    print("connected to ",n["ssid"])
-                    return # exit function
-                    #addr = socket.getaddrinfo("raspberrypi", 65432)[0][-1]
-                    #self.s.connect(addr)
-                    # self.sconected = True 
+                    time.sleep(2)
+                    if self.sta_if.isconnected():
+                        print("connected to ",n["ssid"])
+                        return # exit function
                 except Exception as e:
                     self.myled.turnOff()
                     print('Exception ',e)
-                    # self.sconected = False
-                    # self.s.close()
                     self.sta_if.active(False) # wifi off
                     time.sleep(1)
                     self.sta_if.active(True) # wifi on
                     pass
-            
-
 
     def closeSocket(self):
         self.s.close()
