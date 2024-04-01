@@ -1,5 +1,6 @@
 from machine import Pin
 import utime
+from uasyncio import sleep
 
 class ultrasonic:
     def getMeasureUltrasonic(self):
@@ -32,7 +33,7 @@ class ultrasonic:
         # /2 ida y vuelta del pulso 
         self.VelocidadSonido = 0.01716
 
-        print("some init")
+        print("esp32 ultrasonic init")
         farMeasure = 0
         distError = 20
         for i in range(0,4):
@@ -45,8 +46,9 @@ class ultrasonic:
 
             self.dist = (farMeasure + distError)
 
-            print("treshold " + str(self.treshold))
-        pass
+        print("treshold " + str(self.treshold))
+        print("farMeasure " + str(farMeasure))  
+        print("ready to measures")
 
     async def measureForever(self,uidsScaned):
         try:
@@ -57,8 +59,8 @@ class ultrasonic:
                         print("RFID tags detected: " + str(uidsScaned))
                         print("distance measured " + str(self.dist) + "cm assigned to user: " + uidsScaned.pop(0))     
                         print("RFID tags detected: " + str(uidsScaned))               
-                        utime.sleep(1)                       
-                utime.sleep(0.5)                   
+                        await sleep(1)                    
+                await sleep(0.5)                    
         except Exception as e:
             print("Measurement stopped in ultrasonic")
             print(e)

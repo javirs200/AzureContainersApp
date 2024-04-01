@@ -1,14 +1,11 @@
 {
-    "networks":[{
-        "ssid":"POCOX6PRO",
-        "pass":"xcom1234"
-    },
+    "networks":[
     {
         "ssid":"rogG14",
         "pass":"xcom1234"
     },
     {
-        "ssid":"MIWIFI_ccHC",
-        "pass":"thEchPhf"
+        "ssid":"POCOX6PRO",
+        "pass":"xcom1234"
     }]
 }

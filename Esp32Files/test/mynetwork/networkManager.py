@@ -2,6 +2,7 @@ import socket
 import network
 import json
 from hadware.leds import led
+import time
 
 class myNetwork:
     def __init__(self):
@@ -15,34 +16,41 @@ class myNetwork:
         
         self.nets = self.jsondata["networks"]
 
-        self.sta_if = network.WLAN(network.STA_IF)
+        print("networks loaded ",self.nets)
+
+        self.sta_if = network.WLAN(network.STA_IF) # wifi station mode
+        self.sta_if.active(True) # wifi on
         
-        self.s = socket.socket()
+        # self.s = socket.socket()
     
-        self.sconected = False
+        # self.sconected = False
         
         self.myled = led()
 
 
     def connectOrReconect(self):
-        
-        while not self.sta_if.isconnected() or not self.sconected:
+        while not self.sta_if.isconnected(): # or not self.sconected:
             for n in self.nets:
                 self.myled.turnOn()
                 try:
-                    self.sta_if.active(True)
+                    print("connecting to ",n["ssid"])
+                    time.sleep(1)
                     self.sta_if.connect(n["ssid"],n["pass"])
-                    addr = socket.getaddrinfo("raspberrypi", 65432)[0][-1]
-                    self.s.connect(addr)
-                    self.sconected = True 
+                    time.sleep(1)
+                    print("connected to ",n["ssid"])
+                    return # exit function
+                    #addr = socket.getaddrinfo("raspberrypi", 65432)[0][-1]
+                    #self.s.connect(addr)
+                    # self.sconected = True 
                 except Exception as e:
                     self.myled.turnOff()
-                    print(e)
-                    self.sconected = False
-                    self.s.close()
-                    self.sta_if.active(False)
+                    print('Exception ',e)
+                    # self.sconected = False
+                    # self.s.close()
+                    self.sta_if.active(False) # wifi off
+                    time.sleep(1)
+                    self.sta_if.active(True) # wifi on
                     pass
-        self.myled.turnOff()
             
 
 
