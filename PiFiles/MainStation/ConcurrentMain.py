@@ -1,34 +1,27 @@
-import multiprocessing
-import threading
-import time
-import asyncio
+from multiprocessing import Process,Manager
 
-def count_up():
-    count = 0
-    for i in range(100000000):
-        count = count + i
+from utills import ultra
+from utills import rfid
 
-def count_down():
-    count = 0
-    for i in range(100000000):
-        count = count + i
 
-async def count_up_async():
-        count = 0
-        for i in range(100000000):
-            count = count + i
+def readRfid(uidsScaned):
+    rfid.rfidInit()
+    rfid.rfidCall(uidsScaned)
 
-async def count_down_async():
-    count = 0
-    for i in range(100000000):
-        count = count + i
+def ultrasonicMeasure(uidsScaned):
+    ultra.ultraInit()
+    ultra.measureForever(uidsScaned)
+
 
 if __name__ == "__main__":
-    start_time = time.time()
+
+    uidsScaned = Manager().list()	
+
+    print("Starting main station" + "\n uuids: " + str(uidsScaned))
 
     # Create two threads, each running a CPU-bound task
-    process1 = multiprocessing.Process(target=count_up)
-    process2 = multiprocessing.Process(target=count_down)
+    process1 = Process(target=readRfid,args=(uidsScaned,))
+    process2 = Process(target=ultrasonicMeasure,args=(uidsScaned,))
 
     # Start both threads
     process1.start()
@@ -38,40 +31,5 @@ if __name__ == "__main__":
     process1.join()
     process2.join()
 
-    end_time = time.time()
 
-    print(f"Time taken multiprocesing: {end_time - start_time} seconds")
-
-    start_time2 = time.time()
-
-    # Create two threads, each running a CPU-bound task
-    thread1 = threading.Thread(target=count_up)
-    thread2 = threading.Thread(target=count_down)
-
-    # Start both threads
-    thread1.start()
-    thread2.start()
-
-    # Wait for both threads to finish
-    thread1.join()
-    thread2.join()
-
-    end_time2 = time.time()
-
-    print(f"Time taken multitread: {end_time2 - start_time2} seconds")
-
-    start_time3 = time.time()
-
-    async def main_async():
-        # Create two tasks, each running a CPU-bound task
-        task1 = asyncio.create_task(count_up_async())
-        task2 = asyncio.create_task(count_down_async())
-
-        # Wait for both tasks to finish
-        await asyncio.gather(task1, task2)
-
-    asyncio.run(main_async())
-
-    end_time3 = time.time()
     
-    print(f"Time taken asyncio: {end_time3 - start_time3} seconds")
