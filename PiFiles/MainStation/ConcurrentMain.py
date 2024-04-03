@@ -1,24 +1,26 @@
-from multiprocessing import Process,Manager
+from multiprocessing import Process , Manager
 
 from utills import ultra
 from utills import rfid
+from utills import socketServer
+from utills import socketIoServer
 
 
 def readRfid(uidsScaned):
-    rfid.rfidInit()
-    rfid.rfidCall(uidsScaned)
+    RFIDReader = rfid.RFIDReader()
+    RFIDReader.rfidCall(uidsScaned)
 
 def ultrasonicMeasure(uidsScaned):
-    ultra.ultraInit()
-    ultra.measureForever(uidsScaned)
+    UltrasonicSensor = ultra.UltrasonicSensor()
+    UltrasonicSensor.measureForever(uidsScaned)
 
-def socketServer(uidsScaned):
-        # Code for socket server 1
-    pass
+def socketServerProcess():
+    server = socketServer.Server()
+    server.start()
 
-def socketIOServer(uidsScaned):
-        # Code for socket server 2
-    pass
+def socketIoServerProcess():
+    IoServer =  socketIoServer.IoServer()
+    IoServer.start()
 
 if __name__ == "__main__":
 
@@ -26,13 +28,13 @@ if __name__ == "__main__":
 
     print("Starting main station" + "\n uuids: " + str(uidsScaned))
 
-    # Create four threads, each running a CPU-bound task
+    # Create four processes, each running a CPU-bound task
     process1 = Process(target=readRfid,args=(uidsScaned))
     process2 = Process(target=ultrasonicMeasure,args=(uidsScaned))
-    process3 = Process(target=socketServer, args=(uidsScaned)) # server for the esp32
-    process4 = Process(target=socketIOServer, args=(uidsScaned)) # server for the web
+    process3 = Process(target=socketServerProcess, args=(uidsScaned)) # server for the esp32
+    process4 = Process(target=socketIoServerProcess, args=(uidsScaned)) # server for the web
 
-    # Start both threads
+    # Start all processes
     process1.start()
     process2.start()
     process3.start()

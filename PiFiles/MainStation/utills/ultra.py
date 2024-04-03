@@ -1,90 +1,80 @@
-#!/usr/bin/python
+import sys
 import RPi.GPIO as GPIO
 import time
 
-global treshold
-global dist
-global PIN_TRIGGER
-global PIN_ECHO
+class UltrasonicSensor:
+    def __init__(self):
+        self.PIN_TRIGGER = 40  
+        self.PIN_ECHO = 38
+        self.treshold = None
+        self.dist = None
 
-def ultraInit():
-    global treshold
-    global dist
-    global PIN_TRIGGER
-    global PIN_ECHO
+        GPIO.setmode(GPIO.BOARD)
 
-    PIN_TRIGGER = 40  
-    PIN_ECHO = 38
+        GPIO.setup(self.PIN_TRIGGER, GPIO.OUT)
+        GPIO.setup(self.PIN_ECHO, GPIO.IN)
 
-    GPIO.setmode(GPIO.BOARD)
+        GPIO.output(self.PIN_TRIGGER, GPIO.LOW)
 
-    GPIO.setup(PIN_TRIGGER, GPIO.OUT)
-    GPIO.setup(PIN_ECHO, GPIO.IN)
-
-    GPIO.output(PIN_TRIGGER, GPIO.LOW)
-
-    print("some init")
-    farMeasure = 0
-    distError = 20
-    for i in range(0,4):
-        m = measure()
-        print("claibration " + str(m))
-        if(m > farMeasure):
-            farMeasure = m
+        print("some init")
+        farMeasure = 0
+        distError = 20
+        for i in range(0,4):
+            m = self.measure()
+            print("claibration " + str(m))
+            if(m > farMeasure):
+                farMeasure = m
        
-        treshold = (farMeasure - distError)
+            self.treshold = (farMeasure - distError)
 
-        dist = (farMeasure + distError)
+            self.dist = (farMeasure + distError)
 
-        print("treshold " + str(treshold))
-    pass
+            print("treshold " + str(self.treshold))
 
-def measureForever(uidsScaned):
-    global treshold
-    global dist
-
-    try:
+    def measure(self):
+        try:
+            distance = 0
         
-        while True:
-            if len(uidsScaned) > 0:
-                dist = measure()
-                if dist < treshold :
-                    print("RFID tags detected: " + str(uidsScaned))
-                    print("distance measured " + str(dist) + "cm assigned to user: " + uidsScaned.pop(0))     
-                    print("RFID tags detected: " + str(uidsScaned))               
-                    time.sleep(1)                       
-            time.sleep(0.5)                   
-                
-    except KeyboardInterrupt:
-        print("Measurement stopped by User")
-        GPIO.cleanup()
+            GPIO.output(self.PIN_TRIGGER, GPIO.LOW)
 
-def measure():
-    try:
-        distance = 0
-        
-        GPIO.output(PIN_TRIGGER, GPIO.LOW)
+            time.sleep(0.1)
 
-        time.sleep(0.1)
+            GPIO.output(self.PIN_TRIGGER, GPIO.HIGH)
 
-        GPIO.output(PIN_TRIGGER, GPIO.HIGH)
+            time.sleep(0.00001)
 
-        time.sleep(0.00001)
+            GPIO.output(self.PIN_TRIGGER, GPIO.LOW)
 
-        GPIO.output(PIN_TRIGGER, GPIO.LOW)
+            while GPIO.input(self.PIN_ECHO)==0:
+                    pulse_start_time = time.time()
+            while GPIO.input(self.PIN_ECHO)==1:
+                    pulse_end_time = time.time()
 
-        while GPIO.input(PIN_ECHO)==0:
-                pulse_start_time = time.time()
-        while GPIO.input(PIN_ECHO)==1:
-                pulse_end_time = time.time()
+            pulse_duration = pulse_end_time - pulse_start_time
+            distance = round(pulse_duration * 17150, 2)
 
-        pulse_duration = pulse_end_time - pulse_start_time
-        distance = round(pulse_duration * 17150, 2)
+        except Exception as e:
+            print("exception : ", e)
+            distance = sys.maxsize
 
-    except Exception as e:
-        print("exception : ", e)
-        distance = 0
+        return distance
 
-    return distance
+    def measureForever(self,uidsScaned):
+        try:
+            
+            while True:
+                if len(uidsScaned) > 0:
+                    dist = self.measure()
+                    if dist < self.treshold :
+                        print("RFID tags detected: " + str(uidsScaned))
+                        print("distance measured " + str(dist) + "cm assigned to user: " + uidsScaned.pop(0))     
+                        print("RFID tags detected: " + str(uidsScaned))               
+                        time.sleep(1)                       
+                time.sleep(0.5)                              
+        except Exception as e:
+            print("Measurement stopped due to exception: ", e)
+            GPIO.cleanup()
+
+
 
  

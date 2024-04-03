@@ -1,31 +1,22 @@
 import socket
 
-# Create a socket object
-server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+class Server:
+    def __init__(self, address='localhost', port=12345):
+        self.server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server_address = (address, port)
+        self.server_socket.bind(self.server_address)
+        self.server_socket.listen(1)
+        print('Server is listening on {}:{}'.format(*self.server_address))
 
-# Define the server address and port
-server_address = ('localhost', 12345)
+    def start(self):
+        while True:
+            client_socket, client_address = self.server_socket.accept()
+            print('Received connection from {}:{}'.format(*client_address))
 
-# Bind the socket to the server address and port
-server_socket.bind(server_address)
+            data = client_socket.recv(1024)
+            print('Received data: {}'.format(data.decode()))
 
-# Listen for incoming connections
-server_socket.listen(1)
+            response = 'Hello from the server!'
+            client_socket.sendall(response.encode())
 
-print('Server is listening on {}:{}'.format(*server_address))
-
-while True:
-    # Accept a client connection
-    client_socket, client_address = server_socket.accept()
-    print('Received connection from {}:{}'.format(*client_address))
-
-    # Receive data from the client
-    data = client_socket.recv(1024)
-    print('Received data: {}'.format(data.decode()))
-
-    # Send a response back to the client
-    response = 'Hello from the server!'
-    client_socket.sendall(response.encode())
-
-    # Close the client socket
-    client_socket.close()
+            client_socket.close()
