@@ -4,11 +4,11 @@ import time
 
 class RFIDReader:
     def __init__(self):
+        GPIO.cleanup()
         self.rdr = RFID()
         self.util = self.rdr.util()
         # Set util debug to true - it will print what's going on
         self.util.debug = True
-        self.uidsScanned = []
 
     @staticmethod
     def decodeList(byte_array:list):
@@ -17,9 +17,9 @@ class RFIDReader:
             dec_string = dec_string + str(b)
         return dec_string
 
-    def rfidCall(self):
+    def rfidCall(self,uidsScaned):
         try:
-            print("ready for read",self.uidsScanned)
+            print("ready for read",uidsScaned)
             while(True):
                 self.rdr.wait_for_tag()
                 (error, data) = self.rdr.request()
@@ -28,10 +28,10 @@ class RFIDReader:
                     if not error:
                         print("Detected tag")
                         UUID = self.decodeList(uid)
-                        if UUID not in self.uidsScaned:
-                            self.uidsScaned.append(UUID)
+                        if UUID not in uidsScaned:
+                            uidsScaned.append(UUID)
                             print("new tag UID: " + UUID)
-                        print("Scaned tags: " + str(self.uidsScaned))
+                        print("Scaned tags: " + str(uidsScaned))
                         time.sleep(1)
         except Exception as e:
                 print("ops somehing goes wrong")
