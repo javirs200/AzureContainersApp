@@ -8,7 +8,7 @@ const port = process.env.PORT || 3000;
 const cors = require('cors');
 
 //utils
-const socket = require('./socket');
+const socket = require('./utils/socket');
 const server = http.createServer(app);
 const io = socket(server);
 
