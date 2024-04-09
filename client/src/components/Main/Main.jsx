@@ -14,6 +14,7 @@ import Times from "./Times";
 import UsersManager from "./DashboardAdmin/UsersManager";
 import EventsManager from "./DashboardAdmin/EventsManager";
 import CarsManager from "./Dashboard/CarsManager";
+import EventControl from "./DashboardAdmin/EventControl";
 
 
 const Main = () => {
@@ -27,6 +28,8 @@ const Main = () => {
         <Route path="/" element={logged ? <Navigate to={"/dashboard"} /> : <Landing />} />
 
         <Route path="/events" element={logged ? <EventsManager /> : <Navigate to={"/dashboard"} />} />
+
+        <Route path="/eventControl" element={logged ? <EventControl /> : <Navigate to={"/dashboard"} />} />
 
         <Route path="/login" element={logged ? <Navigate to={"/dashboard"} /> : <Login />} />
 
