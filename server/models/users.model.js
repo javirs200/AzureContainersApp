@@ -35,10 +35,6 @@ const users = db.define("users", {
     }
 );
 
-const cars = require('./cars.model')
-
-users.hasMany(cars);
-
 users.removeAttribute('id')
 
 module.exports = users;

@@ -16,7 +16,8 @@ const newParticipation = async (req, res) => {
         if (event) {
             let car = await carsModel.findOne({ where: { uuid: carUuid } });
             if (car) {
-                const data = { eventUuid,carUuid }
+                const uuid = uuidV4.v4()
+                const data = { uuid,eventUuid,carUuid }
                 const participation = await participationsModel.create(data)
                 res.status(201).json({ 'created participation ': participation });
             } else {
@@ -40,18 +41,25 @@ const addTime = async (req, res) => {
     try {
         let { carUuid, eventUuid , time , index } = req.body;
 
-        data = {carUuid,eventUuid}
+        if (index > 0 && index < 7 ){
 
-        data["t"+index.toString()] = time
+            let data = {carUuid,eventUuid}
 
-        // console.log("my data -> ", data);
+            data["t"+index.toString()] = time
 
-        let participation = await participationsModel.update(data,{ where: { carUuid, eventUuid } });
-        if (participation) {
-            res.status(200).json({ 'added time ': participation });
-        } else {
-            res.status(400).json({ msg: "no se ha podido encontrar la participacion " });
+            // console.log("my data -> ", data);
+
+            let participation = await participationsModel.update(data,{ where: { carUuid, eventUuid } });
+            if (participation) {
+                res.status(200).json({ 'added time ': participation });
+            } else {
+                res.status(400).json({ msg: "no se ha podido encontrar la participacion " });
+            }
+        }else{
+            res.status(400).json({ msg: "indice fuera de rango" });
         }
+
+        
     } catch (error) {
         console.log(`ERROR: ${error}`);
         res.status(400).json({ msj: `ERROR: ${error}` });
@@ -64,12 +72,23 @@ const getEventParticipations = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
     try {
-        const name = req.params.name
-        let event = await eventsModel.findOne({ where: { name } , attributes: ['name', 'uuid']});
-        if (event) {
-            let participations = await participationsModel.findAll({ where: { eventUuid: event.uuid } });
+        const name = req.params.eventName
+        if (name) {
+            let participations = await eventsModel.findOne({
+                where: { name },
+                attributes: ['name'],
+                include: {
+                    model: participationsModel,
+                    attributes: ['t1', 't2', 't3', 't4', 't5', 't6'],
+                    include: {
+                        model: carsModel,
+                        attributes: ['body'],
+                    }
+                }}
+            );
+            console.log(participations);
             if (participations) {
-                res.status(200).json({ 'all times ': participations });
+                res.status(200).json(participations);
             } else {
                 res.status(400).json({ msg: "no se ha podido encontrar los tiempos " });
             }

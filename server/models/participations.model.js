@@ -4,6 +4,11 @@ const { db } = require('../config/db_pgsql');
 const { DataTypes } = require('sequelize');
 
 const participations = db.define("participations", {
+    uuid: {
+        field: 'uuid',
+        type: DataTypes.UUID,
+        primaryKey: true,
+    },
     t1: {
         field: 't1',
         type: DataTypes.TIME
@@ -36,12 +41,6 @@ const participations = db.define("participations", {
         timestamps: false,
     }
 );
-
-const cars = require('./cars.model');
-const events = require('./events.model');
-
-cars.hasMany(participations)
-events.hasMany(participations)
 
 participations.removeAttribute('id')
 

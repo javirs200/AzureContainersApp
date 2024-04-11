@@ -35,4 +35,19 @@ const fetchEvents = async () => {
   return events;
 }
 
-export default { fetchCars, fetchEvents };
+const fetchParticipants = async (eventName) => {
+  if (!eventName) {
+    return [];
+  }
+  const url = `http://${import.meta.env.VITE_API_HOST}/api/participations/getParticipations/${eventName}`;
+  const options = {
+    method: "GET",
+    credentials: 'include',
+    headers: { "Content-Type": "application/json" },
+  };
+  const Participants = await fetchApi(url, options);
+  console.log(Participants);
+  return Participants;
+}
+
+export default { fetchCars, fetchEvents,fetchParticipants };
