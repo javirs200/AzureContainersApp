@@ -3,6 +3,7 @@ const eventsModel = require("../models/events.model");
 const carsModel = require("../models/cars.model");
 const { validationResult } = require('express-validator');
 const uuidV4 = require('uuid');
+const usersModel = require("../models/users.model");
 
 const newParticipation = async (req, res) => {
     const errors = validationResult(req);
@@ -17,7 +18,7 @@ const newParticipation = async (req, res) => {
             let car = await carsModel.findOne({ where: { uuid: carUuid } });
             if (car) {
                 const uuid = uuidV4.v4()
-                const data = { uuid,eventUuid,carUuid }
+                const data = { uuid, eventUuid, carUuid }
                 const participation = await participationsModel.create(data)
                 res.status(201).json({ 'created participation ': participation });
             } else {
@@ -39,27 +40,27 @@ const addTime = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
     try {
-        let { carUuid, eventUuid , time , index } = req.body;
+        let { carUuid, eventUuid, time, index } = req.body;
 
-        if (index > 0 && index < 7 ){
+        if (index > 0 && index < 7) {
 
-            let data = {carUuid,eventUuid}
+            let data = { carUuid, eventUuid }
 
-            data["t"+index.toString()] = time
+            data["t" + index.toString()] = time
 
             // console.log("my data -> ", data);
 
-            let participation = await participationsModel.update(data,{ where: { carUuid, eventUuid } });
+            let participation = await participationsModel.update(data, { where: { carUuid, eventUuid } });
             if (participation) {
                 res.status(200).json({ 'added time ': participation });
             } else {
                 res.status(400).json({ msg: "no se ha podido encontrar la participacion " });
             }
-        }else{
+        } else {
             res.status(400).json({ msg: "indice fuera de rango" });
         }
 
-        
+
     } catch (error) {
         console.log(`ERROR: ${error}`);
         res.status(400).json({ msj: `ERROR: ${error}` });
@@ -74,25 +75,34 @@ const getEventParticipations = async (req, res) => {
     try {
         const name = req.params.eventName
         if (name) {
-            let participations = await eventsModel.findOne({
-                where: { name },
-                attributes: ['name'],
-                include: {
-                    model: participationsModel,
-                    attributes: ['t1', 't2', 't3', 't4', 't5', 't6'],
-                    include: {
-                        model: carsModel,
-                        attributes: ['body'],
-                    }
-                }}
+            
+            let eventSearch = await participationsModel.findAll({
+                distinct: true,
+                attributes: ['t1', 't2', 't3', 't4', 't5', 't6'],
+                include:
+                    [
+                        {
+                            model: eventsModel,
+                            attributes: ['name'],
+                            where: { name }
+                        },
+                        { model: carsModel, 
+                        attributes: ['body'] ,
+                        include:
+                            { model: usersModel, 
+                            attributes: ['name']}
+                        }
+                    ]
+                
+            }
+
             );
-            console.log(participations);
-            if (participations) {
-                res.status(200).json(participations);
+            if (eventSearch) {
+                res.status(200).json(eventSearch);
             } else {
                 res.status(400).json({ msg: "no se ha podido encontrar los tiempos " });
             }
-        }else{
+        } else {
             res.status(400).json({ msg: "no se ha podido encontrar el evento " });
         }
     } catch (error) {
