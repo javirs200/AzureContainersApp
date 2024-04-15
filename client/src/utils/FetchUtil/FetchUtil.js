@@ -46,7 +46,7 @@ const fetchParticipants = async (eventName) => {
     headers: { "Content-Type": "application/json" },
   };
   const Participants = await fetchApi(url, options);
-  console.log(Participants);
+  // console.log("participantes del evento -> ",eventName , "son : " , Participants);
   return Participants;
 }
 
