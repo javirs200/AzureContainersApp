@@ -1,9 +1,10 @@
 const participationsModel = require("../models/participations.model");
 const eventsModel = require("../models/events.model");
 const carsModel = require("../models/cars.model");
-const { validationResult } = require('express-validator');
+const { validationResult, body } = require('express-validator');
 const uuidV4 = require('uuid');
 const usersModel = require("../models/users.model");
+const { Op } = require("sequelize");
 
 const newParticipation = async (req, res) => {
     const errors = validationResult(req);
@@ -33,6 +34,43 @@ const newParticipation = async (req, res) => {
         res.status(400).json({ msj: `ERROR: ${error}` });
     }
 };
+
+const getMyParticipations = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+        const email = req.params.email
+        let eventSearch = await participationsModel.findAll({
+            attributes: ['t1'],
+            include:
+                [
+                    {
+                        model: eventsModel,
+                        attributes: ['name'],
+                    },
+                    { model: carsModel, 
+                    attributes: ['body'] ,
+                    where: { body: {[Op.not] : null}},
+                    include:
+                        { model: usersModel, 
+                        attributes: [],
+                        where: { email:email } }
+                    }
+                ]
+        }
+        );
+        if (eventSearch) {
+            res.status(200).json(eventSearch);
+        } else {
+            res.status(400).json({ msg: "no se ha podido encontrar las participaciones " });
+        }
+    } catch (error) {
+        console.log(`ERROR: ${error}`);
+        res.status(400).json({ msj: `ERROR: ${error}` });
+    }
+}
 
 const addTime = async (req, res) => {
     const errors = validationResult(req);
@@ -114,6 +152,7 @@ const getEventParticipations = async (req, res) => {
 
 module.exports = {
     getEventParticipations,
+    getMyParticipations,
     newParticipation,
     addTime,
 };

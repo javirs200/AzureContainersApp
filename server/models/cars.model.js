@@ -20,7 +20,6 @@ const cars = db.define("cars", {
     body: {
         field: 'body',
         type: DataTypes.STRING(50),
-        unique:true
     },
 },
     {
