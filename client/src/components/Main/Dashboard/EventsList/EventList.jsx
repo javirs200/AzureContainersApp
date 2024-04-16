@@ -36,11 +36,12 @@ const EventsList = () => {
         });
         if (response.status === 201) {
           let data = await response.json()
+          console.log("participacion registrada", data);
           alert('participacion registrada !')
         } else {
           let data = await response.json()
           alert('participacion response warning')
-          console.log("warning",data);
+          console.log("warning", data);
         }
         navigate("/");
       } catch (error) {
