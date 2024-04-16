@@ -21,9 +21,9 @@ const connectSQL = async () => {
         db.participations = require('../models/participations.model')
 
         console.log('add relations to db');
-        db.cars.hasMany(db.participations)
+        db.cars.hasOne(db.participations)
         db.participations.belongsTo(db.cars)
-        db.events.hasMany(db.participations)
+        db.events.hasOne(db.participations)
         db.participations.belongsTo(db.events)
         db.users.hasMany(db.cars);
         db.cars.belongsTo(db.users);
