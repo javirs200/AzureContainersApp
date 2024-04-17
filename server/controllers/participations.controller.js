@@ -18,14 +18,19 @@ const newParticipation = async (req, res) => {
         if (event) {
             let car = await carsModel.findOne({ where: { uuid: carUuid } });
             if (car) {
+                let searchForParticipation = await participationsModel.findOne({ where: { carUuid , eventUuid  } });
+                if (!searchForParticipation) {
+                    console.log("respuesta -> ", searchForParticipation);
                 const uuid = uuidV4.v4()
                 const data = { uuid, eventUuid, carUuid }
                 const participation = await participationsModel.create(data)
                 res.status(201).json({ 'created participation ': participation });
+                } else {
+                    res.status(400).json({ msg: "ya estas participando en este evento" });
+                }
             } else {
                 res.status(400).json({ msg: "no se ha podido encontrar el coche " });
             }
-
         } else {
             res.status(400).json({ msg: "no se ha podido encontrar el evento " });
         }

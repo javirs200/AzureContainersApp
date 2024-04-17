@@ -40,8 +40,11 @@ const EventsList = () => {
           alert('participacion registrada !')
         } else {
           let data = await response.json()
-          alert('participacion response warning')
-          console.log("warning", data);
+          console.log("participacion warning", JSON.stringify(data));
+          if (data.msg) {
+            console.log("participacion warning", JSON.stringify(data));
+            alert(data.msg.toString())
+          }
         }
         navigate("/");
       } catch (error) {
