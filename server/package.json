@@ -9,7 +9,8 @@
     "start": "node app.js",
     "dev": "nodemon app.js",
     "populate": "node ./scripts/populateDatabase.js",
-    "clear": "node ./scripts/clearDatabase.js"
+    "clear": "node ./scripts/clearDatabase.js",
+    "init": "node ./scripts/initDatabase.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
