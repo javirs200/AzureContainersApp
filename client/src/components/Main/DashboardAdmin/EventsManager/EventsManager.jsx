@@ -19,7 +19,7 @@ const EventsManager = () => {
   const navigate = useNavigate();
   const { eventName,setEventName } = useContext(UserContext)
 
-  console.log("EventsManager -> FetchUtil", FetchUtil);
+  // console.log("EventsManager -> FetchUtil", FetchUtil);
 
   const { fetchEvents } = FetchUtil;
 

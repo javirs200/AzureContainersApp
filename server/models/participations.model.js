@@ -37,12 +37,6 @@ const participations = db.define("participations", {
     }
 );
 
-const cars = require('./cars.model');
-const events = require('./events.model');
-
-cars.hasMany(participations)
-events.hasMany(participations)
-
 participations.removeAttribute('id')
 
 module.exports = participations;

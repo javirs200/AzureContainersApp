@@ -29,7 +29,9 @@ const Main = () => {
 
         <Route path="/events" element={logged ? <EventsManager /> : <Navigate to={"/dashboard"} />} />
 
-        <Route path="/eventControl" element={logged ? <EventControl /> : <Navigate to={"/dashboard"} />} />
+        {/* <Route path="/eventControl" element={logged ? <EventControl /> : <Navigate to={"/dashboard"} />} /> */}
+
+        <Route path="/eventControl" element= {<EventControl/>} />
 
         <Route path="/login" element={logged ? <Navigate to={"/dashboard"} /> : <Login />} />
 

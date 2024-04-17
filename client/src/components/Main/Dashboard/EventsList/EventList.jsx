@@ -36,11 +36,15 @@ const EventsList = () => {
         });
         if (response.status === 201) {
           let data = await response.json()
+          console.log("participacion registrada", data);
           alert('participacion registrada !')
         } else {
           let data = await response.json()
-          alert('participacion response warning')
-          console.log("warning",data);
+          console.log("participacion warning", JSON.stringify(data));
+          if (data.msg) {
+            console.log("participacion warning", JSON.stringify(data));
+            alert(data.msg.toString())
+          }
         }
         navigate("/");
       } catch (error) {
@@ -51,12 +55,12 @@ const EventsList = () => {
   }
 
   const handleChange = (e) => {
-    console.log("coche elegido", e.target.value);
+    // console.log("coche elegido", e.target.value);
     setCarUuid(e.target.value)
   }
 
   const drawList = () => {
-    console.log("dibujando coches ", cars);
+    // console.log("dibujando coches ", cars);
     return cars.map((el) => {
       return <MenuItem key={uuidv4()} value={el.uuid}>{el.body}</MenuItem>
     })

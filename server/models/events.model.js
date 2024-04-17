@@ -16,7 +16,8 @@ const events = db.define("events", {
     },
     date: {
         field: 'date',
-        type: DataTypes.DATEONLY
+        type: DataTypes.DATEONLY,
+        unique: true
     },
     description: {
         field: 'description',

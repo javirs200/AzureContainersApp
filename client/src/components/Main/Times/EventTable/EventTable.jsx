@@ -1,15 +1,10 @@
 import React, { useState, useEffect, useContext } from "react";
-import { UserContext } from "../../../../context/userContext";
-
-import Listado from '../../../../utils/Listado';
-
-// import { v4 as uuidv4 } from "uuid";
-// import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../../context/userContext"
 import FetchUtil from "../../../../utils/FetchUtil";
 
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
 
-const EventControl = () => {
+const EventTable = () => {
 
   const { fetchParticipants } = FetchUtil;
 
@@ -21,7 +16,7 @@ const EventControl = () => {
     if (eventName !== '') {
       fetchParticipants(eventName).then((data) => setParticipants(data));
     }
-  }, [])
+  }, [eventName])
 
   const drawTable = (data) => {
     if (data.length === 0) {
@@ -69,8 +64,7 @@ const EventControl = () => {
 
   return (
     <>
-      <section className="Participants">
-        <h3>Evento Selecionado : {eventName}</h3>
+      <section className="EventTable">
         {drawTable(Participants)}
       </section>
     </>
@@ -78,4 +72,4 @@ const EventControl = () => {
   );
 };
 
-export default EventControl;
+export default EventTable;
