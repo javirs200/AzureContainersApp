@@ -3,10 +3,13 @@ import Listado from '../../../../utils/Listado';
 import { UserContext } from "../../../../context/userContext";
 import { v4 as uuidv4 } from "uuid";
 import { useNavigate } from "react-router-dom";
+import FetchUtil from "../../../../utils/FetchUtil";
 
 import { FormControl, Button, Select, MenuItem, InputLabel } from "@mui/material";
 
 const EventsList = () => {
+
+  const { fetchEvents, fetchCars } = FetchUtil;
 
   const navigate = useNavigate();
   const { email, eventUuid, eventName } = useContext(UserContext)
@@ -14,63 +17,9 @@ const EventsList = () => {
   const [cars, setCars] = useState([]);
   const [carUuid, setCarUuid] = useState('');
 
-  const fetchEvents = () => {
-
-    const fetchApi = async () => {
-      try {
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/events/all`, {
-          method: "GET",
-          credentials: 'include',
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const data = await response.json()
-
-        // console.log('todos los eventos ', data);
-
-        if (data) {
-          setEvents(data)
-        } else {
-          setEvents([])
-        }
-      } catch {
-        setEvents([])
-      }
-    }
-    fetchApi();
-  }
-
-  const fetchCars = () => {
-
-    const fetchApi = async () => {
-      try {
-
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/cars/getfromUser/${email}`, {
-          method: "GET",
-          credentials: 'include',
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const data = await response.json()
-
-        // console.log('todos los coches de ', email, ' -> ', data);
-
-        if (data) {
-          setCars(data)
-        } else {
-          setCars([])
-        }
-      } catch {
-        setCars([])
-      }
-    }
-    fetchApi();
-  }
-
-
   useEffect(() => {
-    fetchEvents()
-    fetchCars()
+    fetchCars(email).then((data) => setCars(data));
+    fetchEvents().then((data) => setEvents(data));
   }, [])
 
   const handleSubmit = (e) => {
@@ -87,11 +36,15 @@ const EventsList = () => {
         });
         if (response.status === 201) {
           let data = await response.json()
+          console.log("participacion registrada", data);
           alert('participacion registrada !')
         } else {
           let data = await response.json()
-          alert('participacion response warning')
-          console.log("warning",data);
+          console.log("participacion warning", JSON.stringify(data));
+          if (data.msg) {
+            console.log("participacion warning", JSON.stringify(data));
+            alert(data.msg.toString())
+          }
         }
         navigate("/");
       } catch (error) {
@@ -102,12 +55,12 @@ const EventsList = () => {
   }
 
   const handleChange = (e) => {
-    console.log("coche elegido", e.target.value);
+    // console.log("coche elegido", e.target.value);
     setCarUuid(e.target.value)
   }
 
   const drawList = () => {
-    console.log("dibujando coches ", cars);
+    // console.log("dibujando coches ", cars);
     return cars.map((el) => {
       return <MenuItem key={uuidv4()} value={el.uuid}>{el.body}</MenuItem>
     })

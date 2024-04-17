@@ -1,49 +1,38 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Listado from '../../../../utils/Listado';
+import FetchUtil from "../../../../utils/FetchUtil";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+
+import { useNavigate } from "react-router-dom";
 
 import dayjs from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
+import { UserContext } from "../../../../context/userContext";
+
 const EventsManager = () => {
+
+  const navigate = useNavigate();
+  const { eventName,setEventName } = useContext(UserContext)
+
+  // console.log("EventsManager -> FetchUtil", FetchUtil);
+
+  const { fetchEvents } = FetchUtil;
 
   const [events, setEvents] = useState([]);
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [date, setDate] = useState(dayjs());
 
-  const fetchEvents = () => {
-
-    const fetchApi = async () => {
-      try {
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/events/all`, {
-          method: "GET",
-          credentials: 'include',
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const data = await response.json()
-
-        // console.log('todos los eventos ', data);
-
-        if (data) {
-          setEvents(data)
-        } else {
-          setEvents([])
-        }
-      } catch {
-        setEvents([])
-      }
-    }
-    fetchApi();
-  }
-
   useEffect(() => {
-    fetchEvents()
+    // reset event name
+    setEventName('')
+    // load events
+    fetchEvents().then((data) => setEvents(data));
   }, [])
 
   const handleSubmitCreate = (e) => {
@@ -62,7 +51,7 @@ const EventsManager = () => {
           let data = await response.json()
           alert('evento creado')
           // console.log("ok create , data api -> ", data);
-          fetchEvents()
+          fetchEvents().then((data) => setEvents(data));
         } else {
           let data = await response.json()
           alert('error')
@@ -76,10 +65,15 @@ const EventsManager = () => {
     createEvent()
   }
 
+  const handleclick = (e) => {
+    console.log("click evento " ,eventName );
+    navigate("/eventControl");
+  }
+
   return (
     <>
       <section className="Events">
-        <Listado title={'Eventos'} elementos={events} mode={0} />
+        <Listado title={'Eventos'} elementos={events} mode={3} />
       </section>
       <section className="eventControls">
         <form onSubmit={handleSubmitCreate} className="form_add_event">
@@ -95,6 +89,8 @@ const EventsManager = () => {
           </LocalizationProvider>
           <Button variant="contained" type="submit">Añadir</Button>
         </form>
+        <h3>Evento Selecionado : {eventName}</h3>
+        <Button variant="outlined" type="submit" onClick={handleclick} >Controlar</Button>
       </section>
     </>
 

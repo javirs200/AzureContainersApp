@@ -1,0 +1,9 @@
+.Times > div> ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}

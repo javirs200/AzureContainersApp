@@ -4,8 +4,12 @@ import { UserContext } from "../../../../context/userContext";
 
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
+import FetchUtil from "../../../../utils/FetchUtil";
+
 
 const CarsManager = () => {
+
+  const { fetchCars } = FetchUtil;
 
   const [cars, setCars] = useState([]);
   const [Brand, setBrand] = useState('');
@@ -14,37 +18,8 @@ const CarsManager = () => {
 
   const { email, carUuid, carName } = useContext(UserContext);
 
-  // useEffect(() => { console.log('uuid coche -> ', carUuid); }, [carUuid])
-
-  const fetchCars = () => {
-
-    const fetchApi = async () => {
-      try {
-
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/cars/getfromUser/${email}`, {
-          method: "GET",
-          credentials: 'include',
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const data = await response.json()
-
-        // console.log('todos los coches de ', email, ' -> ', data);
-
-        if (data) {
-          setCars(data)
-        } else {
-          setCars([])
-        }
-      } catch {
-        setCars([])
-      }
-    }
-    fetchApi();
-  }
-
   useEffect(() => {
-    fetchCars()
+    fetchCars(email).then((data) => setCars(data));
   }, [])
 
   const handleSubmitCreate = (e) => {
@@ -63,7 +38,7 @@ const CarsManager = () => {
           let data = await response.json()
           alert('coche creado')
           // console.log("ok create , data api -> ", data);
-          fetchCars()
+          fetchCars(email).then((data) => setCars(data));
         } else {
           let data = await response.json()
           alert('error')

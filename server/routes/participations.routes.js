@@ -11,4 +11,8 @@ const apiKeyValidator = require('../middleware/apiKeyValidator')
 participationsRouter.post("/new/",getAccessToken,participationsController.newParticipation)
 participationsRouter.put("/addTime/", participationsController.addTime);
 
+participationsRouter.get("/getParticipations/:eventName",participationsController.getEventParticipations)
+participationsRouter.get("/getMyParticipations/:email",participationsController.getMyParticipations)
+
+
 module.exports = participationsRouter;
