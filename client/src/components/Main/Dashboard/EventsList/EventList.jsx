@@ -9,7 +9,7 @@ import { FormControl, Button, Select, MenuItem, InputLabel } from "@mui/material
 
 const EventsList = () => {
 
-  const { fetchEvents, fetchCars } = FetchUtil;
+  const { fetchEvents, fetchCars,fetchNewParticipation } = FetchUtil;
 
   const navigate = useNavigate();
   const { email, eventUuid, eventName } = useContext(UserContext)
@@ -28,12 +28,7 @@ const EventsList = () => {
       try {
         const participation = { carUuid: carUuid, eventUuid: eventUuid };
 
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/participations/new`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: 'include',
-          body: JSON.stringify(participation),
-        });
+        const response = await fetchNewParticipation(participation);
         if (response.status === 201) {
           let data = await response.json()
           console.log("participacion registrada", data);

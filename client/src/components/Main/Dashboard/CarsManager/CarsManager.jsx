@@ -9,7 +9,7 @@ import FetchUtil from "../../../../utils/FetchUtil";
 
 const CarsManager = () => {
 
-  const { fetchCars } = FetchUtil;
+  const { fetchCars,addCar,removeCar } = FetchUtil;
 
   const [cars, setCars] = useState([]);
   const [Brand, setBrand] = useState('');
@@ -28,12 +28,7 @@ const CarsManager = () => {
       const car = { 'email': email, 'carBrand': Brand, 'carModel': Model, 'carBody': Body }
       // console.log("coche para crear ", car);
       try {
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/cars/addtoUser`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: 'include',
-          body: JSON.stringify(car),
-        });
+        const response = await addCar(car);
         if (response.status === 200) {
           let data = await response.json()
           alert('coche creado')
@@ -57,20 +52,15 @@ const CarsManager = () => {
     const deleteUser = async () => {
       // console.log(edit);
       try {
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/cars/remove`, {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          credentials: 'include',
-          body: JSON.stringify({ 'uuid': carUuid }),
-        });
+        const response = removeCar(carUuid)
         if (response.status === 200) {
           let data = await response.json()
-          alert('usuario borrado')
+          alert('Coche borrado')
           // console.log("ok delete , data api -> ", data);
           fetchCars()
         } else {
           let data = await response.json()
-          alert('error usuario no borrado')
+          alert('error Coche no borrado')
           console.log("data api -> ", data);
         }
 

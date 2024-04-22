@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Listado from '../../../../utils/Listado';
+import FetchUtil from "../../../../utils/FetchUtil/FetchUtil";
 
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
@@ -10,55 +11,14 @@ import UpdateIcon from "@mui/icons-material/Cached"
 
 const UsersManager = () => {
 
+  const { fetchDeleteUser,fetchUsers,fetchEditUser } = FetchUtil;
+
   const [users, setUsers] = useState([]);
   const [selectRole, setSelectRole] = useState('');
   const [selectEmail, setSelectEmail] = useState('');
 
-  const fetchUsers = () => {
-
-    const fetchApi = async () => {
-      try {
-
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/users/`, {
-          method: "GET",
-          credentials: 'include',
-          headers: { "Content-Type": "application/json" },
-        });
-
-        const data = await response.json()
-
-        // console.log('todos los usuarios registrados ->', data);
-
-        if (data) {
-          // console.log('users from fetch -> ',data);
-          setUsers(data)
-        } else {
-          setUsers([
-            {
-              "name": "demo",
-              "email": "demo@demo.com",
-              "rol": "driver"
-            }
-          ])
-        }
-
-      } catch {
-        setUsers([
-          {
-            "name": "demo",
-            "email": "demo@demo.com",
-            "rol": "driver"
-          }
-        ])
-      }
-
-    }
-
-    fetchApi();
-  }
-
   useEffect(() => {
-    fetchUsers()
+    fetchUsers().then((data) => setUsers(data));
   }, [])
 
   const handleSubmit = (e) => {
@@ -67,12 +27,7 @@ const UsersManager = () => {
       const edit = { email: selectEmail, role: selectRole }
       // console.log(edit);
       try {
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/users/privileges`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          credentials: 'include',
-          body: JSON.stringify(edit),
-        });
+        const response = await fetchEditUser(edit)
         if (response.status === 200) {
           let data = await response.json()
           alert('usuario actualizado')
@@ -99,12 +54,7 @@ const UsersManager = () => {
     const deleteUser = async () => {
       // console.log(edit);
       try {
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/users/delete`, {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          credentials: 'include',
-          body: JSON.stringify({ 'email': selectEmail }),
-        });
+        const response = await fetchDeleteUser(selectEmail);
         if (response.status === 200) {
           let data = await response.json()
           alert('usuario borrado')

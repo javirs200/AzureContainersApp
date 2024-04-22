@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import FetchUtil from "../../../utils/FetchUtil/FetchUtil";
 import { UserContext } from "../../../context/userContext";
 import Button from "@mui/material/Button";
 import IconButton from '@mui/material/IconButton';
@@ -14,6 +15,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const Login = () => {
 
+  const { loginUser } = FetchUtil;
+
   const [showPassword, setShowPassword] = useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -24,41 +27,16 @@ const Login = () => {
 
   const navigate = useNavigate();
   const [emailField, setEmailField] = useState("");
-  const [emailMessage, setEmailMessage] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordMessage, setPasswordMessage] = useState("");
   const { setLoggedIn, setRole,setEmail } = useContext(UserContext);
-
-  useEffect(() => {
-    const passwordValidation = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{9,}$/
-    if (!passwordValidation.test(password) && password.length > 0) {
-      setPasswordMessage("Password must contain lowecase, uppercase, digit and special character");
-    } else {
-      setPasswordMessage("");
-    }
-  }, [password])
-
-  useEffect(() => {
-    const emailValidation = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    if (!emailValidation.test(emailField) && emailField.length > 0) {
-      setEmailMessage("Email must have a valid format");
-    } else {
-      setEmailMessage("");
-    }
-  }, [emailField])
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const loginUser = async () => {
+    const login = async () => {
       const user = { email: emailField, password: password };
       // console.log("user data form form -> ", user);
       //peticion api para login con objeto usuario
-      const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: 'include',
-        body: JSON.stringify(user),
-      });
+      const response = await loginUser(user); 
       if (response.status === 200) {
         let data = await response.json()
         setLoggedIn(true);
@@ -67,10 +45,10 @@ const Login = () => {
         setEmail(emailField);
         navigate("/dashboard");
       } else {
-        alert("datos de acceso incorrectos , intentelo de nuevo");
+        alert("Datos de acceso incorrectos , intentelo de nuevo");
       }
     };
-    loginUser();
+    login();
   };
 
   return (

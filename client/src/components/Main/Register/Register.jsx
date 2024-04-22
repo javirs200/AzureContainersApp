@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../../context/userContext";
+import FetchUtil from "../../../utils/FetchUtil/FetchUtil";
 import Button from "@mui/material/Button";
 import IconButton from '@mui/material/IconButton';
 import Input from '@mui/material/Input';
@@ -13,6 +14,8 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import FormHelperText from "@mui/material/FormHelperText";
 
 const Register = () => {
+
+    const {fetchNewUser} = FetchUtil;
 
     const [showPassword, setShowPassword] = useState(false);
 
@@ -30,7 +33,6 @@ const Register = () => {
     const [password2, setPassword2] = useState("");
     const [passwordMessage, setPasswordMessage] = useState("");
     const [passwordMessage2, setPasswordMessage2] = useState("");
-    const [role, setRole] = useState("");
 
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{6,}$/
 
@@ -69,12 +71,7 @@ const Register = () => {
 
                 // console.log(user);
 
-                const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/users/register`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    credentials: 'include',
-                    body: JSON.stringify(user),
-                });
+                const response = await fetchNewUser(user);
                 if (response.status === 200) {
                     let data = await response.json()
                     // console.log("ok register , data api -> ", data);
