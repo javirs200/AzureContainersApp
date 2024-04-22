@@ -59,7 +59,7 @@ const Login = () => {
         <TextField sx={{ m: 2, width: '22ch' }} id="email" label="Email" variant="standard" onChange={(e) => setEmailField(e.target.value)} />
 
         <FormControl sx={{ m: 2, width: '22ch' }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+          <InputLabel htmlFor="standard-adornment-password">Contraseña</InputLabel>
           <Input
             onChange={(e) => setPassword(e.target.value)}
             id="standard-adornment-password"
@@ -67,7 +67,7 @@ const Login = () => {
             endAdornment={
               <InputAdornment position="end">
                 <IconButton
-                  aria-label="toggle password visibility"
+                  aria-label="ver Contraseña"
                   onClick={handleClickShowPassword}
                   onMouseDown={handleMouseDownPassword}
                 >
@@ -77,7 +77,7 @@ const Login = () => {
             }
           />
         </FormControl>
-
+        <br />
         <Button variant="contained" type="submit">Continuar</Button>
       </form>
     </section >

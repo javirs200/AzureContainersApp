@@ -5,7 +5,7 @@ const Footer = () => {
   return (<>
       <div className='miFooter'>
         <QrComponent/>
-        <h3>Made by Javi</h3>
+        <h3>Hecho por Javi</h3>
       </div>
   </>);
 };

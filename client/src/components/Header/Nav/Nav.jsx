@@ -25,7 +25,7 @@ const Nav = () => {
           </ul>
         :
         <ul>
-          <li><Link className={'link'} to='/login'>login</Link></li>
+          <li><Link className={'link'} to='/login'>Identificarse</Link></li>
           <li><Link className={'link'} to='/register'>Registro</Link></li>
           <li><Link className={'link'} to='/times'>Tiempos</Link></li>
         </ul>

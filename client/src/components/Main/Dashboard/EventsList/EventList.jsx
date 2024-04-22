@@ -50,12 +50,10 @@ const EventsList = () => {
   }
 
   const handleChange = (e) => {
-    // console.log("coche elegido", e.target.value);
     setCarUuid(e.target.value)
   }
 
   const drawList = () => {
-    // console.log("dibujando coches ", cars);
     return cars.map((el) => {
       return <MenuItem key={uuidv4()} value={el.uuid}>{el.body}</MenuItem>
     })

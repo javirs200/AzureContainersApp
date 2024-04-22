@@ -15,16 +15,16 @@ const Logout = () => {
     const response = await logoutUser();
     if (response.status === 200) {
       setLoggedIn(false);
-      alert("logout correcto");
+      alert("Sesión cerrada correctamente");
       navigate("/");
     } else {
-      alert("fallo logout");
+      alert("Fallo al cerrar sesión");
     }
   }
   return (
     <>
       <Button variant="contained" onClick={handleClick}>
-        Logout
+        Cerrar sesión
       </Button>
     </>
   );
