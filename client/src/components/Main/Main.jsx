@@ -46,7 +46,7 @@ const Main = () => {
         } />
         <Route path="/myCars" element={
           <ProtectedRoutes logged={logged} component={
-            <RoleManager role={role} allowedRoles={['driver']} component={<CarsManager />} />
+            <RoleManager role={role} allowedRoles={['driver','admin']} component={<CarsManager />} />
           } />
         } />
         <Route path="/users" element={
