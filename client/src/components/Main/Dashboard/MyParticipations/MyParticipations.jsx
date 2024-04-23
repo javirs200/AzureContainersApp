@@ -18,11 +18,11 @@ const MyParticipations = () => {
 
     return (
         <div className="MyParticipations">
-            <h2>My Participations</h2>
+            <h2>Mis inscripciones</h2>
             <ul>
                 {Participants ? Participants.map((participation,index) => (
-                    <li key={index}><h3>{participation.event.name + ":" + participation.car.body}</h3>  </li>
-                )): <li>There are no participations</li>}
+                    <li key={index}><h2 className="inscription">{participation.event.name + ":" + participation.car.body}</h2>  </li>
+                )): <li>Aun no estas inscrito en ningun evento</li>}
             </ul>
         </div>
     );
