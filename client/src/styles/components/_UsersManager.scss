@@ -1,16 +1,9 @@
-.users,.listado,.usersControls,form{
-    display: flex;
-    flex-direction: column;
+.users {
+    display: block;
+    width: 75%;
 }
 
-ul{
-    display: flex;
-    flex-direction: column;
-}
-
-.Elemento{
-    padding: 5px;
-    margin: 2px;
-    border: 1px solid white;
-    border-radius: 25px;
+.users>div>ul {
+    flex-direction: row;
+    justify-content: space-around;
 }

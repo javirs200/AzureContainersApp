@@ -9,7 +9,7 @@ import { FormControl, Button, Select, MenuItem, InputLabel } from "@mui/material
 
 const EventsList = () => {
 
-  const { fetchEvents, fetchCars,fetchNewParticipation } = FetchUtil;
+  const { fetchEvents, fetchMyCars,fetchNewParticipation } = FetchUtil;
 
   const navigate = useNavigate();
   const { email, eventUuid, eventName } = useContext(UserContext)
@@ -18,7 +18,7 @@ const EventsList = () => {
   const [carUuid, setCarUuid] = useState('');
 
   useEffect(() => {
-    fetchCars(email).then((data) => setCars(data));
+    fetchMyCars(email).then((data) => setCars(data));
     fetchEvents().then((data) => setEvents(data));
   }, [])
 

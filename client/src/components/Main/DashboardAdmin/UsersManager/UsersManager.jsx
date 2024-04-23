@@ -32,7 +32,7 @@ const UsersManager = () => {
           let data = await response.json()
           alert('usuario actualizado')
           // console.log("ok update , data api -> ", data);
-          fetchUsers()
+          fetchUsers().then((data) => setUsers(data));
         } else {
           let data = await response.json()
           alert('error usuario no actualizado')
@@ -42,9 +42,6 @@ const UsersManager = () => {
       } catch (error) {
         console.log(error);
       }
-
-
-
     }
     updateUser()
   }

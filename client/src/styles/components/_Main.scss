@@ -17,3 +17,20 @@ ul{
         flex-direction: column;
     }  
 }
+
+.users,.listado,.usersControls,form{
+    display: flex;
+    flex-direction: column;
+}
+
+ul{
+    display: flex;
+    flex-direction: column;
+}
+
+.Elemento{
+    padding: 5px;
+    margin: 2px;
+    border: 1px solid white;
+    border-radius: 25px;
+}
