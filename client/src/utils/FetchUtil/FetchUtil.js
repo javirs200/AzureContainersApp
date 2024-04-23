@@ -163,12 +163,23 @@ const fetchEditUser = async (edit) => {
   return response;
 }
 
+const fetchDeleteParticipation = async (participation) => {
+  const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/participations/delete`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    credentials: 'include',
+    body: JSON.stringify(participation),
+  });
+  return response;
+}
+
 export default {
   fetchUsers,
   fetchCars,
   fetchEvents,
   fetchParticipants,
   fetchMyParticipations,
+  fetchDeleteParticipation,
   fetchNewUser,
   loginUser,
   logoutUser,
