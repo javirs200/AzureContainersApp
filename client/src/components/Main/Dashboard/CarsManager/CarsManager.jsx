@@ -49,15 +49,15 @@ const CarsManager = () => {
 
   const handleSubmitDelete = (e) => {
     e.preventDefault()
-    const deleteUser = async () => {
+    const deleteCar = async () => {
       // console.log(edit);
       try {
-        const response = removeCar(carUuid)
+        const response = await removeCar(carUuid)
         if (response.status === 200) {
           let data = await response.json()
           alert('Coche borrado')
           // console.log("ok delete , data api -> ", data);
-          fetchCars()
+          fetchCars(email).then((data) => setCars(data));
         } else {
           let data = await response.json()
           alert('error Coche no borrado')
@@ -68,8 +68,7 @@ const CarsManager = () => {
         console.log(error);
       }
     }
-    deleteUser()
-
+    deleteCar()
   }
 
   return (
