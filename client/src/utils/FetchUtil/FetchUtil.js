@@ -174,19 +174,25 @@ const fetchDeleteParticipation = async (participation) => {
 }
 
 export default {
-  fetchUsers,
-  fetchCars,
-  fetchEvents,
-  fetchParticipants,
-  fetchMyParticipations,
-  fetchDeleteParticipation,
+
   fetchNewUser,
+  fetchUsers,
+  fetchEditUser,
+  fetchDeleteUser,
+
   fetchLoginUser,
   fetchLogoutUser,
+
+  fetchMyCars,
   fetchAddCar,
   fetchRemoveCar,
-  fetchNewParticipation,
+
   fetchNewEvent,
-  fetchDeleteUser,
-  fetchEditUser
+  fetchEvents,
+  
+  fetchParticipants,
+  fetchNewParticipation,
+  fetchMyParticipations,
+  fetchDeleteParticipation,
+  
 };
