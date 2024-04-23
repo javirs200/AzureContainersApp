@@ -15,7 +15,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const Login = () => {
 
-  const { loginUser } = FetchUtil;
+  const { fetchLoginUser } = FetchUtil;
 
   const [showPassword, setShowPassword] = useState(false);
 
@@ -36,7 +36,7 @@ const Login = () => {
       const user = { email: emailField, password: password };
       // console.log("user data form form -> ", user);
       //peticion api para login con objeto usuario
-      const response = await loginUser(user); 
+      const response = await fetchLoginUser(user); 
       if (response.status === 200) {
         let data = await response.json()
         setLoggedIn(true);

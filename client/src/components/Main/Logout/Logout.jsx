@@ -6,13 +6,13 @@ import { Button } from "@mui/material";
 
 const Logout = () => {
 
-  const { logoutUser } = FetchUtil;
+  const { fetchLogoutUser } = FetchUtil;
 
   const navigate = useNavigate();
   const { setLoggedIn } = useContext(UserContext);
 
   const handleClick = async () => {
-    const response = await logoutUser();
+    const response = await fetchLogoutUser();
     if (response.status === 200) {
       setLoggedIn(false);
       alert("Sesión cerrada correctamente");

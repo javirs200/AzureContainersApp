@@ -26,7 +26,7 @@ const fetchUsers = async () => {
 }
 
 
-const fetchCars = async (email) => {
+const fetchMyCars = async (email) => {
   const url = `http://${import.meta.env.VITE_API_HOST}/api/cars/getfromUser/${email}`;
   const options = {
     method: "GET",
@@ -74,7 +74,7 @@ const fetchMyParticipations = async (email) => {
   return participations;
 }
 
-const loginUser = async (user) => {
+const fetchLoginUser = async (user) => {
   const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -84,7 +84,7 @@ const loginUser = async (user) => {
   return response;
 }
 
-const logoutUser = async () => {
+const fetchLogoutUser = async () => {
   const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/login/logout`, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
@@ -93,7 +93,7 @@ const logoutUser = async () => {
   return response;
 }
 
-const addCar = async (car) => {
+const fetchAddCar = async (car) => {
   const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/cars/addtoUser`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -103,7 +103,7 @@ const addCar = async (car) => {
   return response;
 }
 
-const removeCar = async (carUuid) => {
+const fetchRemoveCar = async (carUuid) => {
   const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/cars/remove`, {
     method: "DELETE",
     headers: { "Content-Type": "application/json" },
@@ -181,10 +181,10 @@ export default {
   fetchMyParticipations,
   fetchDeleteParticipation,
   fetchNewUser,
-  loginUser,
-  logoutUser,
-  addCar,
-  removeCar,
+  fetchLoginUser,
+  fetchLogoutUser,
+  fetchAddCar,
+  fetchRemoveCar,
   fetchNewParticipation,
   fetchNewEvent,
   fetchDeleteUser,

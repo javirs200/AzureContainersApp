@@ -9,7 +9,7 @@ import FetchUtil from "../../../../utils/FetchUtil";
 
 const CarsManager = () => {
 
-  const { fetchCars,addCar,removeCar } = FetchUtil;
+  const { fetchMyCars,fetchAddCar,fetchRemoveCar } = FetchUtil;
 
   const [cars, setCars] = useState([]);
   const [Brand, setBrand] = useState('');
@@ -19,7 +19,7 @@ const CarsManager = () => {
   const { email, carUuid, carName } = useContext(UserContext);
 
   useEffect(() => {
-    fetchCars(email).then((data) => setCars(data));
+    fetchMyCars(email).then((data) => setCars(data));
   }, [])
 
   const handleSubmitCreate = (e) => {
@@ -28,7 +28,7 @@ const CarsManager = () => {
       const car = { 'email': email, 'carBrand': Brand, 'carModel': Model, 'carBody': Body }
       // console.log("coche para crear ", car);
       try {
-        const response = await addCar(car);
+        const response = await fetchAddCar(car);
         if (response.status === 200) {
           let data = await response.json()
           alert('coche creado')
@@ -52,7 +52,7 @@ const CarsManager = () => {
     const deleteCar = async () => {
       // console.log(edit);
       try {
-        const response = await removeCar(carUuid)
+        const response = await fetchRemoveCar(carUuid)
         if (response.status === 200) {
           let data = await response.json()
           alert('Coche borrado')
