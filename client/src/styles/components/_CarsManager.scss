@@ -19,6 +19,13 @@ div>h2 {
 }
 
 .cars > div> ul> li {
-    width: 5rem;
+    width: auto;
     flex: 0.05 0 10%;
+}
+
+.carsControls{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 1rem;
+    align-items: center;
 }

@@ -83,10 +83,12 @@ const CarsManager = () => {
           <TextField sx={{ m: 2, width: '22ch' }} id="Body" label="Carroceria" variant="standard" onChange={(e) => setBody(e.target.value)} required />
           <Button variant="contained" type="submit">Añadir</Button>
         </form>
+        <section className="form_delete_car">
         <h3>coche Selecionado : {carName}</h3>
         <form onSubmit={handleSubmitDelete} className="form_delete_car">
           <Button variant="outlined" type="submit" color="error">Borrar</Button>
         </form>
+        </section>
       </section> 
     </>
 
