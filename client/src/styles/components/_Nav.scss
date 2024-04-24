@@ -5,15 +5,29 @@ nav {
   justify-content: space-evenly;
   align-items: center;
   padding: 0;
+
+  ul {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 50%;
+    padding: 0;
+
+    li>a.link {
+      /* remove default stiles for links */
+      color: inherit;
+      text-decoration: inherit;
+      &:hover {
+        color: #327ec9;
+        box-shadow: 0 4px 2px -2px #327ec9;
+      }
+    }
+
+  }
+
 }
 
-nav>ul {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 50%;
-  padding: 0;
-}
+
 
 .logo_nav {
   margin-left: 5%;
@@ -26,17 +40,6 @@ nav>ul {
     transition: width 0.3s ease;
     width: 25%;
     box-shadow: 0 0 20px #327ec9;
-  }
-}
-
-
-nav>ul>li>a.link {
-  /* remove default stiles for links */
-  color: inherit;
-  text-decoration: inherit;
-  &:hover {
-    color: #327ec9;
-    box-shadow: 0 4px 2px -2px #327ec9;
   }
 }
 

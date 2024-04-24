@@ -2,21 +2,22 @@
 .cars {
     width: 75%;
 
-}
+    div> ul {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        margin: 0;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
 
-.cars > div> ul {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    padding: 0;
-    margin: 0;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-}
+        li {
+            width: auto;
+            flex: 0.05 0 10%;
+        }
 
-.cars > div> ul> li {
-    width: auto;
-    flex: 0.05 0 10%;
+    }
+
 }
 
 .form_add_car{
