@@ -1,11 +1,7 @@
 
 .cars {
     width: 75%;
-}
 
-div>h2 {
-    width: fit-content;
-    align-self: center;
 }
 
 .cars > div> ul {
@@ -23,7 +19,16 @@ div>h2 {
     flex: 0.05 0 10%;
 }
 
+.form_add_car{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin-top: 1rem;
+    align-items: center;
+}
+
 .carsControls{
+    width: 100%;
     display: flex;
     justify-content: space-evenly;
     margin-top: 1rem;
