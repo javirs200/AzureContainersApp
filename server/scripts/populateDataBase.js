@@ -29,8 +29,8 @@ const populateDatabase = async () => {
         await createEvent('gp Italia', 'carrera de audi ', '2021-12-11');
 
         await createParticipation('anonimo@anonimo.com', 'AudiA3', 'gp España');
-        await createParticipation('a@a.com', 'body1', 'gp España');
-        await createParticipation('a@a.com', 'body1', 'gp Italia');
+        await createParticipation('a@a.com', 'ToyotaST185', 'gp España');
+        await createParticipation('a@a.com', 'MaseratiQuattroporte', 'gp Italia');
 
         console.log('Database populated successfully');
     } catch (error) {
