@@ -9,7 +9,7 @@ import FetchUtil from "../../../../utils/FetchUtil";
 
 const CarsManager = () => {
 
-  const { fetchCars } = FetchUtil;
+  const { fetchMyCars,fetchAddCar,fetchRemoveCar } = FetchUtil;
 
   const [cars, setCars] = useState([]);
   const [Brand, setBrand] = useState('');
@@ -19,7 +19,7 @@ const CarsManager = () => {
   const { email, carUuid, carName } = useContext(UserContext);
 
   useEffect(() => {
-    fetchCars(email).then((data) => setCars(data));
+    fetchMyCars(email).then((data) => setCars(data));
   }, [])
 
   const handleSubmitCreate = (e) => {
@@ -28,12 +28,7 @@ const CarsManager = () => {
       const car = { 'email': email, 'carBrand': Brand, 'carModel': Model, 'carBody': Body }
       // console.log("coche para crear ", car);
       try {
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/cars/addtoUser`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: 'include',
-          body: JSON.stringify(car),
-        });
+        const response = await fetchAddCar(car);
         if (response.status === 200) {
           let data = await response.json()
           alert('coche creado')
@@ -54,23 +49,18 @@ const CarsManager = () => {
 
   const handleSubmitDelete = (e) => {
     e.preventDefault()
-    const deleteUser = async () => {
+    const deleteCar = async () => {
       // console.log(edit);
       try {
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/cars/remove`, {
-          method: "DELETE",
-          headers: { "Content-Type": "application/json" },
-          credentials: 'include',
-          body: JSON.stringify({ 'uuid': carUuid }),
-        });
+        const response = await fetchRemoveCar(carUuid)
         if (response.status === 200) {
           let data = await response.json()
-          alert('usuario borrado')
+          alert('Coche borrado')
           // console.log("ok delete , data api -> ", data);
-          fetchCars()
+          fetchCars(email).then((data) => setCars(data));
         } else {
           let data = await response.json()
-          alert('error usuario no borrado')
+          alert('error Coche no borrado')
           console.log("data api -> ", data);
         }
 
@@ -78,8 +68,7 @@ const CarsManager = () => {
         console.log(error);
       }
     }
-    deleteUser()
-
+    deleteCar()
   }
 
   return (
@@ -94,10 +83,12 @@ const CarsManager = () => {
           <TextField sx={{ m: 2, width: '22ch' }} id="Body" label="Carroceria" variant="standard" onChange={(e) => setBody(e.target.value)} required />
           <Button variant="contained" type="submit">Añadir</Button>
         </form>
+        <section className="form_delete_car">
         <h3>coche Selecionado : {carName}</h3>
         <form onSubmit={handleSubmitDelete} className="form_delete_car">
           <Button variant="outlined" type="submit" color="error">Borrar</Button>
         </form>
+        </section>
       </section> 
     </>
 

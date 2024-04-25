@@ -11,14 +11,14 @@ const Landing = () => {
     <>
       <h1>CronoTimer</h1>
       <section>
-        <h2>Get Started</h2>
+        <h2>Comencemos !</h2>
         <Button variant="contained" onClick={() => { navigate("/login") }}>
-          Login
+          Identificarse
         </Button>
         <Button variant="text" onClick={() => { navigate("/register") }}>
-          Register
+          Registro
         </Button>
-      </section>  
+      </section>
     </>
   );
 };
