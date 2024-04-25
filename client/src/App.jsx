@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { BrowserRouter } from "react-router-dom";
 import Main from './components/Main';
 import Header from './components/Header';
@@ -6,8 +6,6 @@ import Footer from './components/Footer';
 import Autologger from "./utils/Autologger/Autologger";
 
 import { UserContext } from "./context/userContext";
-
-import socket from "./config/socket";
 
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -31,22 +29,6 @@ function App() {
   const [eventName, setEventName] = useState([]);
   const [eventUuid,setEventUuid] = useState('');
 
-  // console.log('variables de entorno cargadas -> ',import.meta.env);
-  
-  // if (import.meta.env.PROD) {
-  //   console.log('variables de entorno cargadas -> ',process.env);
-  // }
-
-  
-  useEffect(() => {
-    //codigo para cuando monta el compomente
-    socket.connect()
-    return () => {
-      //codigo para cuando desmonta el compomente
-      socket.disconnect()
-    }
-  }, [])
-  
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
