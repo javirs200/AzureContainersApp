@@ -59,16 +59,16 @@ class UltrasonicSensor:
 
         return distance
 
-    def measureForever(self,uidsScaned):
+    def measureForever(self,uidsScaned:list,timers: dict):
         try:
-            
             while True:
                 if len(uidsScaned) > 0:
                     dist = self.measure()
                     if dist < self.treshold :
-                        print("RFID tags detected: " + str(uidsScaned))
-                        print("distance measured " + str(dist) + "cm assigned to user: " + uidsScaned.pop(0))     
-                        print("RFID tags detected: " + str(uidsScaned))               
+                        currentuuid = uidsScaned.pop()
+                        timers[currentuuid] = time.time()
+                        print("first timestamp: " + str(timers[currentuuid]) + " assigned to user: " + str(currentuuid))
+                        print("RFID tags detected: " + str(currentuuid))        
                         time.sleep(1)                       
                 time.sleep(0.5)                              
         except Exception as e:

@@ -17,7 +17,7 @@ class RFIDReader:
             dec_string = dec_string + str(b)
         return dec_string
 
-    def rfidCall(self,uidsScaned):
+    def rfidCall(self,uidsScaned:list,times: dict):
         try:
             print("ready for read",uidsScaned)
             while(True):
@@ -28,6 +28,8 @@ class RFIDReader:
                     if not error:
                         print("Detected tag")
                         UUID = self.decodeList(uid)
+                        if UUID not in times:
+                                times[UUID] = None
                         if UUID not in uidsScaned:
                             uidsScaned.append(UUID)
                             print("new tag UID: " + UUID)

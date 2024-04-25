@@ -29,5 +29,6 @@ class IoServer:
         def disconnect(sid):
             print('disconnect ', sid)
 
-    def start(self):
+    def start(self,times: dict):
+        self.times = times
         eventlet.wsgi.server(eventlet.listen(('', 3000)), self.app)

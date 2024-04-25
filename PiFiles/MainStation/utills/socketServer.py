@@ -8,16 +8,13 @@ class Server:
         self.server_socket.listen(1)
         print('Server is listening on {}:{}'.format(*self.server_address))
 
-    def start(self,socketInternalMessages=[]):
-        try:
-            while True:
-                client_socket, client_address = self.server_socket.accept()
-                print('Received connection from {}:{}'.format(*client_address))
+    def start(self,timers:dict,times:dict):
+        while True:
+            client_socket, client_address = self.server_socket.accept()
+            print('Received connection from {}:{}'.format(*client_address))
 
-                data = client_socket.recv(1024)
-                message = data.decode()
-                print('Received data: {}'.format(message))
-                socketInternalMessages.append(message)
+            data = client_socket.recv(1024)
+            print('Received data: {}'.format(data.decode()))
 
                 response = 'Hello from the server!'
                 client_socket.sendto(response.encode(), client_address)
