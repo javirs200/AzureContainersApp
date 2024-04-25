@@ -9,12 +9,15 @@ class Server:
         print('Server is listening on {}:{}'.format(*self.server_address))
 
     def start(self,timers:dict,times:dict):
-        while True:
-            client_socket, client_address = self.server_socket.accept()
-            print('Received connection from {}:{}'.format(*client_address))
-
-            data = client_socket.recv(1024)
-            print('Received data: {}'.format(data.decode()))
+        try:
+            while True:
+                client_socket, client_address = self.server_socket.accept()
+                print('Received connection from {}:{}'.format(*client_address))
+                
+                data = client_socket.recv(1024)
+                message = data.decode()
+                print('Received data: {}'.format(message))
+                
 
                 response = 'Hello from the server!'
                 client_socket.sendto(response.encode(), client_address)
