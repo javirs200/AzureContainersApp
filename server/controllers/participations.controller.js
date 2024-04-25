@@ -18,13 +18,13 @@ const newParticipation = async (req, res) => {
         if (event) {
             let car = await carsModel.findOne({ where: { uuid: carUuid } });
             if (car) {
-                let searchForParticipation = await participationsModel.findOne({ where: { carUuid , eventUuid  } });
+                let searchForParticipation = await participationsModel.findOne({ where: { carUuid, eventUuid } });
                 if (!searchForParticipation) {
                     console.log("respuesta -> ", searchForParticipation);
-                const uuid = uuidV4.v4()
-                const data = { uuid, eventUuid, carUuid }
-                const participation = await participationsModel.create(data)
-                res.status(201).json({ 'created participation ': participation });
+                    const uuid = uuidV4.v4()
+                    const data = { uuid, eventUuid, carUuid }
+                    const participation = await participationsModel.create(data)
+                    res.status(201).json({ 'created participation ': participation });
                 } else {
                     res.status(400).json({ msg: "ya estas participando en este evento" });
                 }
@@ -48,20 +48,23 @@ const getMyParticipations = async (req, res) => {
     try {
         const email = req.params.email
         let eventSearch = await participationsModel.findAll({
-            attributes: ['t1'],
+            attributes: ['uuid'],
             include:
                 [
                     {
                         model: eventsModel,
                         attributes: ['name'],
                     },
-                    { model: carsModel, 
-                    attributes: ['body'] ,
-                    where: { body: {[Op.not] : null}},
-                    include:
-                        { model: usersModel, 
-                        attributes: [],
-                        where: { email:email } }
+                    {
+                        model: carsModel,
+                        attributes: ['body'],
+                        where: { body: { [Op.not]: null } },
+                        include:
+                        {
+                            model: usersModel,
+                            attributes: [],
+                            where: { email: email }
+                        }
                     }
                 ]
         }
@@ -118,7 +121,7 @@ const getEventParticipations = async (req, res) => {
     try {
         const name = req.params.eventName
         if (name) {
-            
+
             let eventSearch = await participationsModel.findAll({
                 distinct: true,
                 attributes: ['t1', 't2', 't3', 't4', 't5', 't6'],
@@ -129,14 +132,17 @@ const getEventParticipations = async (req, res) => {
                             attributes: ['name'],
                             where: { name }
                         },
-                        { model: carsModel, 
-                        attributes: ['body'] ,
-                        include:
-                            { model: usersModel, 
-                            attributes: ['name']}
+                        {
+                            model: carsModel,
+                            attributes: ['body'],
+                            include:
+                            {
+                                model: usersModel,
+                                attributes: ['name']
+                            }
                         }
                     ]
-                
+
             }
 
             );
@@ -154,10 +160,32 @@ const getEventParticipations = async (req, res) => {
     }
 };
 
+const deleteParticipation = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+        let {uuid} = req.body;
+
+        let deleted = await participationsModel.destroy({ where: { uuid } });
+
+        if (deleted) {
+            res.status(200).json({ msg:'deleted participation ' });
+        } else {
+            res.status(400).json({ msg: "no se ha podido eliminar la participacion " });
+        }
+    } catch (error) {
+        console.log(`ERROR: ${error}`);
+        res.status(400).json({ msj: `ERROR: ${error}` });
+    }
+};
+
 
 module.exports = {
     getEventParticipations,
     getMyParticipations,
     newParticipation,
+    deleteParticipation,
     addTime,
 };

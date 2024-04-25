@@ -9,7 +9,7 @@ import { FormControl, Button, Select, MenuItem, InputLabel } from "@mui/material
 
 const EventsList = () => {
 
-  const { fetchEvents, fetchCars } = FetchUtil;
+  const { fetchEvents, fetchMyCars,fetchNewParticipation } = FetchUtil;
 
   const navigate = useNavigate();
   const { email, eventUuid, eventName } = useContext(UserContext)
@@ -18,7 +18,7 @@ const EventsList = () => {
   const [carUuid, setCarUuid] = useState('');
 
   useEffect(() => {
-    fetchCars(email).then((data) => setCars(data));
+    fetchMyCars(email).then((data) => setCars(data));
     fetchEvents().then((data) => setEvents(data));
   }, [])
 
@@ -28,12 +28,7 @@ const EventsList = () => {
       try {
         const participation = { carUuid: carUuid, eventUuid: eventUuid };
 
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/participations/new`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: 'include',
-          body: JSON.stringify(participation),
-        });
+        const response = await fetchNewParticipation(participation);
         if (response.status === 201) {
           let data = await response.json()
           console.log("participacion registrada", data);
@@ -55,12 +50,10 @@ const EventsList = () => {
   }
 
   const handleChange = (e) => {
-    // console.log("coche elegido", e.target.value);
     setCarUuid(e.target.value)
   }
 
   const drawList = () => {
-    // console.log("dibujando coches ", cars);
     return cars.map((el) => {
       return <MenuItem key={uuidv4()} value={el.uuid}>{el.body}</MenuItem>
     })

@@ -21,7 +21,7 @@ const EventsManager = () => {
 
   // console.log("EventsManager -> FetchUtil", FetchUtil);
 
-  const { fetchEvents } = FetchUtil;
+  const { fetchEvents,fetchNewEvent } = FetchUtil;
 
   const [events, setEvents] = useState([]);
   const [name, setName] = useState('');
@@ -41,12 +41,7 @@ const EventsManager = () => {
       const event = { 'name': name, 'description': description, 'date': new Date(date) }
       // console.log("evento para crear ", event);
       try {
-        const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/events/new`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: 'include',
-          body: JSON.stringify(event),
-        });
+        const response = await fetchNewEvent(event);
         if (response.status === 201) {
           let data = await response.json()
           alert('evento creado')

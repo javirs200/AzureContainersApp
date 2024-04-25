@@ -1,5 +1,9 @@
 @echo off
 
+echo Waking up Docker daemon and Docker Desktop...
+start "" "C:\Program Files\Docker\Docker\Docker Desktop.exe"
+timeout /t 10 > nul
+
 REM Check if the Docker Compose database is already running
 docker-compose ps -q db > nul
 if %errorlevel% equ 0 (

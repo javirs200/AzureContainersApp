@@ -5,7 +5,6 @@ import { UserContext } from "../../context/userContext";
 import { Route, Routes, Navigate } from "react-router-dom";
 import RoleManager from "../../utils/RoleManager";
 import ProtectedRoutes from "../../utils/ProtectedRoutes";
-import QrComponent from "../../utils/QrComponent/QrComponent";
 import DashboardAdmin from "./DashboardAdmin";
 import Dashboard from "./Dashboard";
 import Register from "./Register";
@@ -46,7 +45,7 @@ const Main = () => {
         } />
         <Route path="/myCars" element={
           <ProtectedRoutes logged={logged} component={
-            <RoleManager role={role} allowedRoles={['driver']} component={<CarsManager />} />
+            <RoleManager role={role} allowedRoles={['driver','admin']} component={<CarsManager />} />
           } />
         } />
         <Route path="/users" element={
@@ -58,9 +57,6 @@ const Main = () => {
 
         <Route path="/*" element={logged ? <Navigate to={"/dashboard"} /> : <Navigate to={"/"} />} />
       </Routes>
-      
-
-      <QrComponent/>
     </main>
   );
 };

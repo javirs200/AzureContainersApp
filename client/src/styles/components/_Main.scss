@@ -17,3 +17,22 @@ ul{
         flex-direction: column;
     }  
 }
+
+.Elemento {
+    padding: 5px;
+    margin: 2px;
+    border: 1px solid white;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 0 10px #000000; 
+
+    &:hover {
+        background-color: rgba(211, 211, 211, 0.383);
+    }
+
+    &:active {
+        box-shadow: 0 0 10px #389a59; 
+    }
+    
+}

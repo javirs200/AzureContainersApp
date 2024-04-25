@@ -1,26 +1,37 @@
-.listado,
+
 .cars {
+    width: 75%;
+
+    div> ul {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        padding: 0;
+        margin: 0;
+        justify-content: space-evenly;
+        flex-wrap: wrap;
+
+        li {
+            width: auto;
+            flex: 0.05 0 10%;
+        }
+
+    }
+
+}
+
+.form_add_car{
     display: flex;
     flex-direction: column;
-    width: 100%;
+    justify-content: space-evenly;
+    margin-top: 1rem;
+    align-items: center;
 }
 
-div>h2 {
-    width: fit-content;
-    align-self: center;
-}
-
-.cars > div> ul {
+.carsControls{
     width: 100%;
     display: flex;
-    flex-direction: row;
-    padding: 0;
-    margin: 0;
     justify-content: space-evenly;
-    flex-wrap: wrap;
-}
-
-.cars > div> ul> li {
-    width: 5rem;
-    flex: 0.05 0 10%; /* explanation below */
+    margin-top: 1rem;
+    align-items: center;
 }

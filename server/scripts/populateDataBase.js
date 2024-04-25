@@ -15,18 +15,22 @@ const populateDatabase = async () => {
         await createUser('anonimo', 'anonimo@anonimo.com', '1234', 'driver');
         await createUser('user1', 'a@a.com', '4321', 'driver');
 
-        await createCar('a@a.com', 'brand1', 'model1', 'body1');
-        await createCar('a@a.com', 'brand2', 'model2', 'body2');
-        await createCar('a@a.com', 'brand3', 'model3', 'body3');
-        await createCar('anonimo@anonimo.com', 'hps', 'ff', 'nisssanGTR');
+        await createCar('a@a.com', 'tamiya', 'xv01', 'ToyotaST185');
+        await createCar('a@a.com', 'tamiya', 'xv02', 'MaseratiQuattroporte');
+        await createCar('a@a.com', 'tamiya', 'tt02', 'MazdaMX5');
+
+        await createCar('admin@admin.com', 'hsp', 'ff', 'AudiA4');
+        await createCar('admin@admin.com', 'tamiya', 'tt02', 'BmwM3');
+               
+        await createCar('anonimo@anonimo.com', 'hsp', 'ff', 'NisssanGTR');
         await createCar('anonimo@anonimo.com', 'tamiya', 'tt02', 'AudiA3');
 
         await createEvent('gp España', 'carrera de coches sedan', '2021-12-12');
         await createEvent('gp Italia', 'carrera de audi ', '2021-12-11');
 
         await createParticipation('anonimo@anonimo.com', 'AudiA3', 'gp España');
-        await createParticipation('a@a.com', 'body1', 'gp España');
-        await createParticipation('a@a.com', 'body1', 'gp Italia');
+        await createParticipation('a@a.com', 'ToyotaST185', 'gp España');
+        await createParticipation('a@a.com', 'MaseratiQuattroporte', 'gp Italia');
 
         console.log('Database populated successfully');
     } catch (error) {
