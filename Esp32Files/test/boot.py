@@ -2,31 +2,46 @@ import utime
 from hadware.ultrasonic import ultrasonic
 from hadware.rfid import rfid
 from mynetwork.networkManager import myNetwork
+from utils.socket import mySocket
 import uasyncio
 
 uidsScaned = []
 timestamps = []
+messages = []
 
 global farMeasure
 global distError
 
-async def do_read(rf,timestamps):
+async def do_read(rf,timestamps,messages):
     while True:
-        print("read rfid")
+        # print("read rfid")
         uid = rf.read()
         if len(timestamps) > 0 and uid is not None:
-            print("send timestamp ",timestamps.pop(0)," and uid ",uid)
-            #send data to server
+            m = "timestamp:" + str(timestamps.pop(0)) + "|uid:" + str(uid)
+            print("send ",m)
+            #apped m to socket queuque
+            messages.append(m)
         await uasyncio.sleep(0.2)
+        
+async def do_send(soc,messages):
+        while True:
+            # print("read rfid")
+            if len(messages) > 0:
+                soc.sendtcp(messages.pop(0))
+            await uasyncio.sleep(0.2)
 
 #--------main flow----------#
 def main():
     net = myNetwork()
     print('phase 0 , wifi scan')
     net.connectOrReconect()
-    print('phase 1 , wifi conected , initialize ultrasonic and rfid')
+    print('phase 1 , wifi conected , initialize Tcp Socket')
+    soc = mySocket('raspberry.mshome.net',12345) # raspberry.mshome.net host name when ap is from windows 11
+    print(soc)
+    print('phase 2 , Socket conected, initialize ultrasonic and rfid')   
     ult = ultrasonic()
     rf = rfid()
+    
     try:   
         print('wait to start 1000 ms')
         utime.sleep_ms(1000)
@@ -37,7 +52,8 @@ def main():
             net.connectOrReconect()
             # run coroutines concurrently
             loop.create_task(ult.measureForever(timestamps))
-            loop.create_task(do_read(rf,timestamps))
+            loop.create_task(do_read(rf,timestamps,messages))
+            loop.create_task(do_send(soc,messages))
             loop.run_forever()
         except Exception as e:
             print('Exception ',e)
