@@ -24,5 +24,5 @@ class rfid:
                     return uid
             return None
         except:
-            print("ops somehing goes wrong")
+            print("ops somehing goes wrong on rfid")
             return None
