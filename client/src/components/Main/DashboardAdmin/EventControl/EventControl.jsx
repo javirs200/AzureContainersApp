@@ -1,27 +1,79 @@
 import React, { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../../../context/userContext";
 
-import Listado from '../../../../utils/Listado';
+import socket from "../../../../config/socket";
 
-// import { v4 as uuidv4 } from "uuid";
-// import { useNavigate } from "react-router-dom";
 import FetchUtil from "../../../../utils/FetchUtil";
 
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material'
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material'
 
 const EventControl = () => {
 
   const { fetchParticipants } = FetchUtil;
+  const [conected, setConected] = useState(false);
+  const [buttonText, setButtonText] = useState("Conectar");
+
+  const[hasTime, setHasTime] = useState(false);
 
   // const navigate = useNavigate();
   const { eventName } = useContext(UserContext)
   const [Participants, setParticipants] = useState([]);
 
+  socket.on("connect_error", () => {
+    // revert to classic upgrade
+    console.log("socket conect error , socker obj -> ", socket);
+    socket.io.opts.transports = ["polling", "websocket"];
+  });
+
+  socket.on("disconnect", () => {
+    console.log("socket disconnected");
+    setConected(false);
+  });
+
+  socket.on('connect', () => {
+    console.log('Socket connected');
+    setConected(true);
+    socket.emit('my_message', 'Hello server from client');
+  });
+
+  socket.on('my_response', (data) => {
+    console.log('server response ', data);
+  });
+
+  socket.on('time', (data) => {
+    console.log('server time ', data);
+    if(!hasTime){
+      setHasTime(true);
+    }
+  });
+
   useEffect(() => {
+    //codigo para cuando monta el compomente
     if (eventName !== '') {
       fetchParticipants(eventName).then((data) => setParticipants(data));
     }
-  }, [])
+    return () => {
+      //codigo para cuando desmonta el compomente
+      socket.disconnect()
+    }
+  }, [eventName])
+
+  useEffect(() => {
+    if(hasTime){
+      fetchParticipants(eventName).then((data) => setParticipants(data));
+      hasTime = false;
+    }
+  }, [hasTime])
+
+  const handleClick = (e) => {
+    if (conected) {
+      socket.disconnect()
+      setButtonText("Conectar")
+    } else {
+      socket.connect()
+      setButtonText("Desconectar")
+    }
+  }
 
   const drawTable = (data) => {
     if (data.length === 0) {
@@ -43,9 +95,9 @@ const EventControl = () => {
           } else {
             cells.push(<TableCell key={i}>{JSON.stringify(values[i])}</TableCell>)
           }
-        }else if(i === 6){  
+        } else if (i === 6) {
           cells.push(<TableCell key={i}>{values[7].body}</TableCell>)
-        }else if(i === 7){
+        } else if (i === 7) {
           cells.push(<TableCell key={i}>{values[7].user.name}</TableCell>)
         }
       }
@@ -72,6 +124,10 @@ const EventControl = () => {
       <section className="Participants">
         <h3>Evento Selecionado : {eventName}</h3>
         {drawTable(Participants)}
+        {conected ? <h3>Conectado</h3> : <h3>Desconectado</h3>}
+        <Button variant="contained" onClick={handleClick}>
+          {buttonText}
+        </Button>
       </section>
     </>
 
