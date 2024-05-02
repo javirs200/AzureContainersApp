@@ -23,19 +23,19 @@ const EventControl = () => {
 
   socket.on("connect_error", () => {
     if (conectionsTrys > 0) {
-      if (conectionsTrys > 9) {
+      if (conectionsTrys > 3) {
         // revert to polling
         socket.io.opts.transports = ["polling", "websocket"];
-      }else if(conectionsTrys > 1){
+      }else if(conectionsTrys <= 3 && conectionsTrys > 0){
         // revert to websocket
         socket.io.opts.transports = ["websocket", "polling"];
       }
     socket.disconnect();
-    console.log("socket connect_error , try to connect again in 5 seconds");
+    console.log('socket connect_error , trys remaining ', conectionsTrys ,' connect again in 5 seconds');
     socket.connect();
     conectionsTrys--;
     } else {
-      console.log("socket connect_error");
+      console.log("socket connect_error , no more trys");
       socket.disconnect();
       setButtonEnable(true);
     }
