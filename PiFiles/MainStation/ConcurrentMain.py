@@ -31,19 +31,19 @@ if __name__ == "__main__":
     print("Starting main station" + "\n uuids: " + str(uidsScaned))
 
     # Create four processes, each running a CPU-bound task
-    process1 = Process(target=readRfid,args=(uidsScaned,times))
-    process2 = Process(target=ultrasonicMeasure,args=(uidsScaned,timers))
+    # process1 = Process(target=readRfid,args=(uidsScaned,times))
+    # process2 = Process(target=ultrasonicMeasure,args=(uidsScaned,timers))
     process3 = Process(target=socketServerProcess, args=(timers,times)) # server for the esp32
-    process4 = Process(target=socketIoServerProcess, args=(times)) # server for the web
+    # process4 = Process(target=socketIoServerProcess, args=(times)) # server for the web
 
     # Start all processes
-    process1.start()
-    process2.start()
+    # process1.start()
+    # process2.start()
     process3.start()
-    process4.start()
+    # process4.start()
 
     # Wait for all processes to finish
-    process1.join()
-    process2.join()
+    # process1.join()
+    # process2.join()
     process3.join()
-    process4.join()
+    # process4.join()
