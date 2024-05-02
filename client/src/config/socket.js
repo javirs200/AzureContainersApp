@@ -5,6 +5,7 @@ const URL = 'http://raspberry.mshome.net:3000';
 
 const socket = io(URL, {
   autoConnect: false,
+  timeout: 5000,// 5 seconds
   transports: ['websocket','polling']// prefer ws
 });
 
