@@ -6,7 +6,7 @@ import socket from "../../../../config/socket";
 import FetchUtil from "../../../../utils/FetchUtil";
 
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material'
-import {Wifi,WifiOff} from '@mui/icons-material'
+import { Wifi, WifiOff } from '@mui/icons-material'
 
 const EventControl = () => {
 
@@ -26,14 +26,14 @@ const EventControl = () => {
       if (conectionsTrys > 3) {
         // revert to polling
         socket.io.opts.transports = ["polling", "websocket"];
-      }else if(conectionsTrys <= 3 && conectionsTrys > 0){
+      } else if (conectionsTrys <= 3 && conectionsTrys > 0) {
         // revert to websocket
         socket.io.opts.transports = ["websocket", "polling"];
       }
-    socket.disconnect();
-    console.log('socket connect_error , trys remaining ', conectionsTrys ,' connect again in 5 seconds');
-    socket.connect();
-    conectionsTrys--;
+      socket.disconnect();
+      console.log('socket connect_error , trys remaining ', conectionsTrys, ' connect again in 5 seconds');
+      socket.connect();
+      conectionsTrys--;
     } else {
       console.log("socket connect_error , no more trys");
       socket.disconnect();
@@ -59,7 +59,7 @@ const EventControl = () => {
 
   socket.on('new_time', (data) => {
     console.log('server recive new time ', data.time);
-    if(!hasTime){
+    if (!hasTime) {
       setHasTime(true);
     }
   });
@@ -76,7 +76,7 @@ const EventControl = () => {
   }, [eventName])
 
   useEffect(() => {
-    if(hasTime){
+    if (hasTime) {
       fetchParticipants(eventName).then((data) => setParticipants(data));
       setHasTime(false);
     }
@@ -93,6 +93,14 @@ const EventControl = () => {
     }
   }
 
+  const handleClickStart = (e) => {
+    socket.emit('start_event', { event: eventName });
+  }
+
+  const handleClickScan = (e) => {
+    socket.emit('scan', { event: eventName });
+  }
+  
   const drawTable = (data) => {
     if (data.length === 0) {
       return <h3>No hay participantes en este evento</h3>
@@ -142,10 +150,19 @@ const EventControl = () => {
       <section className="Participants">
         <h3>Evento Selecionado : {eventName}</h3>
         {drawTable(Participants)}
-        {socket.connected ? <h3>Conectado <Wifi fontSize="large" /></h3> : <h3>Desconectado <WifiOff fontSize="large" /></h3>}
-        <Button variant="contained" onClick={handleClick} disabled={!buttonEnable}>
-          {buttonEnable ? "Conectar" : "Desconectar"}
-        </Button>
+        <section className="eventMainControls">
+          {socket.connected ? <h3>Conectado <Wifi fontSize="large" /></h3> : <h3>Desconectado <WifiOff fontSize="large" /></h3>}
+          <Button variant="contained" onClick={handleClick} disabled={!buttonEnable}>
+            {buttonEnable ? "Conectar" : "Desconectar"}
+          </Button>
+          {socket.connected ? 
+          <>
+          <Button variant="contained" onClick={handleClickStart} > Comenzar </Button>
+          <Button variant="contained" onClick={handleClickScan} > asignar id </Button>
+          </>
+          : ''
+          }
+        </section>
       </section>
     </>
 
