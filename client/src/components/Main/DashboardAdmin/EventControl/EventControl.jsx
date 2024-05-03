@@ -13,6 +13,9 @@ const EventControl = () => {
   const { fetchParticipants } = FetchUtil;
   const [buttonEnable, setButtonEnable] = useState(true);
 
+  const [selectedParticipant, setSelectedParticipant] = useState('');
+  const [labelEnable, setLabelEnable] = useState(true);
+
   const [hasTime, setHasTime] = useState(false);
 
   // const navigate = useNavigate();
@@ -95,15 +98,24 @@ const EventControl = () => {
 
   const handleClickStart = (e) => {
     socket.emit('start_event', { event: eventName });
+    setLabelEnable(false);
   }
 
   const handleClickScan = (e) => {
     socket.emit('scan', { event: eventName });
+    setLabelEnable(true);
   }
-  
+
+  const handleClickSelectParticipant = (e) => {
+    setSelectedParticipant(e.target.innerText);
+  }
+
   const drawTable = (data) => {
     if (data.length === 0) {
       return <h3>No hay participantes en este evento</h3>
+    }
+    if (data.msj) {
+      return <h3>error interno vuelve al inicio</h3>
     }
     let headersToRender = []
     for (let i = 0; i < 6; i++) {
@@ -122,9 +134,9 @@ const EventControl = () => {
             cells.push(<TableCell key={i}>{JSON.stringify(values[i])}</TableCell>)
           }
         } else if (i === 6) {
-          cells.push(<TableCell key={i}>{values[7].body}</TableCell>)
+          cells.push(<TableCell key={i} onClick={handleClickSelectParticipant}>{values[7].body}</TableCell>)
         } else if (i === 7) {
-          cells.push(<TableCell key={i}>{values[7].user.name}</TableCell>)
+          cells.push(<TableCell key={i} >{values[7].user.name}</TableCell>)
         }
       }
       return <TableRow key={index}>{cells}</TableRow>
@@ -151,21 +163,24 @@ const EventControl = () => {
         <h3>Evento Selecionado : {eventName}</h3>
         {drawTable(Participants)}
         <section className="eventMainControls">
-          {socket.connected ? <h3>Conectado <Wifi fontSize="large" /></h3> : <h3>Desconectado <WifiOff fontSize="large" /></h3>}
-          <Button variant="contained" onClick={handleClick} disabled={!buttonEnable}>
-            {buttonEnable ? "Conectar" : "Desconectar"}
-          </Button>
-          {socket.connected ? 
-          <>
-          <Button variant="contained" onClick={handleClickStart} > Comenzar </Button>
-          <Button variant="contained" onClick={handleClickScan} > asignar id </Button>
-          </>
-          : ''
-          }
+          <div>
+            {socket.connected ? <h3>Conectado <Wifi fontSize="large" /></h3> : <h3>Desconectado <WifiOff fontSize="large" /></h3>}
+            <Button variant="contained" onClick={handleClick} disabled={!buttonEnable}>
+              {buttonEnable ? "Conectar" : "Desconectar"}
+            </Button>
+          </div>
+          <div className="remoteOperations">
+            <Button variant="contained" onClick={handleClickStart} disabled={!socket.connected}>
+              Iniciar
+            </Button>
+            <Button variant="contained" onClick={handleClickScan} disabled={!socket.connected}>
+              Escanear
+            </Button>
+            {selectedParticipant ? <h3>Seleccionado : {selectedParticipant}</h3> : ''}
+          </div>
         </section>
       </section>
     </>
-
   );
 };
 
