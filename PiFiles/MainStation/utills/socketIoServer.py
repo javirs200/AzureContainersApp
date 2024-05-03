@@ -2,7 +2,7 @@ import eventlet
 import socketio
 
 class IoServer:
-    def __init__(self,socketInternalMessages):
+    def __init__(self):
         # standard Python
         self.sio = socketio.Server(cors_allowed_origins="*") #,logger=True, engineio_logger=True)
         self.sio.transport = 'websocket'
@@ -13,18 +13,12 @@ class IoServer:
         def connect(sid, environ):
             print('connect ', sid)
             while True:
-                if len(socketInternalMessages) > 0:
-                    message = socketInternalMessages.pop(0)
+                if len(self.times) > 0:
+                    message = self.times.popitem() # pop element of a dict
                     print('sending message to ',sid,' ->', message)
-                    self.sio.emit('my_response', {'data': message}, room=sid)
+                    self.sio.emit('new_time', {'time': message}, room=sid)
                 self.sio.sleep(1)
                 
-
-        @self.sio.event
-        def my_message(sid, data):
-            print('message recived by ',sid,' with data ->', data)
-            self.sio.emit('my_response', {'data': data}, room=sid)
-
         @self.sio.event
         def disconnect(sid):
             print('disconnect ', sid)

@@ -17,7 +17,17 @@ class Server:
                 if data : 
                     message = data.decode()
                     print('Received data: {}'.format(message))
-
+                    # demo message: "timestamp:1234567890|uid:1234567890"
+                    if message.startswith('timestamp:'):
+                        timestamp, uid = message.split('|')
+                        timestamp = int(timestamp.split(':')[-1])
+                        uid = int(uid.split(':')[-1])
+                        if uid in timers:
+                            time = timestamp - timers[uid] 
+                            times[uid] = time
+                            print('Time for uid {}: {}'.format(uid, time))
+                    else:
+                        print('Invalid message:', message)
         try:
             while True:
                 client_socket, client_address = self.server_socket.accept()
