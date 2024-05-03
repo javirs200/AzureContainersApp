@@ -22,8 +22,10 @@ class Server:
                         timestamp, uid = message.split('|')
                         timestamp = int(timestamp.split(':')[-1])
                         uid = int(uid.split(':')[-1])
-                        times[uid] = timestamp  # store the timestamp
-                        print('Stored timestamp:', timestamp)
+                        if uid in timers:
+                            time = timestamp - timers[uid] 
+                            times[uid] = time
+                            print('Time for uid {}: {}'.format(uid, time))
                     else:
                         print('Invalid message:', message)
         try:
