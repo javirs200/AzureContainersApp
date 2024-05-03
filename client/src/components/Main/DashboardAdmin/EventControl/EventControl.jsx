@@ -57,8 +57,8 @@ const EventControl = () => {
     console.log('server response ', data);
   });
 
-  socket.on('time', (data) => {
-    console.log('server time ', data);
+  socket.on('new_time', (data) => {
+    console.log('server recive new time ', data.time);
     if(!hasTime){
       setHasTime(true);
     }
