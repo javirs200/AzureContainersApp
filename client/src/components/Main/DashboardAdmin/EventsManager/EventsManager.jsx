@@ -21,7 +21,7 @@ const EventsManager = () => {
 
   // console.log("EventsManager -> FetchUtil", FetchUtil);
 
-  const { fetchEvents, fetchNewEvent , fetchDeleteEvent} = FetchUtil;
+  const { fetchEvents, fetchNewEvent, fetchDeleteEvent } = FetchUtil;
 
   const [events, setEvents] = useState([]);
   const [uuid, setUuid] = useState(''); // events[0].uuid
@@ -91,7 +91,7 @@ const EventsManager = () => {
   }
 
   return (
-    <>
+    <section className="eventsManager">
       <section className="Events">
         <Listado title={'Eventos'} elementos={events} mode={3} />
       </section>
@@ -110,12 +110,15 @@ const EventsManager = () => {
           <Button variant="contained" type="submit">Añadir</Button>
         </form>
         <div className="eventManage">
-          <h3>Evento Selecionado : {eventName}</h3>
+          <h3>
+            <p>Evento Selecionado :</p>
+            <p>{eventName}</p>
+          </h3>
           <Button variant="outlined" type="submit" onClick={handleclickControl} >Controlar</Button>
           <Button variant="outlined" color="error" onClick={handleclickDelete} >eliminar</Button>
         </div>
       </section>
-    </>
+    </section>
 
   );
 };

@@ -1,7 +1,49 @@
-.eventControls{
+.eventsManager{
     width: 100%;
     display: flex;
+    flex-direction: row;
     justify-content: space-evenly;
     margin-top: 1rem;
     align-items: center;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        
+    }
+}
+
+.eventManage{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    
+    button{
+        margin-bottom: 1rem;
+    }
+    
+}
+
+.eventControls{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Events
+    .listado {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.form_add_event{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
