@@ -33,7 +33,7 @@ const CarsManager = () => {
           let data = await response.json()
           alert('coche creado')
           // console.log("ok create , data api -> ", data);
-          fetchCars(email).then((data) => setCars(data));
+          fetchMyCars(email).then((data) => setCars(data));
         } else {
           let data = await response.json()
           alert('error')
@@ -57,7 +57,7 @@ const CarsManager = () => {
           let data = await response.json()
           alert('Coche borrado')
           // console.log("ok delete , data api -> ", data);
-          fetchCars(email).then((data) => setCars(data));
+          fetchMyCars(email).then((data) => setCars(data));
         } else {
           let data = await response.json()
           alert('error Coche no borrado')
