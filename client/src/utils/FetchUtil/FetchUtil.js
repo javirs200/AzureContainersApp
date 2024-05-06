@@ -133,6 +133,16 @@ const fetchNewEvent = async (event) => {
   return response;
 }
 
+const fetchDeleteEvent = async (eventName) => {
+  const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/events/remove`, {
+    method: "DELETE",
+    headers: { "Content-Type": "application/json" },
+    credentials: 'include',
+    body: JSON.stringify({ 'name': eventName }),
+  });
+  return response;
+}
+
 const fetchNewUser = async (user) => {
   const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/users/register`, {
     method: "POST",
@@ -189,6 +199,7 @@ export default {
 
   fetchNewEvent,
   fetchEvents,
+  fetchDeleteEvent,
   
   fetchParticipants,
   fetchNewParticipation,

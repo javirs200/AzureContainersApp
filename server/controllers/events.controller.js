@@ -83,11 +83,11 @@ const deleteEvent = async (req, res) => {
     return res.status(400).json({ errors: errors.array() });
   }
   try {
-    let {uuid} = req.body;
+    let {name} = req.body;
 
-    let deletedEvent = await eventsModel.destroy({where:{uuid:uuid}})
+    let deletedEvent = await eventsModel.destroy({where:{name:name}});
     if (deletedEvent) {
-      res.status(200).json({'deleted Event ': deletedEvent});
+      res.status(200).json({'deleted Event count': deletedEvent});
     } else {
       res.status(400).json({ msg: "no se ha podido borar "});
     }
