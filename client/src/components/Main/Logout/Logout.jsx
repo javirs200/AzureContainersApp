@@ -9,12 +9,22 @@ const Logout = () => {
   const { fetchLogoutUser } = FetchUtil;
 
   const navigate = useNavigate();
-  const { setLoggedIn } = useContext(UserContext);
+  const { setLoggedIn,setRole,setEmail,setCarUuid,setCarName,setEventUuid,setEventName } = useContext(UserContext);
+
+  const clearContext = () => {
+    setLoggedIn(false);
+    setRole('driver');
+    setEmail('');
+    setCarName('');
+    setCarUuid('');
+    setEventName('');
+    setEventUuid('');
+  }
 
   const handleClick = async () => {
     const response = await fetchLogoutUser();
     if (response.status === 200) {
-      setLoggedIn(false);
+      clearContext();
       alert("Sesión cerrada correctamente");
       navigate("/");
     } else {
