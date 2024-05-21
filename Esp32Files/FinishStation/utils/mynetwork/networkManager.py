@@ -6,7 +6,7 @@ import time
 class myNetwork:
     def __init__(self):
         # Opening JSON file
-        f = open('mynetwork/networks.json')
+        f = open('utils/mynetwork/networks.json')
 
         self.jsondata = json.load(f)
 
