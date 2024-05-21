@@ -101,7 +101,7 @@ const EventControl = () => {
   }
 
   const handleClickStart = (e) => {
-    socket.emit('start_event', { event: eventName });
+    socket.emit('control', { event: eventName,command:'start' });
     setLabelEnable(false);
   }
 
