@@ -1,7 +1,7 @@
 import utime
 from hadware.ultrasonic import ultrasonic
 from hadware.rfid import rfid
-from mynetwork.networkManager import myNetwork
+from utils.mynetwork.networkManager import myNetwork
 from utils.socket import mySocket
 import uasyncio
 
