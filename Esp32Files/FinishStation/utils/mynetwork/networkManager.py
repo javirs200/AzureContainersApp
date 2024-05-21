@@ -30,7 +30,7 @@ class myNetwork:
                 try:
                     print("connecting to ",n["ssid"])
                     self.sta_if.connect(n["ssid"],n["pass"])
-                    time.sleep(2)
+                    time.sleep(20)
                     if self.sta_if.isconnected():
                         print("connected to ",n["ssid"])
                         return # exit function
