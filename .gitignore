@@ -4,3 +4,6 @@ data/
 CronosTimer_key.pem
 
 _pycache_/
+client/
+
+server/
