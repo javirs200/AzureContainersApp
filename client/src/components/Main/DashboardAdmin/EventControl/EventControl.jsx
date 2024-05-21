@@ -18,6 +18,8 @@ const EventControl = () => {
 
   const [hasTime, setHasTime] = useState(false);
 
+  const [connected, setConnected] = useState(false);
+
   // const navigate = useNavigate();
   const { eventName } = useContext(UserContext)
   const [Participants, setParticipants] = useState([]);
@@ -46,6 +48,7 @@ const EventControl = () => {
 
   socket.on("disconnect", () => {
     console.log("socket disconnected");
+    setConnected(false);
   });
 
   socket.on('connect', () => {
@@ -53,6 +56,7 @@ const EventControl = () => {
       conectionsTrys = 5;
     }
     console.log('Socket connected');
+    setConnected(true);
     socket.emit('my_message', 'Hello server from client');
   });
 
@@ -164,16 +168,16 @@ const EventControl = () => {
         {drawTable(Participants)}
         <section className="eventMainControls">
           <div>
-            {socket.connected ? <h3>Conectado <Wifi fontSize="large" /></h3> : <h3>Desconectado <WifiOff fontSize="large" /></h3>}
+            {connected ? <h3>Conectado <Wifi fontSize="large" /></h3> : <h3>Desconectado <WifiOff fontSize="large" /></h3>}
             <Button variant="contained" onClick={handleClick} disabled={!buttonEnable}>
               {buttonEnable ? "Conectar" : "Desconectar"}
             </Button>
           </div>
           <div className="remoteOperations">
-            <Button variant="contained" onClick={handleClickStart} disabled={!socket.connected}>
+            <Button variant="contained" onClick={handleClickStart} disabled={!connected}>
               Iniciar
             </Button>
-            <Button variant="contained" onClick={handleClickScan} disabled={!socket.connected}>
+            <Button variant="contained" onClick={handleClickScan} disabled={!connected}>
               Escanear
             </Button>
             {selectedParticipant ? <h3>Seleccionado : {selectedParticipant}</h3> : ''}
