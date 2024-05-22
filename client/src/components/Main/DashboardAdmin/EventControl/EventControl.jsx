@@ -6,7 +6,7 @@ import socket from "../../../../config/socket";
 import FetchUtil from "../../../../utils/FetchUtil";
 
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material'
-import { Wifi, WifiOff } from '@mui/icons-material'
+import { Wifi, WifiOff,DirectionsRun,Man} from '@mui/icons-material'
 
 const EventControl = () => {
 
@@ -24,6 +24,8 @@ const EventControl = () => {
   const { eventName } = useContext(UserContext)
   const [Participants, setParticipants] = useState([]);
 
+  const [started, setStarted] = useState(false);
+
   let conectionsTrys = 5;
 
   socket.on("connect_error", () => {
@@ -39,6 +41,7 @@ const EventControl = () => {
       console.log('socket connect_error , trys remaining ', conectionsTrys, ' connect again in 5 seconds');
       socket.connect();
       conectionsTrys--;
+      return
     } else {
       console.log("socket connect_error , no more trys");
       socket.disconnect();
@@ -57,6 +60,8 @@ const EventControl = () => {
     }
     console.log('Socket connected');
     setConnected(true);
+    setButtonEnable(true);
+    setStarted(false);
     socket.emit('my_message', 'Hello server from client');
   });
 
@@ -91,7 +96,7 @@ const EventControl = () => {
 
   const handleClick = (e) => {
 
-    if (socket.connected) {
+    if (connected) {
       socket.disconnect()
       setButtonEnable(true);
     } else {
@@ -103,11 +108,13 @@ const EventControl = () => {
   const handleClickStart = (e) => {
     socket.emit('control', { event: eventName,command:'start' });
     setLabelEnable(false);
+    setStarted(true);
   }
 
   const handleClickScan = (e) => {
-    socket.emit('scan', { event: eventName });
+    socket.emit('scan', { selectedParticipant });
     setLabelEnable(true);
+    console.log('scan',selectedParticipant);
   }
 
   const handleClickSelectParticipant = (e) => {
@@ -167,17 +174,18 @@ const EventControl = () => {
         <h3>Evento Selecionado : {eventName}</h3>
         {drawTable(Participants)}
         <section className="eventMainControls">
-          <div>
+          <div className="conectionStatus">
             {connected ? <h3>Conectado <Wifi fontSize="large" /></h3> : <h3>Desconectado <WifiOff fontSize="large" /></h3>}
+            {!started ? <h3>Fase 0 <Man fontSize="large" /></h3> : <h3>Fase 1 <DirectionsRun fontSize="large" /></h3>}
             <Button variant="contained" onClick={handleClick} disabled={!buttonEnable}>
-              {buttonEnable ? "Conectar" : "Desconectar"}
+              {!connected ? "Conectar" : "Desconectar"}
             </Button>
           </div>
           <div className="remoteOperations">
-            <Button variant="contained" onClick={handleClickStart} disabled={!connected}>
+            <Button variant="contained" onClick={handleClickStart} disabled={!connected || started}>
               Iniciar
             </Button>
-            <Button variant="contained" onClick={handleClickScan} disabled={!connected}>
+            <Button variant="contained" onClick={handleClickScan} disabled={!connected || started}>
               Escanear
             </Button>
             {selectedParticipant ? <h3>Seleccionado : {selectedParticipant}</h3> : ''}
