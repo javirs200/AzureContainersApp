@@ -4,7 +4,8 @@ import socketio
 class IoServer:
     def __init__(self):
         # standard Python
-        self.sio = socketio.Server(cors_allowed_origins="*") #,logger=True, engineio_logger=True)
+        print('IoServer init')
+        self.sio = socketio.Server( cors_allowed_origins="*") #,logger=True, engineio_logger=True)
         self.sio.transport = 'websocket'
         self.sio.always_connect = True
         self.app = socketio.WSGIApp(self.sio)
@@ -20,18 +21,34 @@ class IoServer:
         @self.sio.event
         def control(sid, data):
             if data['command'] == 'start':
-                print('start')
-                while True:
-                    if len(self.times) > 0:
-                        message = self.times.popitem() # pop element of a dict
-                        print('sending message to ',sid,' ->', message)
-                        self.sio.emit('new_time', {'time': message}, room=sid)
-                    self.sio.sleep(1)
+                print('start recieved')
+                self.flagStart.value = True
+                print("flagStart: ",self.flagStart ," | ",self.flagStart.value) 
             elif data['command'] == 'stop':
                 print('stop')
-                self.times.clear()
+                self.flagStart.value = False
+                self.times.clear
+
+        @self.sio.event
+        def scan(sid, data):
+            if data['selectedParticipant']:
+                print('recived selectedParticipant: ', data['selectedParticipant'])
+                print('tags: ', self.tags)
+                if data['selectedParticipant'] not in self.tags:
+                    self.tags[data['selectedParticipant']] = None
+                    print('new tag added: ', data['selectedParticipant'])
+                    print('tags: ', self.tags)
                     
 
-    def start(self,times: dict):
+    def start(self,times: dict,flagStart:bool,tags: dict):
+        print('IoServer started')
         self.times = times
+        self.flagStart = flagStart
+        self.tags = tags
         eventlet.wsgi.server(eventlet.listen(('', 3000)), self.app)
+        while True:
+            if len(self.times) > 0:
+                message = self.times.popitem() # pop element of a dict
+                print('sending message ->', message)
+                self.sio.emit('new_time', {'time': message})
+            self.sio.sleep(1)
