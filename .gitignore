@@ -6,3 +6,6 @@ CronosTimer_key.pem
 _pycache_/
 **/_pycache_/
 */_pycache_/
+client/
+
+server/
