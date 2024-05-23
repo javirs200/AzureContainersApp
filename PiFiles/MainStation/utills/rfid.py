@@ -48,7 +48,7 @@ class RFIDReader:
                 print(str(e))
                 GPIO.cleanup()
 
-    def readTag(self,tags:dict,flagStart:bool):
+    def readTag(self,tags:dict,flagStart:bool,currenttag:str):
         if not flagStart :
             try:
                 print("ready for read tag",tags)
@@ -63,6 +63,9 @@ class RFIDReader:
                             for key in tags.keys():
                                 if tags[key] is None:
                                     tags[key] = UUID
+                                    mtag = str(key) + ":" + str(UUID)
+                                    currenttag.value = mtag
+                                    print("currenttag  " + currenttag.value)
                                     break
                 time.sleep(1)
             except Exception as e:

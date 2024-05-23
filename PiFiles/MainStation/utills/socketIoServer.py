@@ -1,5 +1,8 @@
 import eventlet
 import socketio
+from time import sleep
+
+from multiprocessing import Process
 
 class IoServer:
     def __init__(self):
@@ -38,17 +41,25 @@ class IoServer:
                     self.tags[data['selectedParticipant']] = None
                     print('new tag added: ', data['selectedParticipant'])
                     print('tags: ', self.tags)
-                    
+     
 
-    def start(self,times: dict,flagStart:bool,tags: dict):
+    def start(self,times: dict,flagStart:bool,tags: dict,currenttag:str):
         print('IoServer started')
         self.times = times
         self.flagStart = flagStart
         self.tags = tags
-        eventlet.wsgi.server(eventlet.listen(('', 3000)), self.app)
+        # eventlet.wsgi.server(eventlet.listen(('', 3000)), self.app)
+        print('IoServer started')
+        server = Process(target=eventlet.wsgi.server,args=(eventlet.listen(('', 3000)), self.app))
+        server.start()
         while True:
+            print('currenttag: ', currenttag.value , currenttag.value != "")
+            if currenttag.value != "":
+                print('sending tag ->', currenttag.value)
+                self.sio.emit('tagScanned', {'tag': currenttag.value})
+                currenttag.value = ""
             if len(self.times) > 0:
                 message = self.times.popitem() # pop element of a dict
                 print('sending message ->', message)
                 self.sio.emit('new_time', {'time': message})
-            self.sio.sleep(1)
+            sleep(1)  

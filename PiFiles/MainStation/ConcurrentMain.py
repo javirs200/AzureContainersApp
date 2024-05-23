@@ -6,13 +6,13 @@ from utills import socketServer
 from utills import socketIoServer
 
 
-def readRfid(uidsScaned,times,flagStart,tags):
+def readRfid(uidsScaned,times,flagStart,tags,currenttag):
     RFIDReader = rfid.RFIDReader()
     print("RFIDReader created")
     print("flagStart: ",flagStart.value)
     while not flagStart.value:
         print("flagStart: ",flagStart.value)
-        RFIDReader.readTag(tags,flagStart.value)
+        RFIDReader.readTag(tags,flagStart.value,currenttag)
     if flagStart.value:
         RFIDReader.rfidCall(uidsScaned,times)
 
@@ -27,9 +27,10 @@ def socketServerProcess(timers,times,flagStart):
     server = socketServer.Server()
     server.start(timers,times)
 
-def socketIoServerProcess(times,flagStart,tags):
+def socketIoServerProcess(times,flagStart,tags,currenttag):
     IoServer =  socketIoServer.IoServer()
-    IoServer.start(times,flagStart,tags)
+    IoServer.start(times,flagStart,tags,currenttag)
+    
 
 if __name__ == "__main__":
 
@@ -38,17 +39,17 @@ if __name__ == "__main__":
     times = Manager().dict()
     flagStart = Manager().Value('b', False)
     tags = Manager().dict()
-
+    currenttag = Manager().Value('str', "")
 
     print("Starting main station" + "\n uuids: " + str(uidsScaned))
 
     print(str(times) + "\n" + str(timers))
 
     # Create four processes, each running a CPU-bound task
-    process1 = Process(target=readRfid,args=(uidsScaned,times,flagStart,tags))
+    process1 = Process(target=readRfid,args=(uidsScaned,times,flagStart,tags,currenttag))
     process2 = Process(target=ultrasonicMeasure,args=(uidsScaned,timers,flagStart))
     process3 = Process(target=socketServerProcess, args=(timers,times,flagStart)) # server for the esp32
-    process4 = Process(target=socketIoServerProcess, args=(times,flagStart,tags)) # server for the web
+    process4 = Process(target=socketIoServerProcess, args=(times,flagStart,tags,currenttag)) # server for the web
 
     # Start all processes
     process1.start()
