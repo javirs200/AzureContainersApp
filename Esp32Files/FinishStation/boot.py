@@ -5,6 +5,9 @@ from utils.mynetwork.networkManager import myNetwork
 from utils.socket import mySocket
 import uasyncio
 
+import ntptime
+
+
 uidsScaned = []
 timestamps = []
 messages = []
@@ -35,13 +38,17 @@ def main():
     net = myNetwork()
     print('phase 0 , wifi scan')
     net.connectOrReconect()
-    print('phase 1 , wifi conected , initialize Tcp Socket')
-    soc = mySocket('raspberry.mshome.net',12345) # raspberry.mshome.net host name when ap is from windows 11
+    print('phase 1 , sync time')
+    ntptime.host = "0.es.pool.ntp.org"
+    ntptime.settime()	# this queries the time from an NTP server
+    print('now are ',utime.localtime())
+    print('phase 2 , wifi conected , initialize Tcp Socket')
+    soc = mySocket('raspberry.local',12345) # raspberry.mshome.net host name when ap is from windows 11 , raspberry.local host name when ap is from android
     print(soc)
-    print('phase 2 , Socket conected, initialize ultrasonic and rfid')   
+    print('phase 3 , Socket conected, initialize ultrasonic and rfid')   
     ult = ultrasonic()
     rf = rfid()
-    
+
     try:   
         print('wait to start 1000 ms')
         utime.sleep_ms(1000)
