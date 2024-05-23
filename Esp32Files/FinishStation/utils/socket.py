@@ -1,6 +1,7 @@
 import usocket as socket
 #import socket
 from uasyncio import sleep_ms
+from utime import sleep
 
 class mySocket:
     def __init__(self,host, port):
@@ -12,6 +13,7 @@ class mySocket:
             except Exception as e:
                 print('try ',i,' Exception mesage : ',e)
                 self.sock.close()
+                sleep(1)
         
     def close(self):
         self.sock.close()
