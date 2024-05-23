@@ -20,12 +20,20 @@ class Server:
                     # demo message: "timestamp:1234567890|uid:1234567890"
                     if message.startswith('timestamp:'):
                         timestamp, uid = message.split('|')
-                        timestamp = int(timestamp.split(':')[-1])
-                        uid = int(uid.split(':')[-1])
-                        if uid in timers:
-                            time = timestamp - timers[uid] 
-                            times[uid] = time
-                            print('Time for uid {}: {}'.format(uid, time))
+                        timestamp = str(timestamp.split(':')[-1])
+                        uid = str(int(uid.split(':')[-1],0))
+                        print("card uid " , uid , "is in timers ? ",timers.keys())
+                        if uid in timers.keys():
+                            print('compare two values {}: {}'.format(timestamp, timers[uid]))
+                            time = abs(int(timestamp) - int(timers[uid]))
+                            time_in_ns = int(timestamp)
+                            time_in_ms = time_in_ns / 1e6
+                            minutes = int(time_in_ms / 60000)
+                            seconds = int((time_in_ms % 60000) / 1000)
+                            milliseconds = int((time_in_ms % 60000) % 1000)
+                            formatted_time = '{}:{:02d}.{:03d}'.format(minutes, seconds, milliseconds)
+                            print('Time for uid {}: {}'.format(uid, formatted_time))
+                            times[uid] = formatted_time
                     else:
                         print('Invalid message:', message)
         try:

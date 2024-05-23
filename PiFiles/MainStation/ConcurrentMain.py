@@ -12,7 +12,7 @@ def readRfid(uidsScaned,times,flagStart,tags):
     print("flagStart: ",flagStart.value)
     while not flagStart.value:
         print("flagStart: ",flagStart.value)
-        RFIDReader.readTag(tags)
+        RFIDReader.readTag(tags,flagStart.value)
     if flagStart.value:
         RFIDReader.rfidCall(uidsScaned,times)
 

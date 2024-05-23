@@ -66,7 +66,8 @@ class UltrasonicSensor:
                     dist = self.measure()
                     if dist < self.treshold :
                         currentuuid = uidsScaned.pop()
-                        timers[currentuuid] = time.time()
+                        ns = time.time_ns()
+                        timers[currentuuid]  = ns
                         print("first timestamp: " + str(timers[currentuuid]) + " assigned to user: " + str(currentuuid))
                         print("RFID tags detected: " + str(currentuuid))        
                         time.sleep(1)                       
