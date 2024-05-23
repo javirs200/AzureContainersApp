@@ -113,7 +113,7 @@ const EventControl = () => {
 
   const handleClickScan = (e) => {
     socket.emit('scan', { selectedParticipant });
-    setLabelEnable(true);
+    setLabelEnable(false);
     console.log('scan',selectedParticipant);
   }
 
@@ -188,7 +188,7 @@ const EventControl = () => {
             <Button variant="contained" onClick={handleClickScan} disabled={!connected || started}>
               Escanear
             </Button>
-            {selectedParticipant ? <h3>Seleccionado : {selectedParticipant}</h3> : ''}
+            {selectedParticipant && labelEnable ? <h3>Seleccionado : {selectedParticipant}</h3> : ''}
           </div>
         </section>
       </section>
