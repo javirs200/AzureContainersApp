@@ -58,7 +58,7 @@ class ultrasonic:
                 print("timestamps ",timestamps)
                 if self.dist < self.treshold  :
                     print("distance less than treshold")
-                    timestamps.append(utime.ticks_ms())
+                    timestamps.append(utime.time_ns())
                 await sleep(0.2)                              
         except Exception as e:
             print("Measurement stopped in ultrasonic")
