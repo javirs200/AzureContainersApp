@@ -25,7 +25,8 @@ const Elemento = ({ obj, mode }) => {
 
   switch (mode) {
     case 1:
-      mapFunction = (e, i) => { if (i > 0) return <p key={uuidv4()}> {e.toString()}</p> };
+      mapFunction = (e, i) => { return <p key={uuidv4()}> {e.toString()}</p> };
+      break;
     case 2:
       mapFunction = (e, i) => { if (i > 0) return <p key={uuidv4()}> {e.toString()}</p> };
       break;
