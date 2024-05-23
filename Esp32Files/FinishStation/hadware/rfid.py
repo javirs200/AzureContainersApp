@@ -20,9 +20,14 @@ class rfid:
             if stat == self.rdr.OK:
                 (stat, raw_uid) = self.rdr.anticoll()
                 if stat == self.rdr.OK:
-                    uid = ("0x%02x%02x%02x%02x" % (raw_uid[0], raw_uid[1], raw_uid[2], raw_uid[3]))
-                    return uid
+                    dec_string = ""
+                    print("raw uid",raw_uid)
+                    for b in raw_uid:
+                        print("b ",b)
+                        dec_string = dec_string + str(b)
+                    print("dec_string ",dec_string)
+                    return dec_string
             return None
-        except:
-            print("ops somehing goes wrong on rfid")
+        except Exception as e:
+            print("ops somehing goes wrong on rfid" , e)
             return None
