@@ -1,10 +1,16 @@
 require('dotenv').config();
+const http = require('http');
 const helmet = require('helmet');
 const express = require('express');
 const error404 = require('./middleware/error404')
 const app = express();
 const port = process.env.PORT || 3000;
 const cors = require('cors');
+
+//utils
+const socket = require('./utils/socket');
+const server = http.createServer(app);
+const io = socket(server);
 
 //routers
 const userRoutes = require('./routes/users.routes')
@@ -52,8 +58,8 @@ app.get('/api/hello',async (req, res) => {
 });
 
 app.use('/api/*',error404);
-  
-app.listen(port, () => {
+
+server.listen(port, () => {
     console.log(`listening on port:${port}`);
   });
   

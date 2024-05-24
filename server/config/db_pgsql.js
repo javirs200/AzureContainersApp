@@ -17,12 +17,20 @@ const connectSQL = async () => {
         console.log('add models to db');
         db.users = require('../models/users.model')
         db.cars = require('../models/cars.model')
-        db.pruebas = require('../models/events.model')
+        db.events = require('../models/events.model')
         db.participations = require('../models/participations.model')
 
-        console.log('models sync');
+        console.log('add relations to db');
+        db.cars.hasOne(db.participations, {onDelete: 'CASCADE'})
+        db.participations.belongsTo(db.cars)
+        db.events.hasOne(db.participations, {onDelete: 'CASCADE'})
+        db.participations.belongsTo(db.events)
+        db.users.hasMany(db.cars , {onDelete: 'CASCADE'});
+        db.cars.belongsTo(db.users );
+
+        console.log('db sync');
         // await db.sync({alter:true})
-        await db.sync()
+        db.sync()
         
         console.log('db ready');
 

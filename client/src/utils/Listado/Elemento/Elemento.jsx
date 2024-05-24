@@ -20,58 +20,41 @@ const Elemento = ({ obj, mode }) => {
     }
   }
 
+  let onClickHandler = null;
+  let mapFunction = null;
+
   switch (mode) {
-    case 0:
-      return (
-        <li>
-          {obj ? <div className="Elemento">
-            {Object.values(obj).map(
-              (e, i) => { if (i > 0) return <p key={uuidv4()}> {e.toString()}</p> }
-            )}
-          </div> : ''}
-        </li>
-      );
     case 1:
-      return (
-        <li>
-          {obj ? <div className="Elemento">
-            {Object.values(obj).map(
-              (e) => { return <p key={uuidv4()}> {e.toString()} </p> }
-            )}
-          </div> : ''}
-        </li>
-      );
+      mapFunction = (e, i) => { return <p key={uuidv4()}> {e.toString()}</p> };
+      break;
     case 2:
-      return (
-        <li>
-          {obj ? <div className="Elemento" onClick={handleClickCar}>
-            {Object.values(obj).map(
-              (e, i) => { if (i > 0) return <p key={uuidv4()}> {e.toString()}</p> }
-            )}
-          </div> : ''}
-        </li>
-      );
+      mapFunction = (e, i) => { if (i > 0) return <p key={uuidv4()}> {e.toString()}</p> };
+      break;
     case 3:
-      return (
-        <li>
-          {obj ? <div className="Elemento" onClick={handleClickevent}>
-            {Object.values(obj).map(
-              (e, i) => { if (i > 0) return <p key={uuidv4()}> {e.toString()}</p> }
-            )}
-          </div> : ''}
-        </li>
-      );
+      mapFunction = (e, i) => { if (i > 0) return <p key={uuidv4()}> {e.toString()}</p> };
+      break;
     default:
-      return (
-        <li>
-          {obj ? <div className="Elemento">
-            {Object.entries(obj).map(
-              (e) => { return <p key={uuidv4()}> {e.toString()} </p> }
-            )}
-          </div> : ''}
-        </li>
-      );
+      mapFunction = (e) => { return <p key={uuidv4()}> {e.toString()} </p> };
+      break;
   }
+
+  switch (mode) {
+    case 2:
+      onClickHandler = handleClickCar;
+      break;
+    case 3:
+      onClickHandler = handleClickevent;
+      break;
+  }
+
+  return (
+    <li>
+      {obj ? <div className="Elemento" onClick={onClickHandler}>
+        {Object.values(obj).map(mapFunction)}
+      </div> : ''}
+    </li>
+  );
+
 };
 
 export default Elemento;

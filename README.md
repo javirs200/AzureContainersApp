@@ -1,10 +1,18 @@
 ## Descripción del Proyecto
 
+Sistema de Cronometro WRC para vehiculos a escala
 
-### 🏗️ Arquitectura de la Solución
+### 🏗️ Tecnologias utilizadas
 
-- **MVC:**
-   Modelo-Vsita-Controlador , Arquitectura utilizada para serparar los datos de la logica de negocio , a su vez se ha decidido separar la Vista (Frontend) web para navegador en react , del Modelo y Controladores (Backend) Este patro a su vez de conoce como Cliente Servidor
+- **REACT**
+
+- **API REST**
+
+- **WEBSOCKETS**
+
+- **Socekt TCP** 
+
+- **JWT**
 
 ### 💻 Desarrollo Frontend y Backend
 
@@ -14,12 +22,23 @@
 
 - **Base de Datos:** Se utiliza Sequelize como ORM (object-relational mapping , mapeo relacional de objetos) para interactuar con la base de datos y almacenar la información necesaria para el funcionamiento del comparador.
 
+### 💻 Desarrollo dispositivos conectados
+
+dispone de dos ramas en las que se ha dessarollado el codigo para las estaciones fisiscas de deteccion de los vehiculos
+
+- **RaspberryPiDevelop** para la estacion de partida
+- **ESP32Files** para la estacion de meta
+
 ### 🔍 Funcionalidades Actuales
 
 ### ⌛ Futuras Mejoras
 
+- correccion del envio de tiempos desdde la raspberry pi , socketio no envia datos bien
+
 ## 🌐 Acceso a la Aplicación:
 
 ## 🤝 Developers
+
+- @javirs200
 
 ¡Gracias por contribuir al desarrollo de este proyecto! Siéntase libre de proponer nuevas funciones, reportar problemas o contribuir con mejoras.

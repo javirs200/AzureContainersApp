@@ -1,0 +1,18 @@
+.eventMainControls{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: row;
+    
+}
+
+.conectionStatus{
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+}
+
+.remoteOperations{
+    display: flex;
+    justify-content: space-evenly;
+    flex-direction: column;
+}

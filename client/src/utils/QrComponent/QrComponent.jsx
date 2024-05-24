@@ -15,11 +15,11 @@ const QrComponent = () => {
     return (
         <>
             <Button variant="text" onClick={() => { setShow(!show) }}>
-                Share!!
+                Compartir !!
             </Button>
             {show ?
                 <section className="qrcode_section">
-                    < h1 > Share this app</h1 >
+                    < h1 > Comparte nuestra app !!</h1 >
                     <div className="qrcode_container">
                         <QRCode value={url} size={300} />
                     </div>

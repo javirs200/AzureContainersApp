@@ -7,7 +7,6 @@ import Autologger from "./utils/Autologger/Autologger";
 
 import { UserContext } from "./context/userContext";
 
-
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 
@@ -30,12 +29,6 @@ function App() {
   const [eventName, setEventName] = useState([]);
   const [eventUuid,setEventUuid] = useState('');
 
-  // console.log('variables de entorno cargadas -> ',import.meta.env);
-  
-  // if (import.meta.env.PROD) {
-  //   console.log('variables de entorno cargadas -> ',process.env);
-  // }
-  
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
