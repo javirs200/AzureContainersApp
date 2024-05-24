@@ -10,7 +10,7 @@ WORKDIR /app/client
 COPY ./client/package.json ./
 
 #instalar dependencias
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # copy rest of app
 COPY ./client/ ./
