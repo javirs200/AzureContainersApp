@@ -6,7 +6,7 @@ import socket from "../../../../config/socket";
 import FetchUtil from "../../../../utils/FetchUtil";
 
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Button } from '@mui/material'
-import { Wifi, WifiOff,DirectionsRun,Man} from '@mui/icons-material'
+import { Wifi, WifiOff, DirectionsRun, Man } from '@mui/icons-material'
 
 const EventControl = () => {
 
@@ -46,6 +46,10 @@ const EventControl = () => {
       console.log("socket connect_error , no more trys");
       socket.disconnect();
       setButtonEnable(true);
+      //dummy enable for demo
+      setConnected(true);
+      setButtonEnable(true);
+      setStarted(false);
     }
   });
 
@@ -76,6 +80,11 @@ const EventControl = () => {
     }
   });
 
+  socket.on('tagScanned', (data) => {
+    console.log('tag escaneado ', data);
+    alert('tag escaneado ' + data);
+  });
+
   useEffect(() => {
     //codigo para cuando monta el compomente
     if (eventName !== '') {
@@ -99,6 +108,8 @@ const EventControl = () => {
     if (connected) {
       socket.disconnect()
       setButtonEnable(true);
+      setConnected(false);
+      setStarted(false);
     } else {
       socket.connect()
       setButtonEnable(false);
@@ -106,19 +117,25 @@ const EventControl = () => {
   }
 
   const handleClickStart = (e) => {
-    socket.emit('control', { event: eventName,command:'start' });
+    socket.emit('control', { event: eventName, command: 'start' });
     setLabelEnable(false);
     setStarted(true);
   }
 
   const handleClickScan = (e) => {
     socket.emit('scan', { selectedParticipant });
+    console.log('scan', selectedParticipant);
     setLabelEnable(false);
-    console.log('scan',selectedParticipant);
+    setSelectedParticipant('');
+    setTimeout(() => {
+      alert('rfid tag escaneado');
+      setLabelEnable(true);
+    }, 3000)
   }
 
   const handleClickSelectParticipant = (e) => {
     setSelectedParticipant(e.target.innerText);
+    setLabelEnable(true);
   }
 
   const drawTable = (data) => {
@@ -145,7 +162,7 @@ const EventControl = () => {
             cells.push(<TableCell key={i}>{JSON.stringify(values[i])}</TableCell>)
           }
         } else if (i === 6) {
-          cells.push(<TableCell key={i} onClick={handleClickSelectParticipant}>{values[7].body}</TableCell>)
+          cells.push(<TableCell key={i} onClick={handleClickSelectParticipant}><Button variant="outlined" className="participantBtn">{values[7].body}</Button></TableCell>)
         } else if (i === 7) {
           cells.push(<TableCell key={i} >{values[7].user.name}</TableCell>)
         }
@@ -176,19 +193,19 @@ const EventControl = () => {
         <section className="eventMainControls">
           <div className="conectionStatus">
             {connected ? <h3>Conectado <Wifi fontSize="large" /></h3> : <h3>Desconectado <WifiOff fontSize="large" /></h3>}
-            {!started ? <h3>Fase 0 <Man fontSize="large" /></h3> : <h3>Fase 1 <DirectionsRun fontSize="large" /></h3>}
             <Button variant="contained" onClick={handleClick} disabled={!buttonEnable}>
               {!connected ? "Conectar" : "Desconectar"}
             </Button>
           </div>
           <div className="remoteOperations">
+            {!started ? <h3>Configurando <Man fontSize="large" /></h3> : <h3>Listo <DirectionsRun fontSize="large" /></h3>}
             <Button variant="contained" onClick={handleClickStart} disabled={!connected || started}>
               Iniciar
             </Button>
-            <Button variant="contained" onClick={handleClickScan} disabled={!connected || started}>
+            <Button variant="contained" onClick={handleClickScan} disabled={!connected || started || !labelEnable}>
               Escanear
             </Button>
-            {selectedParticipant && labelEnable ? <h3>Seleccionado : {selectedParticipant}</h3> : ''}
+            {selectedParticipant && labelEnable && connected ? <h3>Seleccionado : {selectedParticipant}</h3> : ''}
           </div>
         </section>
       </section>
