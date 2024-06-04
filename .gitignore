@@ -1,11 +1,13 @@
 node_modules/
 
 data/
+
 CronosTimer_key.pem
 
-_pycache_/
-**/_pycache_/
-*/_pycache_/
-client/
+__pycache__/
+**/__pycache__/
+*/__pycache__/
 
+
+client/
 server/
