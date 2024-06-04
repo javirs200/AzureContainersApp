@@ -5,7 +5,7 @@ from time import sleep
 from multiprocessing import Process
 
 class IoServer:
-    def __init__(self):
+    def __init__(self ,currenttag):
         # standard Python
         print('IoServer init')
         self.sio = socketio.Server( cors_allowed_origins="*") #,logger=True, engineio_logger=True)
@@ -13,9 +13,24 @@ class IoServer:
         self.sio.always_connect = True
         self.app = socketio.WSGIApp(self.sio)
 
+        self.currenttag = currenttag
+
         @self.sio.event
         def connect(sid, environ):
             print('connect ', sid)
+            # self.sio.emit('my_response', {'data': 'Connected', 'count': 0}, room=sid)
+            # while True:
+            #     print('currenttag: ', self.currenttag.value , self.currenttag.value != "")
+            #     if self.currenttag.value != "":
+            #         print('sending tag ->', self.currenttag.value)
+            #         self.sio.emit('tagScanned', {'tag': self.currenttag.value})
+            #         self.currenttag.value = ""
+            #     if len(self.times) > 0:
+            #         message = self.times.popitem() # pop element of a dict
+            #         print('sending message ->', message)
+            #         res = self.sio.emit('my_response', {'time': message} ,room=sid)
+            #         print('res:', res)
+            #     self.sio.sleep(1)  
            
         @self.sio.event
         def disconnect(sid):
@@ -34,6 +49,8 @@ class IoServer:
 
         @self.sio.event
         def scan(sid, data):
+            res = self.sio.emit('my_response', {'participant': data} ,room=sid)
+            print('res:', res)
             if data['selectedParticipant']:
                 print('recived selectedParticipant: ', data['selectedParticipant'])
                 print('tags: ', self.tags)
@@ -43,7 +60,7 @@ class IoServer:
                     print('tags: ', self.tags)
      
 
-    def start(self,times: dict,flagStart:bool,tags: dict,currenttag:str):
+    def start(self,times: dict,flagStart:bool,tags: dict):
         print('IoServer started')
         self.times = times
         self.flagStart = flagStart
@@ -52,14 +69,4 @@ class IoServer:
         print('IoServer started')
         server = Process(target=eventlet.wsgi.server,args=(eventlet.listen(('', 3000)), self.app))
         server.start()
-        while True:
-            print('currenttag: ', currenttag.value , currenttag.value != "")
-            if currenttag.value != "":
-                print('sending tag ->', currenttag.value)
-                self.sio.emit('tagScanned', {'tag': currenttag.value})
-                currenttag.value = ""
-            if len(self.times) > 0:
-                message = self.times.popitem() # pop element of a dict
-                print('sending message ->', message)
-                self.sio.emit('new_time', {'time': message})
-            sleep(1)  
+        
