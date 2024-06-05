@@ -28,8 +28,8 @@ def socketServerProcess(timers,times,flagStart):
     server.start(timers,times)
 
 def socketIoServerProcess(times,flagStart,tags,currenttag):
-    IoServer =  socketIoServer.IoServer(currenttag)
-    IoServer.start(times,flagStart,tags)
+    IoServer =  socketIoServer.IoServer()
+    IoServer.start(times,flagStart,tags,currenttag)
     
 
 if __name__ == "__main__":
