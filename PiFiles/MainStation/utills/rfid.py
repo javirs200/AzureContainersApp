@@ -1,4 +1,4 @@
-from pirc522 import RFID
+from mfrc522 import SimpleMFRC522
 import RPi.GPIO as GPIO
 import time
 
@@ -8,40 +8,25 @@ class RFIDReader:
             GPIO.cleanup()
         except:
             pass
-        self.rdr = RFID()
-        self.util = self.rdr.util()
-        # Set util debug to true - it will print what's going on
-        self.util.debug = True
-
+        self.reader = SimpleMFRC522()
+        
     def __del__(self):
         GPIO.cleanup()
-
-    @staticmethod
-    def decodeList(byte_array:list):
-        dec_string = ""
-        print("decode",byte_array)
-        for b in byte_array:
-            dec_string = dec_string + str(b)
-        return dec_string
 
     def rfidCall(self,uidsScaned:list,times: dict):
         try:
             print("rfidCall started")
             print("ready for read",uidsScaned)
             while(True):
-                self.rdr.wait_for_tag()
-                (error, data) = self.rdr.request()
-                if not error:
-                    (error, uid) = self.rdr.anticoll()
-                    if not error:
-                        print("Detected tag")
-                        UUID = self.decodeList(uid)
-                        if UUID not in times:
-                                times[UUID] = None
-                        if UUID not in uidsScaned:
-                            uidsScaned.append(UUID)
-                            print("new tag UID: " + UUID)
-                        print("Scaned tags: " + str(uidsScaned))
+                print("waiting tagg")
+                UUID, text = self.reader.read()
+                print("Detected tag")
+                if UUID not in times:
+                        times[UUID] = None
+                if UUID not in uidsScaned:
+                    uidsScaned.append(UUID)
+                    print("new tag UID: " + UUID)
+                print("Scaned tags: " + str(uidsScaned))
                 time.sleep(1)
         except Exception as e:
                 print("ops somehing goes wrong")
@@ -52,21 +37,16 @@ class RFIDReader:
         if not flagStart :
             try:
                 print("ready for read tag",tags)
-                self.rdr.wait_for_tag()
-                (error, data) = self.rdr.request()
-                if not error:
-                    (error, uid) = self.rdr.anticoll()
-                    if not error:
-                        print("Detected tag")
-                        UUID = self.decodeList(uid)
-                        if UUID not in tags.values():
-                            for key in tags.keys():
-                                if tags[key] is None:
-                                    tags[key] = UUID
-                                    mtag = str(key) + ":" + str(UUID)
-                                    currenttag.value = mtag
-                                    print("currenttag  " + currenttag.value)
-                                    break
+                UUID, text = self.reader.read()
+                print("Detected tag")
+                if UUID not in tags.values():
+                    for key in tags.keys():
+                        if tags[key] is None:
+                            tags[key] = UUID
+                            mtag = str(key) + ":" + str(UUID)
+                            currenttag.value = mtag
+                            print("currenttag  " + currenttag.value)
+                            break
                 time.sleep(1)
             except Exception as e:
                     print("ops somehing goes wrong")
