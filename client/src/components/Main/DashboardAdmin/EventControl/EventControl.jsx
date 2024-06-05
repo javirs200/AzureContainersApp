@@ -66,7 +66,6 @@ const EventControl = () => {
     setConnected(true);
     setButtonEnable(true);
     setStarted(false);
-    socket.emit('my_message', 'Hello server from client');
   });
 
   socket.on('my_response', (data) => {
@@ -82,7 +81,7 @@ const EventControl = () => {
 
   socket.on('tagScanned', (data) => {
     console.log('tag escaneado ', data);
-    alert('tag escaneado ' + data);
+    //alert('tag escaneado ' + data);
   });
 
   useEffect(() => {
