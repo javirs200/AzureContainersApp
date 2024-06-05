@@ -1,0 +1,5 @@
+RPi.GPIO
+spidev
+eventlet
+mfrc522
+python-socketio
