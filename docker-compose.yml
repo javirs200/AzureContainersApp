@@ -25,13 +25,13 @@ services:
       - SQL_USER=postgres
       - SQL_NAME=postgres
       - MY_TOKEN_SECRET=miSecreto
-      - PORT=4000
+      - PORT=3000
     volumes:
       - ./server:/server
     ports:
-      - "4000:4000"
+      - "3000:3000"
     healthcheck:
-      test: wget --tries=1 --spider http://localhost:4000/api/login/logout || exit 1
+      test: wget --tries=1 --spider http://localhost:3000/api/login/logout || exit 1
       interval: 2s
       timeout: 10s
       retries: 5
@@ -45,7 +45,7 @@ services:
       context: .
       dockerfile: ./client/Dockerfile
     environment:
-      VITE_API_HOST: localhost:4000
+      VITE_API_HOST: localhost:3000
     volumes:
       - ./client:/client
     ports:
