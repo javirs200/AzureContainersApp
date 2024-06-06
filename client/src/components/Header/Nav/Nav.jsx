@@ -10,26 +10,24 @@ const Nav = () => {
       <Link className={'link'} to='/landing'>
         <img src={foto} alt="logo" className="logo_nav" />
       </Link>
-      {logged ?
-        role == 'admin' ?
-          <ul>
-            <li><Link className={'link'} to='/landing'>Inicio</Link></li>
-            <li><Link className={'link'} to='/users'>Usuarios</Link></li>
-            <li><Link className={'link'} to='/events'>Eventos</Link></li>
-            <li><Link className={'link'} to='/myCars'>Mis Coches</Link></li>
-          </ul>
-          :
-          <ul>
+      <ul>
+        {logged ?
+          <>
             <li><Link className={'link'} to='/landing'>Inicio</Link></li>
             <li><Link className={'link'} to='/myCars'>Mis Coches</Link></li>
-          </ul>
-        :
-        <ul>
-          <li><Link className={'link'} to='/login'>Identificarse</Link></li>
-          <li><Link className={'link'} to='/register'>Registro</Link></li>
-          <li><Link className={'link'} to='/times'>Tiempos</Link></li>
-        </ul>
-      }
+            {role == 'admin' ?
+            <>
+              <li><Link className={'link'} to='/users'>Usuarios</Link></li>
+              <li><Link className={'link'} to='/events'>Eventos</Link></li>
+            </>
+            : null}
+          </>
+          : <>
+            <li><Link className={'link'} to='/login'>Identificarse</Link></li>
+            <li><Link className={'link'} to='/register'>Registro</Link></li>
+          </>}
+        <li><Link className={'link'} to='/times'>Tiempos</Link></li>
+      </ul>
     </nav>
   );
 };
