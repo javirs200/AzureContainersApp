@@ -153,17 +153,13 @@ const EventControl = () => {
     let rows = data.map((row, index) => {
       let cells = []
       let values = Object.values(row);
-      for (let i = 0; i < values.length; i++) {
-        if (i < 6) {
-          if (values[i] === null) {
-            cells.push(<TableCell key={i}>-</TableCell>)
-          } else {
-            cells.push(<TableCell key={i}>{JSON.stringify(values[i])}</TableCell>)
-          }
-        } else if (i === 6) {
-          cells.push(<TableCell key={i} onClick={handleClickSelectParticipant}><Button variant="outlined" className="participantBtn">{values[7].body}</Button></TableCell>)
-        } else if (i === 7) {
-          cells.push(<TableCell key={i} >{values[7].user.name}</TableCell>)
+      for (let i = 1; i <= values.length; i++) {
+        if (i < 7) {
+          cells.push(<TableCell key={i}>{values[i]}</TableCell>)
+        } else if (i === 9) {
+          cells.push(<TableCell key={i} onClick={handleClickSelectParticipant}><Button variant="outlined" className="participantBtn">{values[9].body}</Button></TableCell>)
+        } else if (i === 10) {
+          cells.push(<TableCell key={i} >{values[9].user.name}</TableCell>)
         }
       }
       return <TableRow key={index}>{cells}</TableRow>
