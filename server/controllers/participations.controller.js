@@ -4,7 +4,7 @@ const carsModel = require("../models/cars.model");
 const { validationResult, body } = require('express-validator');
 const uuidV4 = require('uuid');
 const usersModel = require("../models/users.model");
-const { Op } = require("sequelize");
+const { Sequelize,Op, DATE, STRING } = require("sequelize");
 
 const newParticipation = async (req, res) => {
     const errors = validationResult(req);
@@ -124,7 +124,7 @@ const getEventParticipations = async (req, res) => {
 
             let eventSearch = await participationsModel.findAll({
                 distinct: true,
-                attributes: ['t1', 't2', 't3', 't4', 't5', 't6'],
+                attributes: ['uuid', 't1', 't2', 't3', 't4', 't5', 't6','tTotal'],
                 include:
                     [
                         {
@@ -141,8 +141,8 @@ const getEventParticipations = async (req, res) => {
                                 attributes: ['name']
                             }
                         }
-                    ]
-
+                    ],
+                order: [['tTotal', 'ASC']]
             }
 
             );
@@ -166,12 +166,12 @@ const deleteParticipation = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
     try {
-        let {uuid} = req.body;
+        let { uuid } = req.body;
 
         let deleted = await participationsModel.destroy({ where: { uuid } });
 
         if (deleted) {
-            res.status(200).json({ msg:'deleted participation ' });
+            res.status(200).json({ msg: 'deleted participation ' });
         } else {
             res.status(400).json({ msg: "no se ha podido eliminar la participacion " });
         }

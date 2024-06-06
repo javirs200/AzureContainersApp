@@ -33,17 +33,34 @@ const populateDatabase = async () => {
 
         await createParticipation('a@a.com', 'MaseratiQuattroporte', 'gp Italia');
 
-        for (let i = 1; i <= 6; i++) {
-            let min1 = Math.floor(Math.random() * 3) + 1;
-            let min2 = min1 + 1;
-            await createTime('ToyotaST185', 'gp España', min1, min2, i);
-        }
+        await createTime('ToyotaST185', 'gp España', 1, 2, 1);
+        await createTime('ToyotaST185', 'gp España', 1, 2, 2);
+        await createTime('ToyotaST185', 'gp España', 2, 2, 3);
 
-        for (let i = 1; i <= 5; i++) {
-            let min1 = Math.floor(Math.random() * 3) + 1;
-            let min2 = min1 + 1;
-            await createTime('AudiA3', 'gp España', min1, min2, i);
-        }
+        await createTime('AudiA3', 'gp España', 1, 2, 1);
+        await createTime('AudiA3', 'gp España', 2, 2, 2);
+        await createTime('AudiA3', 'gp España', 1, 2, 3);
+
+        await createTime('ToyotaST185', 'gp España', 2, 2, 4);
+        await createTime('AudiA3', 'gp España', 2, 2, 4);
+        
+        await createTime('ToyotaST185', 'gp España', 2, 2, 5);
+        await createTime('AudiA3', 'gp España', 1, 2, 5);
+
+        await createTime('ToyotaST185', 'gp España', 1, 2, 6);
+        await createTime('AudiA3', 'gp España', 1, 2, 6);
+
+        // for (let i = 1; i <= 6; i++) {
+        //     let min1 = Math.floor(Math.random() * 3) + 1;
+        //     let min2 = min1 + 1;
+        //     await createTime('ToyotaST185', 'gp España', min1, min2, i);
+        // }
+
+        // for (let i = 1; i <= 5; i++) {
+        //     let min1 = Math.floor(Math.random() * 3) + 1;
+        //     let min2 = min1 + 1;
+        //     await createTime('AudiA3', 'gp España', min1, min2, i);
+        // }
 
         for (let i = 1; i <= 4; i++) {
             let min1 = Math.floor(Math.random() * 3) + 1;
@@ -120,7 +137,7 @@ const createTime = async (carBody, eventName, min1, min2, index) => {
 
         let eventSearch = await participationsModel.findOne({
             distinct: true,
-            attributes: ['uuid', 't1', 't2', 't3', 't4', 't5', 't6'],
+            attributes: ['uuid', 't1', 't2', 't3', 't4', 't5', 't6', 'tTotal'],
             include:
                 [
                     {
@@ -134,15 +151,22 @@ const createTime = async (carBody, eventName, min1, min2, index) => {
                         where: { body: carBody },
                     }
                 ]
-
         }
         );
 
-        // console.log('eventSearch -> ', eventSearch);
-        const time = generateTime(min1, min2);
+        tTotal = await eventSearch.get('tTotal');
+        // console.log('eventSearch ttotal -> ', tTotal);
+        res = generateTime(min1, min2);
+        // console.log('eventSearch time ts -> ', res);
         let ti = "t" + index.toString()
         let data = {};
-        data[ti] = time
+        data[ti] = res.formattedTime
+
+        if (tTotal == null) {
+            tTotal = 0;
+        }
+        data['tTotal'] =  tTotal + res.timestamp;
+
         // console.log("my data -> ", data);
         let response = await eventSearch.update(data);
         // console.log('response -> ', response);
@@ -154,9 +178,14 @@ const generateTime = (min1, min2) => {
     const randomSeconds = Math.floor(Math.random() * 60);
     const randomMilliseconds = Math.floor(Math.random() * 1000);
 
-    const formattedTime = `${randomMinutes}:${randomSeconds.toString().padStart(2, '0')}.${randomMilliseconds.toString().padStart(3, '0')}`;
+    // const randomMinutes = min1;
+    // const randomSeconds = 0;
+    // const randomMilliseconds = 0;
 
-    return formattedTime;
+    const formattedTime = `${randomMinutes}:${randomSeconds.toString().padStart(2, '0')}.${randomMilliseconds.toString().padStart(3, '0')}`;
+    const timestamp = (randomMinutes * 60 + randomSeconds) * 1000 + randomMilliseconds;
+
+    return {formattedTime,timestamp};
 }
 
 console.log('populating database...');
