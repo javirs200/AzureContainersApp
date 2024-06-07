@@ -14,6 +14,7 @@ const EventControl = () => {
   const [buttonEnable, setButtonEnable] = useState(true);
 
   const [selectedParticipant, setSelectedParticipant] = useState('');
+  const [selectedId, setSelectedId] = useState('');
   const [labelEnable, setLabelEnable] = useState(true);
 
   const [hasTime, setHasTime] = useState(false);
@@ -122,8 +123,8 @@ const EventControl = () => {
   }
 
   const handleClickScan = (e) => {
-    socket.emit('scan', { selectedParticipant });
-    console.log('scan', selectedParticipant);
+    socket.emit('scan', { selectedid});
+    console.log('scan send ', selectedParticipant , selectedId);
     setLabelEnable(false);
     setSelectedParticipant('');
     setTimeout(() => {
@@ -132,8 +133,10 @@ const EventControl = () => {
     }, 3000)
   }
 
-  const handleClickSelectParticipant = (e) => {
-    setSelectedParticipant(e.target.innerText);
+  const handleClickSelectParticipant = (id,name) => {
+    console.log('selected participant', id);
+    setSelectedId(id);
+    setSelectedParticipant(name);
     setLabelEnable(true);
   }
 
@@ -157,7 +160,7 @@ const EventControl = () => {
         if (i < 7) {
           cells.push(<TableCell key={i}>{values[i]}</TableCell>)
         } else if (i === 9) {
-          cells.push(<TableCell key={i} onClick={handleClickSelectParticipant}><Button variant="outlined" className="participantBtn">{values[9].body}</Button></TableCell>)
+          cells.push(<TableCell key={i} onClick={()=>{handleClickSelectParticipant(values[0],values[9].body)}}><Button variant="outlined" className="participantBtn">{values[9].body}</Button></TableCell>)
         } else if (i === 10) {
           cells.push(<TableCell key={i} >{values[9].user.name}</TableCell>)
         }
