@@ -81,8 +81,17 @@ const EventControl = () => {
   });
 
   socket.on('tagScanned', (data) => {
-    console.log('tag escaneado ', data);
-    //alert('tag escaneado ' + data);
+    if (data) {
+      // console.log('tag escaneado ', data);
+      let id = data.tag.toString().split(':')[0];
+      console.log('id extraido ', id);
+      let el = document.getElementById(id)
+      // console.log('elemento encontrado ', el);
+      if (el) {
+        el.style.color = 'green';
+        el.disabled = true;
+      }
+    }
   });
 
   useEffect(() => {
@@ -123,14 +132,10 @@ const EventControl = () => {
   }
 
   const handleClickScan = (e) => {
-    socket.emit('scan', { selectedid});
+    socket.emit('scan', { selectedId});
     console.log('scan send ', selectedParticipant , selectedId);
     setLabelEnable(false);
     setSelectedParticipant('');
-    setTimeout(() => {
-      alert('rfid tag escaneado');
-      setLabelEnable(true);
-    }, 3000)
   }
 
   const handleClickSelectParticipant = (id,name) => {
@@ -160,7 +165,9 @@ const EventControl = () => {
         if (i < 7) {
           cells.push(<TableCell key={i}>{values[i]}</TableCell>)
         } else if (i === 9) {
-          cells.push(<TableCell key={i} onClick={()=>{handleClickSelectParticipant(values[0],values[9].body)}}><Button variant="outlined" className="participantBtn">{values[9].body}</Button></TableCell>)
+          cells.push(<TableCell key={i} onClick={()=>{handleClickSelectParticipant(values[0],values[9].body)}}>
+          <Button variant="outlined" className="participantBtn" id={values[0]}>{values[9].body}</Button>
+          </TableCell>)
         } else if (i === 10) {
           cells.push(<TableCell key={i} >{values[9].user.name}</TableCell>)
         }
