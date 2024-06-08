@@ -43,7 +43,7 @@ def main():
     ntptime.settime()	# this queries the time from an NTP server
     print('now are ',utime.localtime())
     print('phase 2 , wifi conected , initialize Tcp Socket')
-    soc = mySocket('raspberry.local',12345) # raspberry.mshome.net host name when ap is from windows 11 , raspberry.local host name when ap is from android
+    soc = mySocket('raspberrypi.local',12345) # raspberrypi.mshome.net host name when ap is from windows 11 , raspberry.local host name when ap is from android
     print(soc)
     print('phase 3 , Socket conected, initialize ultrasonic and rfid')   
     ult = ultrasonic()
