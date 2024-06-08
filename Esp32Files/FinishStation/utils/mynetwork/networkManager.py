@@ -1,7 +1,7 @@
 import network
 import json
 from hadware.leds import led
-import time
+from utime import sleep
 
 class myNetwork:
     def __init__(self):
@@ -14,8 +14,13 @@ class myNetwork:
         f.close()
         
         self.nets = self.jsondata["networks"]
+        
+        loadedNets = []
+        
+        for n in self.nets:
+            loadedNets.append(n['ssid'])
 
-        print("networks loaded ",self.nets)
+        print("networks loaded ",loadedNets)
 
         self.sta_if = network.WLAN(network.STA_IF) # wifi station mode
         self.sta_if.active(True) # wifi on
@@ -30,17 +35,20 @@ class myNetwork:
                 try:
                     print("connecting to ",n["ssid"])
                     self.sta_if.connect(n["ssid"],n["pass"])
-                    time.sleep(20)
+                    sleep(5)
                     if self.sta_if.isconnected():
                         print("connected to ",n["ssid"])
+                        self.myled.flash(0.1)
                         return # exit function
                 except Exception as e:
                     self.myled.turnOff()
                     print('Exception ',e)
                     self.sta_if.active(False) # wifi off
-                    time.sleep(1)
+                    sleep(1)
                     self.sta_if.active(True) # wifi on
                     pass
+        print("connected to ",self.sta_if.config('essid'))
+        self.myled.flash(0.1)
 
     def closeSocket(self):
         self.s.close()
