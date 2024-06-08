@@ -35,22 +35,17 @@ class IoServer:
 
         @self.sio.event
         def scan(sid, data):
-            # res = self.sio.emit('my_response', {'participant': data} ,room=sid)
-            # print('res:', res)
-            if data['selectedParticipant']:
-                print('recived selectedParticipant: ', data['selectedParticipant'])
+            if data['selectedId']:
+                print('recived selectedId: ', data['selectedId'])
                 print('tags: ', self.tags)
-                if data['selectedParticipant'] not in self.tags:
-                    self.tags[data['selectedParticipant']] = None
-                    print('new tag added: ', data['selectedParticipant'])
+                if data['selectedId'] not in self.tags:
+                    self.tags[data['selectedId']] = None
+                    print('new tag added: ', data['selectedId'])
                     print('tags: ', self.tags)
-
-
         
     def background_loop(self):
         print('background_loop started')
         while True:
-                print('currenttag: ', self.currenttag.value , self.currenttag.value != "")
                 if self.currenttag.value != "":
                     print('sending tag ->', self.currenttag.value)
                     self.sio.emit('tagScanned', {'tag': self.currenttag.value})
@@ -58,7 +53,7 @@ class IoServer:
                 if len(self.times) > 0:
                     message = self.times.popitem() # pop element of a dict
                     print('sending message ->', message)
-                    res = self.sio.emit('my_response', {'time': message} ,room=sid)
+                    res = self.sio.emit('my_response', {'time': message})
                     print('res:', res)
                 self.sio.sleep(1)   
 
