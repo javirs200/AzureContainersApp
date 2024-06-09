@@ -46,15 +46,19 @@ class IoServer:
     def background_loop(self):
         print('background_loop started')
         while True:
+                # print('currenttag ', self.currenttag.value)
+                # print('times:', self.times)
                 if self.currenttag.value != "":
                     print('sending tag ->', self.currenttag.value)
                     self.sio.emit('tagScanned', {'tag': self.currenttag.value})
                     self.currenttag.value = ""
-                if len(self.times) > 0:
-                    message = self.times.popitem() # pop element of a dict
-                    print('sending message ->', message)
-                    res = self.sio.emit('my_response', {'time': message})
-                    print('res:', res)
+                for t in self.times.items():
+                    #blocking loop ?
+                    # print('t:', t)
+                        message = self.times.popitem() # pop element of a dict
+                        print('sending message ->',str(message))
+                        # res = self.sio.emit('my_response', {'time': message})
+                        # print('res:', res)
                 self.sio.sleep(1)   
 
     def start(self,times: dict,flagStart:bool,tags: dict,currenttag):
