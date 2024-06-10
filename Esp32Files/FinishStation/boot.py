@@ -6,7 +6,10 @@ from utils.socket import mySocket
 import uasyncio
 
 import ntptime
+import machine
+from machine import RTC
 
+from utils.timeConverter import datetime_to_nanoseconds
 
 uidsScaned = []
 timestamps = []
@@ -15,6 +18,7 @@ messages = []
 global farMeasure
 global distError
 
+#--------auxiliar functions----------#
 async def do_read(rf,timestamps,messages):
     while True:
         # print("read rfid")
@@ -35,13 +39,18 @@ async def do_send(soc,messages):
 
 #--------main flow----------#
 def main():
+    rtc = machine.RTC()
     net = myNetwork()
     print('phase 0 , wifi scan')
     net.connectOrReconect()
+
     print('phase 1 , sync time')
     ntptime.host = "0.es.pool.ntp.org"
-    ntptime.settime()	# this queries the time from an NTP server
-    print('now are ',utime.localtime())
+    ntptime.settime()	# this queries the time from an NTP server for init rtc
+    dt_tuple = utime.localtime()
+    year, month, day, hours, minutes, seconds, weekday, yearday = dt_tuple
+    rtc.datetime((year, month, day, weekday, hours, minutes, seconds, 0))# set rtc time
+    
     print('phase 2 , wifi conected , initialize Tcp Socket')
     soc = mySocket('raspberrypi.local',12345) # raspberrypi.mshome.net host name when ap is from windows 11 , raspberry.local host name when ap is from android
     print(soc)

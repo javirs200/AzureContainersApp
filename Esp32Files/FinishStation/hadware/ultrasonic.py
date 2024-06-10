@@ -2,6 +2,11 @@ from machine import Pin
 import utime
 from uasyncio import sleep
 
+import machine
+from machine import RTC
+
+from utils.timeConverter import datetime_to_nanoseconds
+
 class ultrasonic:
     def getMeasureUltrasonic(self):
         distance=0
@@ -24,6 +29,8 @@ class ultrasonic:
         return int(distance)
     
     def __init__(self):
+
+        self.rtc = machine.RTC()
 
         self.PIN_TRIGGER=Pin(4,Pin.OUT,0)
         self.PIN_ECHO=Pin(14,Pin.IN,0)
@@ -58,7 +65,10 @@ class ultrasonic:
                 print("timestamps ",timestamps)
                 if self.dist < self.treshold  :
                     print("distance less than treshold")
-                    timestamps.append(utime.time_ns())
+                    rtctimetuple = self.rtc.datetime()
+                    #print("rtc time tuple ",rtctimetuple)
+                    nanoseconds = datetime_to_nanoseconds(rtctimetuple)
+                    timestamps.append(nanoseconds)
                 await sleep(0.2)                              
         except Exception as e:
             print("Measurement stopped in ultrasonic")
