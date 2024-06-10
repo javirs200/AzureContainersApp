@@ -41,7 +41,7 @@ class IoServer:
                 if data['selectedId'] not in self.tags:
                     self.tags[data['selectedId']] = None
                     print('new tag added: ', data['selectedId'])
-                    print('tags: ', self.tags)
+                    print('tags: ', )
         
     def background_loop(self):
         print('background_loop started')
@@ -53,12 +53,18 @@ class IoServer:
                     self.sio.emit('tagScanned', {'tag': self.currenttag.value})
                     self.currenttag.value = ""
                 for t in self.times.items():
-                    #blocking loop ?
-                    # print('t:', t)
-                        message = self.times.popitem() # pop element of a dict
-                        print('sending message ->',str(message))
-                        # res = self.sio.emit('my_response', {'time': message})
-                        # print('res:', res)
+                    print('times -> ', self.times.items())
+                    if t[1] != None and t[1] != "":
+                        for tag in self.tags.items():
+                            if tag[1][0] == t[0]:
+                                print('tag founded ->', tag[0])
+                                print('new_time', {'uuid': tag[0], 'time': t[1] , 'index': tag[1][1]})
+                                self.sio.emit('new_time', {'uuid': tag[0], 'time': t[1] , 'index': tag[1][1]})
+                                #increase cointer
+                                if tag[1][1] < 6:
+                                    self.tags = tag[1][1] + 1
+                                #clear time
+                                self.times[tag[1][0]] = None
                 self.sio.sleep(1)   
 
     def start(self,times: dict,flagStart:bool,tags: dict,currenttag):

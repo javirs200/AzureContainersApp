@@ -25,14 +25,16 @@ class Server:
                         print("card uid " , uid , "is in timers ? ",timers.keys())
                         if uid in timers.keys():
                             print('compare two values {}: {}'.format(timestamp, timers[uid]))
-                            time = abs(int(timestamp) - int(timers[uid]))
-                            time_in_ns = int(timestamp)
+                            mytime = abs(int(timestamp) - int(timers[uid]))
+                            print('Time in ns:', mytime)
+                            time_in_ns = int(mytime)
                             time_in_ms = time_in_ns / 1e6
                             minutes = int(time_in_ms / 60000)
+                            minutes = minutes % 60
                             seconds = int((time_in_ms % 60000) / 1000)
                             milliseconds = int((time_in_ms % 60000) % 1000)
-                            formatted_time = '{}:{:02d}.{:03d}'.format(minutes, seconds, milliseconds)
-                            print('Time for uid {}: {}'.format(uid, formatted_time))
+                            formatted_time = '{}:{}.{}'.format(minutes, seconds, milliseconds)
+                            print('Time for uid {} : {}'.format(uid, formatted_time))
                             times[uid] = formatted_time
                     else:
                         print('Invalid message:', message)

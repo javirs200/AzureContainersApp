@@ -49,8 +49,7 @@ class RFIDReader:
             try:
                 print("ready for read tag",tags)
                 (error, tag_type) = self.rdr.request()
-                print("tag_type",tag_type)
-                print("error",error)
+                print("tag_type",tag_type,"error",error)
                 if not error:
                     print("Tag detected")
                     (error, uid) = self.rdr.anticoll()
@@ -61,7 +60,7 @@ class RFIDReader:
                         if UUID not in tags.values():
                             for key in tags.keys():
                                 if tags[key] is None:
-                                    tags[key] = UUID
+                                    tags[key] = [UUID,1] # [UUID,counter]
                                     mtag = str(key) + ":" + str(UUID)
                                     currenttag.value = mtag
                                     print("currenttag  " + currenttag.value)
