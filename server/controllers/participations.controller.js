@@ -87,16 +87,17 @@ const addTime = async (req, res) => {
     }
     try {
         let { carUuid, eventUuid, time, index } = req.body;
+        let { participationUUID, time, index } = req.body;
 
         if (index > 0 && index < 7) {
 
-            let data = { carUuid, eventUuid }
+            let data = { participationUUID }
 
             data["t" + index.toString()] = time
 
             // console.log("my data -> ", data);
 
-            let participation = await participationsModel.update(data, { where: { carUuid, eventUuid } });
+            let participation = await participationsModel.update(data, { where: { 'uuid': participationUUID } });
             if (participation) {
                 res.status(200).json({ 'added time ': participation });
             } else {

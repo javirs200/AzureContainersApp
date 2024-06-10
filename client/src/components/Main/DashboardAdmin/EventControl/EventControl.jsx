@@ -10,7 +10,7 @@ import { Wifi, WifiOff, DirectionsRun, Man } from '@mui/icons-material'
 
 const EventControl = () => {
 
-  const { fetchParticipants } = FetchUtil;
+  const { fetchParticipants,fetchAddNewTime } = FetchUtil;
   const [buttonEnable, setButtonEnable] = useState(true);
 
   const [selectedParticipant, setSelectedParticipant] = useState('');
@@ -74,10 +74,13 @@ const EventControl = () => {
   });
 
   socket.on('new_time', (data) => {
-    console.log('server recive new time ', data.time);
+    console.log('server recive new time ', data);
+    fetchAddNewTime(data.uuid, data.time, data.index).then((response) => console.log('response from server ', response));
     if (!hasTime) {
       setHasTime(true);
-    }
+    } 
+
+
   });
 
   socket.on('tagScanned', (data) => {
@@ -163,7 +166,11 @@ const EventControl = () => {
       let values = Object.values(row);
       for (let i = 1; i <= values.length; i++) {
         if (i < 7) {
-          cells.push(<TableCell key={i}>{values[i]}</TableCell>)
+          if(values[i] === null){
+            cells.push(<TableCell key={i}>--:--:--</TableCell>)
+          }else{          
+            cells.push(<TableCell key={i}>{values[i]}</TableCell>)
+          }
         } else if (i === 9) {
           cells.push(<TableCell key={i} onClick={()=>{handleClickSelectParticipant(values[0],values[9].body)}}>
           <Button variant="outlined" className="participantBtn" id={values[0]}>{values[9].body}</Button>
