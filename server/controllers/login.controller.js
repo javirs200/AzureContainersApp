@@ -17,7 +17,7 @@ const login = async (req, res) => {
                 if (result) {
                     const token = createToken({ email: user.email, role: user.rol });
                     res.status(200)
-                        .cookie('access_token', token ,{httonly:true})
+                        .cookie('access_token', token ,{httponly:true})
                         .json({ msg: "login ok" , role:user.rol  });
                 } else {
                     res.status(400).json({ msg: "Las credenciales proporcionadas son incorrectas" });
@@ -37,7 +37,7 @@ const login = async (req, res) => {
 const logout = async (req, res) => {
     try {
         res.status(200)
-            .cookie('access_token', "",{httonly:true})
+            .cookie('access_token', "",{httponly:true})
             .send();
     } catch (error) {
         res.status(500).json({ msg: "Internal server error " , error:error });

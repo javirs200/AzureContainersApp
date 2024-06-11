@@ -34,13 +34,13 @@ const Login = () => {
     e.preventDefault()
     const login = async () => {
       const user = { email: emailField, password: password };
-      // console.log("user data form form -> ", user);
+      console.log("user data form form -> ", user);
       //peticion api para login con objeto usuario
       const response = await fetchLoginUser(user); 
       if (response.status === 200) {
         let data = await response.json()
         setLoggedIn(true);
-        // console.log('datos respuesta ', data);
+        console.log('datos respuesta ', data);
         setRole(data.role);
         setEmail(emailField);
         navigate("/dashboard");
