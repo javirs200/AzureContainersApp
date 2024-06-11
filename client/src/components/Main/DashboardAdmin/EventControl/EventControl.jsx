@@ -74,7 +74,7 @@ const EventControl = () => {
   });
 
   socket.on('new_time', (data) => {
-    console.log('server recive new time ', data);
+    // console.log('server recive new time ', data);
     fetchAddNewTime(data.uuid, data.time, data.index).then((response) => console.log('response from server ', response));
     if (!hasTime) {
       setHasTime(true);
@@ -87,7 +87,7 @@ const EventControl = () => {
     if (data) {
       // console.log('tag escaneado ', data);
       let id = data.tag.toString().split(':')[0];
-      console.log('id extraido ', id);
+      // console.log('id extraido ', id);
       let el = document.getElementById(id)
       // console.log('elemento encontrado ', el);
       if (el) {
@@ -136,13 +136,13 @@ const EventControl = () => {
 
   const handleClickScan = (e) => {
     socket.emit('scan', { selectedId});
-    console.log('scan send ', selectedParticipant , selectedId);
+    // console.log('scan send ', selectedParticipant , selectedId);
     setLabelEnable(false);
     setSelectedParticipant('');
   }
 
   const handleClickSelectParticipant = (id,name) => {
-    console.log('selected participant', id);
+    // console.log('selected participant', id);
     setSelectedId(id);
     setSelectedParticipant(name);
     setLabelEnable(true);

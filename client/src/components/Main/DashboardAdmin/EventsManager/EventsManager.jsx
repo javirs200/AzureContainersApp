@@ -47,7 +47,7 @@ const EventsManager = () => {
           let data = await response.json()
           alert('evento creado')
           // console.log("ok create , data api -> ", data);
-          fetchEvents().then((data) => setEvents(data));
+          // fetchEvents().then((data) => setEvents(data));
         } else {
           let data = await response.json()
           alert('error')

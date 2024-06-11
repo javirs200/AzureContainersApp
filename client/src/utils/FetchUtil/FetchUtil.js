@@ -75,7 +75,7 @@ const fetchMyParticipations = async (email) => {
 }
 
 const fetchLoginUser = async (user) => {
-  console.log("api fech util login after user data" , user)
+  // console.log("api fech util login after user data" , user)
   const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
