@@ -183,6 +183,16 @@ const fetchDeleteParticipation = async (participation) => {
   return response;
 }
 
+const fetchAddNewTime = async (participationUUID, time, index) => {
+  const response = await fetch(`http://${import.meta.env.VITE_API_HOST}/api/participations/addTime`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    credentials: 'include',
+    body: JSON.stringify({'participationUUID':participationUUID, 'time':time, 'index':index}),
+  });
+  return response;
+}
+
 export default {
 
   fetchNewUser,
@@ -205,5 +215,7 @@ export default {
   fetchNewParticipation,
   fetchMyParticipations,
   fetchDeleteParticipation,
+
+  fetchAddNewTime
   
 };

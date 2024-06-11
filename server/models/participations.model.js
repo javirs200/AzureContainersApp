@@ -33,6 +33,10 @@ const participations = db.define("participations", {
         field: 't6',
         type: DataTypes.TIME
     },
+    tTotal: {
+        field: 'tTotal',
+        type: DataTypes.INTEGER
+    }
 },
     {
         db,

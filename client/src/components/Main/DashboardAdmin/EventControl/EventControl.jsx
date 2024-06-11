@@ -10,10 +10,11 @@ import { Wifi, WifiOff, DirectionsRun, Man } from '@mui/icons-material'
 
 const EventControl = () => {
 
-  const { fetchParticipants } = FetchUtil;
+  const { fetchParticipants,fetchAddNewTime } = FetchUtil;
   const [buttonEnable, setButtonEnable] = useState(true);
 
   const [selectedParticipant, setSelectedParticipant] = useState('');
+  const [selectedId, setSelectedId] = useState('');
   const [labelEnable, setLabelEnable] = useState(true);
 
   const [hasTime, setHasTime] = useState(false);
@@ -66,7 +67,6 @@ const EventControl = () => {
     setConnected(true);
     setButtonEnable(true);
     setStarted(false);
-    socket.emit('my_message', 'Hello server from client');
   });
 
   socket.on('my_response', (data) => {
@@ -74,15 +74,27 @@ const EventControl = () => {
   });
 
   socket.on('new_time', (data) => {
-    console.log('server recive new time ', data.time);
+    console.log('server recive new time ', data);
+    fetchAddNewTime(data.uuid, data.time, data.index).then((response) => console.log('response from server ', response));
     if (!hasTime) {
       setHasTime(true);
-    }
+    } 
+
+
   });
 
   socket.on('tagScanned', (data) => {
-    console.log('tag escaneado ', data);
-    alert('tag escaneado ' + data);
+    if (data) {
+      // console.log('tag escaneado ', data);
+      let id = data.tag.toString().split(':')[0];
+      console.log('id extraido ', id);
+      let el = document.getElementById(id)
+      // console.log('elemento encontrado ', el);
+      if (el) {
+        el.style.color = 'green';
+        el.disabled = true;
+      }
+    }
   });
 
   useEffect(() => {
@@ -123,18 +135,16 @@ const EventControl = () => {
   }
 
   const handleClickScan = (e) => {
-    socket.emit('scan', { selectedParticipant });
-    console.log('scan', selectedParticipant);
+    socket.emit('scan', { selectedId});
+    console.log('scan send ', selectedParticipant , selectedId);
     setLabelEnable(false);
     setSelectedParticipant('');
-    setTimeout(() => {
-      alert('rfid tag escaneado');
-      setLabelEnable(true);
-    }, 3000)
   }
 
-  const handleClickSelectParticipant = (e) => {
-    setSelectedParticipant(e.target.innerText);
+  const handleClickSelectParticipant = (id,name) => {
+    console.log('selected participant', id);
+    setSelectedId(id);
+    setSelectedParticipant(name);
     setLabelEnable(true);
   }
 
@@ -154,17 +164,19 @@ const EventControl = () => {
     let rows = data.map((row, index) => {
       let cells = []
       let values = Object.values(row);
-      for (let i = 0; i < values.length; i++) {
-        if (i < 6) {
-          if (values[i] === null) {
-            cells.push(<TableCell key={i}>-</TableCell>)
-          } else {
-            cells.push(<TableCell key={i}>{JSON.stringify(values[i])}</TableCell>)
+      for (let i = 1; i <= values.length; i++) {
+        if (i < 7) {
+          if(values[i] === null){
+            cells.push(<TableCell key={i}>--:--:--</TableCell>)
+          }else{          
+            cells.push(<TableCell key={i}>{values[i]}</TableCell>)
           }
-        } else if (i === 6) {
-          cells.push(<TableCell key={i} onClick={handleClickSelectParticipant}><Button variant="outlined" className="participantBtn">{values[7].body}</Button></TableCell>)
-        } else if (i === 7) {
-          cells.push(<TableCell key={i} >{values[7].user.name}</TableCell>)
+        } else if (i === 9) {
+          cells.push(<TableCell key={i} onClick={()=>{handleClickSelectParticipant(values[0],values[9].body)}}>
+          <Button variant="outlined" className="participantBtn" id={values[0]}>{values[9].body}</Button>
+          </TableCell>)
+        } else if (i === 10) {
+          cells.push(<TableCell key={i} >{values[9].user.name}</TableCell>)
         }
       }
       return <TableRow key={index}>{cells}</TableRow>
