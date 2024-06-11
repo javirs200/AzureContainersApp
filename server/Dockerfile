@@ -19,7 +19,7 @@ COPY ./server/ ./
 RUN ls
 
 # El puerto en el que se ejecutará la aplicación
-EXPOSE 4000
+EXPOSE 3000
 
 # Comando para iniciar la aplicación
 CMD ["npm", "run" ,"start"]
