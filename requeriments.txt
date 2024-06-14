@@ -1,5 +1,5 @@
 RPi.GPIO
 spidev
 eventlet
-mfrc522
+pirc522
 python-socketio
