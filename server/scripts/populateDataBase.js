@@ -1,4 +1,4 @@
-const { connectSQL, db } = require('../config/db_pgsql');
+// Desc: Script to populate the database with some data for testing purposes
 const bcrypt = require('bcryptjs');
 const uuidV4 = require('uuid');
 const usersModel = require('../models/users.model');
@@ -9,7 +9,6 @@ const participationsModel = require('../models/participations.model');
 
 const populateDatabase = async () => {
     try {
-        await connectSQL();
 
         await createUser('admin', 'admin@admin.com', 'admin1234', 'admin');
         await createUser('anonimo', 'anonimo@anonimo.com', '1234', 'driver');

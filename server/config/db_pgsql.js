@@ -11,15 +11,19 @@ const db = new Sequelize(process.env.SQL_NAME, process.env.SQL_USER, process.env
 
 const checkDatabaseContent = async () => {
     console.log('check database content');
-    const users = await db.users.findAll()
-    if(users.length == 0){
-        console.log('no users found ,add default data');
-        console.log('data clearing');
-        res = require('../scripts/clearDatabase');
-        console.log('data population');
-        res = require('../scripts/populateDataBase');
-    }else{  
-        console.log('users found');
+    try{
+        const users = await db.users.findAll()
+        if(users.length == 0){
+            console.log('no users found ,add default data');
+            console.log('data clearing');
+            res = require('../scripts/clearDatabase');
+            console.log('data population');
+            res = require('../scripts/populateDataBase');
+        }else{  
+            console.log('users found');
+        }
+    }catch(error){
+        console.error('Error checking database content');
     }
     console.log('database content checked');
 }
