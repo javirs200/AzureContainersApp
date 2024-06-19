@@ -47,7 +47,7 @@ const connectSQL = async () => {
 
         console.log('db sync');
         // await db.sync({alter:true})
-        db.sync()
+        await db.sync()
         
         console.log('db ready');
 
