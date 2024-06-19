@@ -31,7 +31,7 @@ const EventsList = () => {
         const response = await fetchNewParticipation(participation);
         if (response.status === 201) {
           let data = await response.json()
-          console.log("participacion registrada", data);
+          // console.log("participacion registrada", data);
           alert('participacion registrada !')
         } else {
           let data = await response.json()

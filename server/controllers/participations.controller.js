@@ -86,7 +86,6 @@ const addTime = async (req, res) => {
         return res.status(400).json({ errors: errors.array() });
     }
     try {
-        let { carUuid, eventUuid, time, index } = req.body;
         let { participationUUID, time, index } = req.body;
 
         if (index > 0 && index < 7) {
