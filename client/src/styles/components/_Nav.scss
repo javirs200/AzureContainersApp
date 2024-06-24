@@ -6,11 +6,15 @@ nav {
   align-items: center;
   padding: 0;
 
+  a{
+    width: 10%;
+  }
+
   ul {
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    width: 50%;
+    width: 60%;
     padding: 0;
 
     li>a.link {
@@ -32,7 +36,7 @@ nav {
 .logo_nav {
   margin-left: 5%;
   height: 100%;
-  width: 20%;
+  width: 80%;
   border-radius: 50%;
   box-shadow: 0 0 10px #1c2169;
 
@@ -43,6 +47,7 @@ nav {
   }
 }
 
+// aqui va lo que se vera con la pantalla grande
 @media screen and (min-width: 600px) {
   .logo_nav {
     width: 10%;
@@ -54,4 +59,14 @@ nav {
       width: 15%;
     }
   }
+
+  nav{
+    a{
+      width: 50%;
+    }
+    ul{
+      width: 50%;
+    }
+  }
+
 }
