@@ -1,6 +1,6 @@
 ## Descripción del Proyecto
 
-Sistema de Cronometro WRC para vehiculos a escala
+Sistema de Cronometro WRC para vehiculos a escala , codigo fuente de mi TFG en ingenieria de Software
 
 ### 🏗️ Tecnologias utilizadas
 
