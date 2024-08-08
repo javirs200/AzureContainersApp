@@ -43,6 +43,8 @@ dispone de dos ramas en las que se ha dessarollado el codigo para las estaciones
 
 ## 🌐 Acceso a la Aplicación:
 
+- aplicacion desplegable en contenedores docker , actualmente no existe una version demo abierta al publico.
+
 ## 🤝 Developers
 
 - @javirs200
