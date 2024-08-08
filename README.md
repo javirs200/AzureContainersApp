@@ -31,9 +31,15 @@ dispone de dos ramas en las que se ha dessarollado el codigo para las estaciones
 
 ### 🔍 Funcionalidades Actuales
 
+- creacion de pruebas o eventos
+- incripcion de participantes
+- registro de vehiculos
+- captura de salida y llegada
+- asociacion vehiculo y piloto
+
 ### ⌛ Futuras Mejoras
 
-- correccion del envio de tiempos desdde la raspberry pi , socketio no envia datos bien
+- corregir calculo de tiempo en raspberry , diferencia de tramas con esp32, debido a la diferencia de precision de los relojes
 
 ## 🌐 Acceso a la Aplicación:
 
