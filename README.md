@@ -43,7 +43,7 @@ dispone de dos ramas en las que se ha dessarollado el codigo para las estaciones
 
 ## 🌐 Acceso a la Aplicación:
 
-- aplicacion desplegable en contenedores docker , actualmente no existe una version demo abierta al publico.
+- aplicacion desplegable en contenedores docker , actualmente existe una version demo [abierta](http://cronos-timer.westeurope.cloudapp.azure.com/) funcionalidad limitada.
 
 ## 🤝 Developers
 
