@@ -16,11 +16,11 @@ Sistema de Cronometro WRC para vehiculos a escala , codigo fuente de mi TFG en i
 
 ### 💻 Desarrollo Frontend y Backend
 
-- **Frontend:** Desarrollado en React, proporciona una interfaz de usuario intuitiva y atractiva para comparar precios y realizar cálculos.
+- **Frontend:** Desarrollado en React, proporciona una interfaz de usuario.
 
-- **Backend:** Implementado en JavaScript (Node.js), utiliza Sequelize como base de datos para gestionar la información del comparador de precios.
+- **Backend:** Implementado en JavaScript (Node.js), utiliza Sequelize como base de datos para gestionar la información.
 
-- **Base de Datos:** Se utiliza Sequelize como ORM (object-relational mapping , mapeo relacional de objetos) para interactuar con la base de datos y almacenar la información necesaria para el funcionamiento del comparador.
+- **Base de Datos:** Se utiliza Sequelize como ORM (object-relational mapping , mapeo relacional de objetos) para interactuar con la base de datos y almacenar la información necesaria.
 
 ### 💻 Desarrollo dispositivos conectados
 
