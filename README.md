@@ -1,6 +1,6 @@
 ## Descripción del Proyecto
 
-Sistema de Cronometro WRC para vehiculos a escala
+Sistema de Cronometro WRC para vehiculos a escala , codigo fuente de mi TFG en ingenieria de Software
 
 ### 🏗️ Tecnologias utilizadas
 
@@ -16,11 +16,11 @@ Sistema de Cronometro WRC para vehiculos a escala
 
 ### 💻 Desarrollo Frontend y Backend
 
-- **Frontend:** Desarrollado en React, proporciona una interfaz de usuario intuitiva y atractiva para comparar precios y realizar cálculos.
+- **Frontend:** Desarrollado en React, proporciona una interfaz de usuario.
 
-- **Backend:** Implementado en JavaScript (Node.js), utiliza Sequelize como base de datos para gestionar la información del comparador de precios.
+- **Backend:** Implementado en JavaScript (Node.js), utiliza Sequelize como base de datos para gestionar la información.
 
-- **Base de Datos:** Se utiliza Sequelize como ORM (object-relational mapping , mapeo relacional de objetos) para interactuar con la base de datos y almacenar la información necesaria para el funcionamiento del comparador.
+- **Base de Datos:** Se utiliza Sequelize como ORM (object-relational mapping , mapeo relacional de objetos) para interactuar con la base de datos y almacenar la información necesaria.
 
 ### 💻 Desarrollo dispositivos conectados
 
@@ -31,11 +31,23 @@ dispone de dos ramas en las que se ha dessarollado el codigo para las estaciones
 
 ### 🔍 Funcionalidades Actuales
 
-### ⌛ Futuras Mejoras
+- creacion de pruebas o eventos
+- incripcion de participantes
+- registro de vehiculos
+- captura de salida y llegada
+- asociacion vehiculo y piloto
 
-- correccion del envio de tiempos desdde la raspberry pi , socketio no envia datos bien
+### ⌛ Futuras Mejoras , nuevos planes
+
+- version migrada a K8s actualmente usa DockerCompose. 
+- Disponer de un container mokup/wrapper que pueda reemplazar los dispositivos fisicos durante el dessarrollo
+
+### ⚠️ Fallos conocidos
+- calculo de tiempo en raspberry , diferencia de tramas con esp32, debido a la diferencia de precision de los relojes
 
 ## 🌐 Acceso a la Aplicación:
+
+- aplicacion desplegable en contenedores docker , actualmente existe una version demo [abierta](http://cronos-timer.westeurope.cloudapp.azure.com/) funcionalidad limitada.
 
 ## 🤝 Developers
 
