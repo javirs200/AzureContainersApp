@@ -40,7 +40,7 @@ dispone de dos ramas en las que se ha dessarollado el codigo para las estaciones
 ### ⌛ Futuras Mejoras , nuevos planes
 
 - version migrada a K8s actualmente usa DockerCompose. 
-- Disponer de un container mokup/wrapper que pueda reemplazar los dispositivos fisicos durante el dessarrollo
+- Disponer de un container mokup/wrapper hecho con fastApi que pueda reemplazar los dispositivos fisicos durante el dessarrollo
 
 ### ⚠️ Fallos conocidos
 - calculo de tiempo en raspberry , diferencia de tramas con esp32, debido a la diferencia de precision de los relojes
