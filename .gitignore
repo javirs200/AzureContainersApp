@@ -4,3 +4,4 @@ data/
 CronosTimer_key.pem
 
 _pycache_/
+mockupMainStation/utills/__pycache__/
